@@ -1,0 +1,435 @@
+
+CAHIER DES CHARGES
+Application de Gestion de Rendez-vous
+Stack Technique : Laravel + React
+Version 1.0 - 06/01/2026
+
+1. PRÉSENTATION DU PROJET
+1.1 Contexte
+L'application vise à digitaliser et simplifier la gestion des rendez-vous pour les professionnels de services (coiffeurs, esthéticiens, consultants, thérapeutes, etc.). Elle permettra aux prestataires de gérer leur agenda en ligne et aux clients de prendre rendez-vous de manière autonome, 24h/24 et 7j/7.
+1.2 Objectifs
+Réduire la charge administrative liée à la prise de rendez-vous
+Minimiser les erreurs de planning et les oublis
+Améliorer l'expérience client avec un système de réservation simple
+Optimiser le taux de remplissage des plannings
+Réduire les absences avec un système de rappel automatique
+1.3 Utilisateurs cibles
+Prestataires de services : professionnels indépendants ou gérants de petites structures
+Clients finaux : particuliers souhaitant réserver des prestations en ligne
+
+2. SPÉCIFICATIONS FONCTIONNELLES
+2.1 Module Prestataire
+2.1.1 Inscription et Authentification
+Inscription avec validation par email
+Connexion sécurisée (email/mot de passe)
+Récupération de mot de passe
+Authentification à deux facteurs (optionnelle)
+2.1.2 Gestion du Profil
+Configuration des informations professionnelles (nom, description, photo)
+Gestion des coordonnées (adresse, téléphone, email)
+Ajout d'images/portfolio des prestations
+Configuration de l'URL personnalisée du site de réservation
+2.1.3 Gestion des Services
+Création de services/prestations (nom, description, durée, prix)
+Catégorisation des services
+Activation/désactivation temporaire de services
+Gestion des images associées aux services
+2.1.4 Gestion des Disponibilités
+Définition des horaires de travail hebdomadaires
+Configuration des jours de fermeture
+Gestion des périodes de vacances/congés
+Création de plages horaires exceptionnelles
+Configuration des créneaux horaires (intervalles de 15, 30, ou 60 minutes)
+2.1.5 Gestion de l'Agenda
+Vue calendrier (jour, semaine, mois)
+Visualisation des rendez-vous confirmés, en attente, annulés
+Ajout manuel de rendez-vous (pour les réservations par téléphone)
+Modification de rendez-vous existants
+Annulation de rendez-vous avec notification au client
+Notes privées sur chaque rendez-vous
+2.1.6 Gestion des Clients
+Liste des clients avec historique de rendez-vous
+Ajout de notes sur les préférences clients
+Recherche et filtrage des clients
+Statistiques par client (nombre de visites, montant total dépensé)
+2.1.7 Notifications et Rappels
+Configuration des rappels automatiques (email/SMS 24h ou 48h avant)
+Notification instantanée lors d'une nouvelle réservation
+Notification d'annulation de rendez-vous par le client
+2.1.8 Statistiques et Rapports
+Tableau de bord avec indicateurs clés (rendez-vous du jour, taux d'occupation)
+Statistiques de réservation (par jour, semaine, mois)
+Services les plus demandés
+Taux d'annulation
+Export des données en CSV/PDF
+
+2.2 Module Client
+2.2.1 Accès au Site de Réservation
+Accès public au site du prestataire via URL personnalisée
+Navigation sans inscription pour consulter les services
+Inscription/connexion requise uniquement pour réserver
+2.2.2 Inscription et Connexion Client
+Inscription simplifiée (nom, prénom, email, téléphone, mot de passe)
+Connexion classique ou via Google/Facebook (OAuth)
+Récupération de mot de passe
+2.2.3 Consultation des Services
+Liste des services avec détails (description, durée, prix)
+Filtrage par catégorie
+Visualisation des images des prestations
+2.2.4 Prise de Rendez-vous
+Sélection du service souhaité
+Calendrier interactif avec affichage des créneaux disponibles
+Sélection de la date et de l'heure
+Ajout de notes/commentaires pour le prestataire
+Confirmation immédiate de la réservation
+2.2.5 Gestion de Mon Compte
+Consultation de l'historique des rendez-vous
+Visualisation des rendez-vous à venir
+Annulation de rendez-vous (selon délai configuré par le prestataire)
+Modification des informations personnelles
+Gestion des préférences de notification
+2.2.6 Notifications Client
+Email de confirmation immédiate après réservation
+Rappel automatique 24h avant le rendez-vous
+Notification en cas d'annulation ou de modification par le prestataire
+
+3. SPÉCIFICATIONS TECHNIQUES
+3.1 Architecture
+L'application suivra une architecture client-serveur avec API RESTful :
+Backend : API Laravel exposant des endpoints REST
+Frontend : Application React (SPA) communicant avec l'API
+Authentification : JWT (JSON Web Tokens) ou Laravel Sanctum
+3.2 Stack Technique Backend (Laravel)
+Framework : Laravel 10.x ou 11.x
+Base de données : MySQL 8.0+ ou PostgreSQL 14+
+Authentification : Laravel Sanctum pour l'API
+Gestion d'emails : Laravel Mail + queues (Redis/Database)
+Validation : Laravel Form Requests
+ORM : Eloquent
+Tâches planifiées : Laravel Scheduler (pour rappels automatiques)
+3.3 Stack Technique Frontend (React)
+Framework : React 18+
+Build tool : Vite
+Routing : React Router v6
+State management : React Context API + React Query (pour le cache)
+HTTP Client : Axios
+UI Framework : Tailwind CSS + Headless UI ou Material-UI
+Calendrier : FullCalendar ou React Big Calendar
+Gestion de formulaires : React Hook Form + Yup/Zod
+Notifications : React Toastify
+3.4 Modèle de Données
+
+
+
+Entité
+
+
+Attributs principaux
+
+
+User
+
+
+id, name, email, password, phone, role (provider/client), email_verified_at, timestamps
+
+
+Provider
+
+
+id, user_id, business_name, description, address, city, postal_code, slug (URL), avatar, cover_image, timestamps
+
+
+Service
+
+
+id, provider_id, name, description, duration (minutes), price, category, is_active, image, timestamps
+
+
+Availability
+
+
+id, provider_id, day_of_week (0-6), start_time, end_time, is_active, timestamps
+
+
+ClosedPeriod
+
+
+id, provider_id, start_date, end_date, reason, timestamps
+
+
+Appointment
+
+
+id, provider_id, client_id, service_id, date, start_time, end_time, status (pending/confirmed/cancelled/completed), client_notes, provider_notes, timestamps
+
+
+Notification
+
+
+id, user_id, type (email/sms), subject, message, sent_at, read_at, timestamps
+
+
+Settings
+
+
+id, provider_id, slot_duration (15/30/60), cancellation_delay_hours, reminder_hours_before, timezone, timestamps
+Relations principales :
+User hasOne Provider (si role = provider)
+Provider hasMany Services
+Provider hasMany Availabilities
+Provider hasMany ClosedPeriods
+Provider hasMany Appointments
+Client (User) hasMany Appointments
+Appointment belongsTo Service, Provider, Client
+
+4. PRINCIPAUX ENDPOINTS API
+4.1 Authentification
+POST /api/register - Inscription utilisateur
+POST /api/login - Connexion
+POST /api/logout - Déconnexion
+POST /api/password/forgot - Réinitialisation mot de passe
+4.2 Gestion Prestataire
+GET /api/provider/profile - Récupérer profil
+PUT /api/provider/profile - Mettre à jour profil
+GET /api/provider/services - Liste des services
+POST /api/provider/services - Créer un service
+PUT /api/provider/services/{id} - Modifier un service
+DELETE /api/provider/services/{id} - Supprimer un service
+GET /api/provider/availabilities - Récupérer les disponibilités
+POST /api/provider/availabilities - Définir les disponibilités
+GET /api/provider/appointments - Liste des rendez-vous
+POST /api/provider/appointments - Créer rendez-vous manuel
+PUT /api/provider/appointments/{id} - Modifier rendez-vous
+DELETE /api/provider/appointments/{id} - Annuler rendez-vous
+GET /api/provider/statistics - Statistiques
+4.3 Espace Public & Client
+GET /api/booking/{slug} - Informations publiques du prestataire
+GET /api/booking/{slug}/services - Services disponibles
+GET /api/booking/{slug}/slots - Créneaux disponibles
+POST /api/booking/{slug}/appointments - Réserver un rendez-vous
+GET /api/client/appointments - Mes rendez-vous
+DELETE /api/client/appointments/{id} - Annuler mon rendez-vous
+
+5. SÉCURITÉ
+Authentification basée sur tokens (Laravel Sanctum)
+Hashage des mots de passe (bcrypt)
+Protection CSRF pour toutes les requêtes modifiant des données
+Validation stricte des entrées utilisateur
+Rate limiting sur les endpoints sensibles (connexion, inscription)
+Protection contre les injections SQL (Eloquent ORM)
+Sanitization des sorties pour éviter les XSS
+HTTPS obligatoire en production
+Politique CORS stricte
+6. DESIGN ET EXPÉRIENCE UTILISATEUR
+6.1 Principes de Design
+Design responsive (mobile-first)
+Interface épurée et intuitive
+Navigation claire et logique
+Chargement progressif avec indicateurs visuels
+6.2 Accessibilité
+Conformité WCAG 2.1 niveau AA
+Contraste suffisant pour les textes
+Navigation au clavier
+Labels ARIA appropriés
+6.3 Performance
+Temps de chargement initial < 3 secondes
+Lazy loading des images
+Cache API avec React Query
+Optimisation des bundles JavaScript
+
+7. DÉPLOIEMENT ET HÉBERGEMENT
+7.1 Environnements
+Développement (local)
+Staging (préproduction)
+Production
+7.2 Infrastructure Recommandée
+Serveur : VPS (DigitalOcean, AWS, OVH) ou Platform-as-a-Service (Laravel Forge, Ploi)
+Base de données : MySQL/PostgreSQL managé
+Storage : S3 ou équivalent pour les images
+CDN : CloudFlare pour les assets statiques
+Emails : SendGrid, Mailgun ou Amazon SES
+Monitoring : Sentry pour les erreurs, Laravel Telescope en développement
+7.3 CI/CD
+Git pour le versioning (GitHub/GitLab)
+Pipeline automatisé avec GitHub Actions ou GitLab CI
+Tests automatiques avant déploiement
+8. STRATÉGIE DE TESTS
+Tests unitaires (PHPUnit pour Laravel)
+Tests d'intégration API
+Tests E2E Frontend (Cypress ou Playwright)
+Couverture de code minimale : 70%
+
+9. PLANNING PRÉVISIONNEL
+
+
+
+Phase
+
+
+Durée estimée
+
+
+Livrables
+
+
+Setup & Architecture
+
+
+1 semaine
+
+
+Configuration environnements
+
+
+Backend - Authentification
+
+
+1 semaine
+
+
+API Auth + Tests
+
+
+Backend - Module Prestataire
+
+
+3 semaines
+
+
+APIs complètes + Tests
+
+
+Backend - Module Client
+
+
+2 semaines
+
+
+APIs booking + Tests
+
+
+Frontend - Auth & UI Base
+
+
+1 semaine
+
+
+UI Kit + Routing
+
+
+Frontend - Dashboard Prestataire
+
+
+3 semaines
+
+
+Interface complète
+
+
+Frontend - Site de réservation
+
+
+2 semaines
+
+
+Interface publique
+
+
+Notifications & Emails
+
+
+1 semaine
+
+
+Système complet
+
+
+Tests & Optimisations
+
+
+2 semaines
+
+
+Tests complets + Bug fixes
+
+
+TOTAL
+
+
+16 semaines (~4 mois)
+
+
+MVP complet
+
+10. ÉVOLUTIONS FUTURES (V2)
+Fonctionnalités envisagées pour les versions ultérieures :
+Système de paiement en ligne (Stripe, PayPal)
+Gestion multi-prestataires pour les salons avec plusieurs employés
+Système de fidélité et programmes de récompenses
+Avis et évaluations des clients
+Intégration avec Google Calendar et autres agendas
+Application mobile native (React Native)
+Système de liste d'attente automatique
+Marketing automation (campagnes email, promotions)
+Gestion des stocks de produits
+Intégration de visio pour consultations à distance
+Système de packages/abonnements
+Mode multi-langues
+11. BUDGET INDICATIF
+
+
+
+Poste
+
+
+Coût estimé
+
+
+Développement (4 mois)
+
+
+Variable selon équipe
+
+
+Design UI/UX
+
+
+1000 - 3000 €
+
+
+Hébergement (1ère année)
+
+
+300 - 1000 €
+
+
+Services tiers (emails, SMS)
+
+
+200 - 500 €
+
+
+Domaine & SSL
+
+
+50 - 100 €
+
+12. MAINTENANCE ET SUPPORT
+12.1 Maintenance Corrective
+Correction des bugs critiques sous 24h
+Correction des bugs mineurs sous 72h
+12.2 Maintenance Évolutive
+Mises à jour de sécurité mensuelles
+Optimisations de performance trimestrielles
+Ajout de nouvelles fonctionnalités selon roadmap
+12.3 Support Utilisateur
+Documentation utilisateur complète
+Tutoriels vidéo pour les fonctions principales
+Support par email avec réponse sous 24h
+
+13. CONCLUSION
+Ce cahier des charges définit les grandes lignes d'une application de gestion de rendez-vous moderne et complète. L'utilisation du stack Laravel + React garantit une architecture robuste, scalable et maintenable.
+Le projet vise à créer une solution intuitive tant pour les prestataires de services que pour leurs clients, avec un focus particulier sur l'expérience utilisateur et l'automatisation des processus.
+Le planning prévisionnel de 16 semaines permet une approche itérative avec des livrables réguliers. Ce document reste flexible et pourra être ajusté selon les retours et les besoins spécifiques identifiés en cours de développement.
+***
+Document sujet à révision et validation
