@@ -11,6 +11,21 @@ use Carbon\CarbonPeriod;
 
 class BookingController extends Controller
 {
+    // Liste tous les prestataires
+    public function getAllProviders(Request $request)
+    {
+        $query = Provider::with('services')->whereHas('services');
+        
+        // Recherche par nom
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where('business_name', 'like', "%{$search}%");
+        }
+
+        $providers = $query->get();
+        return response()->json($providers);
+    }
+
     public function getProviderPublic($slug)
     {
         $provider = Provider::where('slug', $slug)->with('services')->firstOrFail();

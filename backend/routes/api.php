@@ -9,6 +9,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 // Public Booking Routes
+Route::get('/providers', [BookingController::class, 'getAllProviders']);
 Route::get('/booking/{slug}', [BookingController::class, 'getProviderPublic']);
 Route::get('/booking/{slug}/services', [BookingController::class, 'getServicesPublic']);
 Route::get('/booking/{slug}/slots', [BookingController::class, 'getAvailableSlots']);

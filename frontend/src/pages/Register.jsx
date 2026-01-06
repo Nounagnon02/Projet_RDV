@@ -60,7 +60,7 @@ const Register = () => {
                             <Calendar className="h-7 w-7 text-white" />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-black text-white tracking-tight">RDV Pro</h1>
+                            <h1 className="text-2xl font-black text-white tracking-tight">E-appointment</h1>
                             <p className="text-xs text-slate-500 font-medium">Gestion de rendez-vous</p>
                         </div>
                     </div>

@@ -3,13 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Provider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ServiceController extends Controller
 {
+    private function getOrCreateProvider($user)
+    {
+        if ($user->provider) {
+            return $user->provider;
+        }
+
+        // Auto-create provider profile for users with provider role
+        if ($user->role === 'provider') {
+            return Provider::create([
+                'user_id' => $user->id,
+                'business_name' => $user->name,
+                'slug' => Str::slug($user->name) . '-' . Str::random(5)
+            ]);
+        }
+
+        return null;
+    }
+
     public function index(Request $request)
     {
-        $provider = $request->user()->provider;
+        $provider = $this->getOrCreateProvider($request->user());
         if (!$provider) return response()->json([]);
 
         return response()->json($provider->services);
@@ -17,8 +37,8 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
-        $provider = $request->user()->provider;
-        if (!$provider) return response()->json(['message' => 'Provider profile required'], 403);
+        $provider = $this->getOrCreateProvider($request->user());
+        if (!$provider) return response()->json(['message' => 'Vous devez être un prestataire pour gérer des services'], 403);
 
         $request->validate([
             'name' => 'required|string|max:255',

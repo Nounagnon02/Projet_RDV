@@ -3,13 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Provider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AppointmentController extends Controller
 {
+    private function getOrCreateProvider($user)
+    {
+        if ($user->provider) {
+            return $user->provider;
+        }
+
+        if ($user->role === 'provider') {
+            return Provider::create([
+                'user_id' => $user->id,
+                'business_name' => $user->name,
+                'slug' => Str::slug($user->name) . '-' . Str::random(5)
+            ]);
+        }
+
+        return null;
+    }
+
     public function index(Request $request)
     {
-        $provider = $request->user()->provider;
+        $provider = $this->getOrCreateProvider($request->user());
         if (!$provider) return response()->json([]);
 
         return response()->json($provider->appointments()->with(['client', 'service'])->get());
@@ -17,7 +36,8 @@ class AppointmentController extends Controller
 
     public function update(Request $request, Appointment $appointment)
     {
-        if ($appointment->provider_id !== $request->user()->provider->id) {
+        $provider = $this->getOrCreateProvider($request->user());
+        if (!$provider || $appointment->provider_id !== $provider->id) {
             return response()->json(['message' => 'Non autorisé'], 403);
         }
 
@@ -34,8 +54,8 @@ class AppointmentController extends Controller
     // Manual appointment creation by provider
     public function store(Request $request)
     {
-        $provider = $request->user()->provider;
-        if (!$provider) return response()->json(['message' => 'Provider profile required'], 403);
+        $provider = $this->getOrCreateProvider($request->user());
+        if (!$provider) return response()->json(['message' => 'Vous devez être un prestataire pour créer des rendez-vous'], 403);
 
         $request->validate([
             'service_id' => 'required|exists:services,id',
