@@ -41,6 +41,17 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
 
+    public function loyaltyAccount()
+    {
+        return $this->hasOne(LoyaltyAccount::class);
+    }
+
+    public function hairProfile()
+    {
+        return $this->hasOne(HairProfile::class);
+    }
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

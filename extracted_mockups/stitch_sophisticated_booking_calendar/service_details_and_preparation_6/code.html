@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Exclusive Boutique - Elsa Coiffure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#cb834a",
+                        "deep-maroon": "#422927",
+                        "vibrant-gold": "#cb834a",
+                        "cream": "#f9f6f2",
+                        "background-light": "#fbfaf9",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Newsreader', serif;
+        }
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(66, 41, 39, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-cream text-deep-maroon transition-colors duration-300">
+<header class="sticky top-0 z-50 bg-cream/95 backdrop-blur-md border-b border-deep-maroon/5">
+<div class="max-w-[1400px] mx-auto px-8 h-24 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="text-vibrant-gold">
+<span class="material-symbols-outlined text-4xl">flare</span>
+</div>
+<h1 class="text-3xl font-bold tracking-tight text-deep-maroon">Elsa Coiffure</h1>
+</div>
+<nav class="hidden md:flex items-center gap-12">
+<a class="text-sm font-semibold text-deep-maroon tracking-widest uppercase hover:text-vibrant-gold transition-colors underline decoration-vibrant-gold underline-offset-8" href="#">Shop</a>
+<a class="text-sm font-semibold text-deep-maroon tracking-widest uppercase hover:text-vibrant-gold transition-colors" href="#">Services</a>
+<a class="text-sm font-semibold text-deep-maroon tracking-widest uppercase hover:text-vibrant-gold transition-colors" href="#">Stylists</a>
+<a class="text-sm font-semibold text-deep-maroon tracking-widest uppercase hover:text-vibrant-gold transition-colors" href="#">Our Story</a>
+</nav>
+<div class="flex items-center gap-6">
+<button class="text-deep-maroon relative">
+<span class="material-symbols-outlined text-2xl">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-vibrant-gold text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">2</span>
+</button>
+<button class="bg-deep-maroon text-white px-8 py-3 rounded-none font-bold text-xs uppercase tracking-widest hover:bg-deep-maroon/90 transition-all">
+                    Book Now
+                </button>
+</div>
+</div>
+</header>
+<main class="max-w-[1400px] mx-auto px-8 py-16">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div class="max-w-2xl">
+<span class="text-vibrant-gold font-bold tracking-[0.3em] uppercase text-xs mb-4 block">The Selection</span>
+<h2 class="text-6xl font-display text-deep-maroon mb-6 italic">Signature Care Boutique</h2>
+<p class="text-xl text-deep-maroon/70 leading-relaxed">Curated professional-grade essentials for maintaining the integrity and brilliance of your braids and natural crown between salon visits.</p>
+</div>
+<div class="flex items-center gap-4 pb-2 border-b border-deep-maroon/20">
+<span class="text-sm font-bold uppercase tracking-widest">Filter by category</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+<div class="product-card bg-white rounded-lg overflow-hidden flex flex-col shadow-sm">
+<div class="aspect-[4/5] relative overflow-hidden bg-gray-100">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBvTunoiR7eLLiAim1GPXRv6kgUzHF2T_nlaqkRRCJDxwMgqQoXqt01KS4VOALgf35vgMDT7c2JOF_3p3O6IWOpahArNkySge8exD1TD8pDZcEmDVXb832o0vA_CiuliQTn-8hlJ_-xnhqtg0s-RV8bcWQqPVGTsU8i34C4dzvBCT6MifXXVBTo4SA83HGfqQbeFH5nYfR9FtOJ9MIIfG7Vh80_iFnLGuEauGurBxqGcf39X41LqFHnm8wV7n1kAXZLpZwmoIsXzbM');"></div>
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-deep-maroon">Best Seller</div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<p class="text-[10px] font-bold uppercase tracking-widest text-vibrant-gold mb-2">Scalp Care</p>
+<h3 class="text-2xl font-display text-deep-maroon mb-2">Crown Revitalizing Oil</h3>
+<p class="text-sm text-deep-maroon/60 mb-6 flex-grow">A lightweight infusion of ancient oils for maximum hydration and scalp relief.</p>
+<div class="flex items-center justify-between mb-6">
+<span class="text-xl font-bold text-deep-maroon">$48.00</span>
+<div class="flex gap-1 text-vibrant-gold">
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+</div>
+</div>
+<button class="w-full bg-vibrant-gold hover:bg-vibrant-gold/90 text-white py-4 font-bold text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">add_shopping_cart</span>
+                        Add to Cart
+                    </button>
+</div>
+</div>
+<div class="product-card bg-white rounded-lg overflow-hidden flex flex-col shadow-sm">
+<div class="aspect-[4/5] relative overflow-hidden bg-gray-100">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAhzK4T4EfU8lEo9umkynFZmMx7kItZFvEpYQKzI_DPGS-J-Fe2zB8t4PI9YjCo_BzoBxEJnJs92VTi2uEOIahJH1BSYtjNsEGIcedxN8JbvKFQyFCQN_sPDr5DoO2-3XWpxabQHny6P-N97rJIbWddrvigwlzoba6ynUyGrKAuL4_I9KokGIS-ATI4ubh32MJuSuOp_LijF8cxR3JgnJx63Ri1iAVI-VP5hg1zLXnvUMPQeMaIAcCOx7jIuw8Fffdlff1ZcQ7j8jg');"></div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<p class="text-[10px] font-bold uppercase tracking-widest text-vibrant-gold mb-2">Styling</p>
+<h3 class="text-2xl font-display text-deep-maroon mb-2">Edge Control Glaze</h3>
+<p class="text-sm text-deep-maroon/60 mb-6 flex-grow">High-shine, long-lasting hold without buildup or flaking. Enriched with silk proteins.</p>
+<div class="flex items-center justify-between mb-6">
+<span class="text-xl font-bold text-deep-maroon">$24.00</span>
+<div class="flex gap-1 text-vibrant-gold">
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</div>
+<button class="w-full bg-vibrant-gold hover:bg-vibrant-gold/90 text-white py-4 font-bold text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">add_shopping_cart</span>
+                        Add to Cart
+                    </button>
+</div>
+</div>
+<div class="product-card bg-white rounded-lg overflow-hidden flex flex-col shadow-sm">
+<div class="aspect-[4/5] relative overflow-hidden bg-gray-100">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBK9kOScyuHO7GPVwvUKg1fD1QRejH9kbVdaJeakRs9BOyRyv6qxmYaE-jHTyVZP8KRUMbDB_jgrxiDcxyKlDhS1OGrxmaghRZeAVAbEkKI9zrwD93BJN3SWPOyNXBDSZ_D2WGAUzZeMMy28aCJfIv5hDjOF0r81bh0BM1qZ26axTYpmczp37ibFmzuwaBRq4uDOSZ7r2a-Hk2yvgSZzra3IZ7ISlwKMweO-sxWwXsCfT4gwnKJ0c3412K7ga-yF87winIH4PB2JwM');"></div>
+<div class="absolute top-4 left-4 bg-deep-maroon text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest">New Arrival</div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<p class="text-[10px] font-bold uppercase tracking-widest text-vibrant-gold mb-2">Accessories</p>
+<h3 class="text-2xl font-display text-deep-maroon mb-2">Silk Sleep Set</h3>
+<p class="text-sm text-deep-maroon/60 mb-6 flex-grow">100% Mulberry silk bonnet and pillowcase set to preserve your style through the night.</p>
+<div class="flex items-center justify-between mb-6">
+<span class="text-xl font-bold text-deep-maroon">$85.00</span>
+<div class="flex gap-1 text-vibrant-gold">
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+</div>
+</div>
+<button class="w-full bg-vibrant-gold hover:bg-vibrant-gold/90 text-white py-4 font-bold text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">add_shopping_cart</span>
+                        Add to Cart
+                    </button>
+</div>
+</div>
+<div class="product-card bg-white rounded-lg overflow-hidden flex flex-col shadow-sm">
+<div class="aspect-[4/5] relative overflow-hidden bg-gray-100">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCWQ3tLAsCwkvUoZTDdkEEqfbUH40-8hOYT1h4HOdjoP4RmlAQyIeSV6ZXX67mG2eDw38Gyzio1atk_LFDwQeaiTbzZEaZQ9oz56MX3QGdWfy8haS49ttwlJdm1p2zmlNzAOBSCn5mkWQgbj9kc8T72g-d-GtHw0S2voDWtRZTHcawabbgIPLp_oIIj4Rl05Kbn8n7S2GGzpVE-ZUvgsQhjO7PzXZUYrVIW2whn5AaHbY2sJwYTA7bnpLqqAc0av1FsVCu1NOIpoeA');"></div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<p class="text-[10px] font-bold uppercase tracking-widest text-vibrant-gold mb-2">Cleansing</p>
+<h3 class="text-2xl font-display text-deep-maroon mb-2">Moisture Lock Mist</h3>
+<p class="text-sm text-deep-maroon/60 mb-6 flex-grow">Daily hydrating spray designed for braids, twists, and locs. No residue, pure botanical scent.</p>
+<div class="flex items-center justify-between mb-6">
+<span class="text-xl font-bold text-deep-maroon">$32.00</span>
+<div class="flex gap-1 text-vibrant-gold">
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm fill-1">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+</div>
+<button class="w-full bg-vibrant-gold hover:bg-vibrant-gold/90 text-white py-4 font-bold text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">add_shopping_cart</span>
+                        Add to Cart
+                    </button>
+</div>
+</div>
+</div>
+<section class="mt-32 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="relative">
+<div class="aspect-square bg-white shadow-2xl overflow-hidden rounded-2xl">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA_UcLV2Zn5FF4261q8W5GHiWQgsn2d2ye6-ZPxZ_jU2kCZfNkwhQ5mU3qx06vuv0WuhsN3RjKe8Kq_V7eWsvQbJ6CdstG9qfgIRwYAAjM4U13PbPo9nyv3gxXN341Zq-CCYrG94fCraRmUl3Ps6ulefGCM_Tk2ZRIOk8ZL5VoAM3THMZWT0KUZHOGfZUX9m3u5I8pMNGO3wc6H_ldtosPzzwc4DDhHXNnWiJBCiLzdnVFQcaeH3e-ozB8xF1y0Ij7uVmkxRZk9Uc0');"></div>
+</div>
+<div class="absolute -bottom-8 -right-8 bg-vibrant-gold p-12 hidden md:block">
+<p class="text-white text-3xl font-display italic">"Nature's care for your crown's glory."</p>
+</div>
+</div>
+<div class="space-y-8">
+<span class="text-vibrant-gold font-bold tracking-[0.3em] uppercase text-xs">Sustainability Commit</span>
+<h3 class="text-5xl font-display text-deep-maroon leading-tight italic">Conscious Beauty, Effortless Style</h3>
+<p class="text-lg text-deep-maroon/80 leading-relaxed">Our boutique products are ethically sourced and formulated without sulfates, parabens, or synthetic fragrances. We believe that what you put on your crown should be as pure as the artistry we provide in the salon.</p>
+<div class="flex gap-8 items-center pt-4">
+<div class="flex flex-col">
+<span class="text-2xl font-bold text-deep-maroon">100%</span>
+<span class="text-[10px] uppercase tracking-widest text-deep-maroon/60">Organic Base</span>
+</div>
+<div class="w-px h-10 bg-deep-maroon/10"></div>
+<div class="flex flex-col">
+<span class="text-2xl font-bold text-deep-maroon">Vegan</span>
+<span class="text-[10px] uppercase tracking-widest text-deep-maroon/60">Certified</span>
+</div>
+<div class="w-px h-10 bg-deep-maroon/10"></div>
+<div class="flex flex-col">
+<span class="text-2xl font-bold text-deep-maroon">Plastic-Free</span>
+<span class="text-[10px] uppercase tracking-widest text-deep-maroon/60">Packaging</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-deep-maroon text-white/70 py-20 mt-20">
+<div class="max-w-[1400px] mx-auto px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+<div class="col-span-1 lg:col-span-2 space-y-8">
+<div class="flex items-center gap-3 text-white">
+<span class="material-symbols-outlined text-3xl text-vibrant-gold">flare</span>
+<h2 class="text-3xl font-bold">Elsa Coiffure</h2>
+</div>
+<p class="max-w-md text-lg leading-relaxed italic">The intersection of heritage and high-fashion hair care. Elevating the standard for Afro luxury since 2012.</p>
+<div class="flex gap-6">
+<a class="hover:text-vibrant-gold transition-colors" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+<a class="hover:text-vibrant-gold transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="hover:text-vibrant-gold transition-colors" href="#"><span class="material-symbols-outlined">favorite</span></a>
+</div>
+</div>
+<div>
+<h4 class="text-white font-bold uppercase tracking-widest text-xs mb-8">Navigation</h4>
+<ul class="space-y-4 text-sm font-medium">
+<li><a class="hover:text-vibrant-gold transition-colors" href="#">Salon Services</a></li>
+<li><a class="hover:text-vibrant-gold transition-colors" href="#">The Boutique</a></li>
+<li><a class="hover:text-vibrant-gold transition-colors" href="#">Gift Cards</a></li>
+<li><a class="hover:text-vibrant-gold transition-colors" href="#">Care Guides</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold uppercase tracking-widest text-xs mb-8">Location</h4>
+<p class="text-sm leading-loose">124 Avenue des Champs-Élysées<br/>75008 Paris, France</p>
+<p class="mt-4 text-sm text-vibrant-gold font-bold">+33 1 23 45 67 89</p>
+</div>
+</div>
+<div class="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] uppercase tracking-widest font-bold">
+<p>© 2024 Elsa Coiffure Boutique. All Rights Reserved.</p>
+<div class="flex gap-10">
+<a class="hover:text-white transition-colors" href="#">Privacy</a>
+<a class="hover:text-white transition-colors" href="#">Terms</a>
+<a class="hover:text-white transition-colors" href="#">Shipping</a>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>

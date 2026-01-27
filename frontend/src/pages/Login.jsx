@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock, ArrowRight, Loader2, Sparkles, Calendar } from 'lucide-react';
+import { Button, Card, Input } from '../components/ui';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -27,108 +27,115 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-            {/* Background Orbs */}
-            <div className="orb orb-primary w-96 h-96 -top-48 -left-48"></div>
-            <div className="orb orb-purple w-80 h-80 -bottom-40 -right-40"></div>
-            <div className="orb orb-cyan w-64 h-64 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20"></div>
+        <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-background-light via-neutral-100 to-accent-cream dark:from-background-dark dark:via-maroon-800 dark:to-maroon-900">
+            {/* Decorative Background Elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-maroon-dark/10 rounded-full blur-3xl"></div>
+            </div>
 
             {/* Login Card */}
-            <div className="w-full max-w-md relative">
-                {/* Logo */}
-                <div className="flex items-center justify-center mb-10 animate-fade-in-up">
-                    <div className="flex items-center gap-3">
-                        <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30 animate-pulse-glow">
-                            <Calendar className="h-7 w-7 text-white" />
+            <div className="w-full max-w-md relative z-10">
+                {/* Logo & Brand */}
+                <div className="flex flex-col items-center mb-10 animate-fade-in-up">
+                    <div className="flex items-center gap-4 mb-2">
+                        <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-primary-glow">
+                            <span className="material-symbols-outlined text-white text-4xl">flare</span>
                         </div>
                         <div>
-                            <h1 className="text-2xl font-black text-white tracking-tight">E-appointment</h1>
-                            <p className="text-xs text-slate-500 font-medium">Gestion de rendez-vous</p>
+                            <h1 className="text-3xl font-display font-bold text-maroon-dark dark:text-text-light tracking-tight">
+                                Elsa Coiffure
+                            </h1>
+                            <p className="text-[10px] text-primary uppercase tracking-[0.4em] font-black">
+                                L'Atelier de Luxe
+                            </p>
                         </div>
                     </div>
                 </div>
 
                 {/* Card */}
-                <div className="glass-card p-8 md:p-10 animate-fade-in-up stagger-1">
-                    <div className="text-center mb-8">
-                        <h2 className="text-2xl font-bold text-white mb-2">Bon retour parmi nous</h2>
-                        <p className="text-slate-400 text-sm">Connectez-vous pour accéder à votre espace</p>
+                <Card className="p-8 md:p-10 animate-fade-in-up stagger-1">
+                    <div className="text-center mb-10">
+                        <h2 className="text-3xl font-display font-bold text-maroon-dark dark:text-text-light mb-2 italic">
+                            Accès Membre
+                        </h2>
+                        <p className="text-accent-bronze text-sm font-medium italic">
+                            Bienvenue dans votre espace privilégié
+                        </p>
                     </div>
 
                     {error && (
-                        <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-medium flex items-center gap-3">
-                            <div className="h-8 w-8 rounded-lg bg-rose-500/20 flex items-center justify-center shrink-0">
-                                <Sparkles className="h-4 w-4" />
-                            </div>
+                        <div className="mb-6 p-4 rounded-xl bg-accent-rose/10 border border-accent-rose/20 text-accent-rose text-sm font-medium flex items-center gap-3">
+                            <span className="material-symbols-outlined">error</span>
                             {error}
                         </div>
                     )}
 
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                        <div className="space-y-2">
-                            <label className="text-sm font-semibold text-slate-300 block">Email</label>
-                            <div className="relative group">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 group-focus-within:text-indigo-400 transition-colors" />
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                    placeholder="vous@exemple.com"
-                                    className="input-premium pl-12"
-                                />
-                            </div>
-                        </div>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <Input
+                            type="email"
+                            label="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            placeholder="vous@excellence.com"
+                            leftIcon={<span className="material-symbols-outlined">mail</span>}
+                        />
 
-                        <div className="space-y-2">
-                            <div className="flex items-center justify-between">
-                                <label className="text-sm font-semibold text-slate-300">Mot de passe</label>
-                                <Link to="/forgot-password" className="text-xs text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                                    Mot de passe oublié ?
+                        <div>
+                            <div className="flex items-center justify-between mb-2 pl-1">
+                                <label className="text-xs font-black uppercase tracking-widest text-maroon-dark dark:text-text-light opacity-60">
+                                    Mot de passe
+                                </label>
+                                <Link
+                                    to="/forgot-password"
+                                    className="text-[10px] text-primary hover:text-primary-dark font-black tracking-widest uppercase transition-colors"
+                                >
+                                    Oublié ?
                                 </Link>
                             </div>
-                            <div className="relative group">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 group-focus-within:text-indigo-400 transition-colors" />
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                    placeholder="••••••••"
-                                    className="input-premium pl-12"
-                                />
-                            </div>
+                            <Input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                placeholder="••••••••"
+                                leftIcon={<span className="material-symbols-outlined">lock</span>}
+                            />
                         </div>
 
-                        <button
+                        <Button
                             type="submit"
-                            disabled={loading}
-                            className="btn-primary w-full h-14 text-base flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
+                            variant="primary"
+                            size="lg"
+                            loading={loading}
+                            className="w-full h-16 font-black uppercase tracking-[0.3em] text-xs shadow-xl"
                         >
-                            {loading ? (
-                                <Loader2 className="h-5 w-5 animate-spin" />
-                            ) : (
-                                <>
-                                    Se connecter
-                                    <ArrowRight className="h-5 w-5" />
-                                </>
+                            {!loading && (
+                                <div className="flex items-center justify-center gap-3">
+                                    SE CONNECTER
+                                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                                </div>
                             )}
-                        </button>
+                        </Button>
                     </form>
 
-                    <div className="mt-8 pt-6 border-t border-slate-800/50">
-                        <p className="text-center text-slate-400 text-sm">
-                            Pas encore de compte ?{' '}
-                            <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors">
-                                Créer un compte
+                    <div className="mt-10 pt-8 border-t border-accent-cream/50">
+                        <p className="text-center text-accent-bronze text-sm">
+                            Pas encore membre ?{' '}
+                            <Link
+                                to="/register"
+                                className="text-primary hover:text-primary-dark font-bold underline underline-offset-4 transition-all"
+                            >
+                                Créer un profil
                             </Link>
                         </p>
                     </div>
-                </div>
+                </Card>
 
                 {/* Footer */}
-                <p className="text-center text-slate-600 text-xs mt-8 animate-fade-in-up stagger-2">
-                    © 2026 E-appointment. Tous droits réservés.
+                <p className="text-center text-accent-bronze/40 text-[10px] font-black uppercase tracking-widest mt-8 animate-fade-in-up stagger-2">
+                    © 2026 Elsa Coiffure. Excellence & Tradition.
                 </p>
             </div>
         </div>

@@ -12,8 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('phone')->nullable()->after('email');
-            $table->enum('role', ['provider', 'client'])->default('client')->after('phone');
+            // Only add phone if it doesn't exist
+            if (!Schema::hasColumn('users', 'phone')) {
+                $table->string('phone')->nullable()->after('email');
+            }
+            
+            // Only add role if it doesn't exist
+            if (!Schema::hasColumn('users', 'role')) {
+                $table->enum('role', ['provider', 'client'])->default('client')->after('phone');
+            }
         });
     }
 

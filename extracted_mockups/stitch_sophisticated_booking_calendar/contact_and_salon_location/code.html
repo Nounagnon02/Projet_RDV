@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact &amp; Location - Elsa Coiffure</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Newsreader and Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#ca8349",
+              "marron": "#422927",
+              "background-light": "#f8f7f6",
+              "background-dark": "#1f1813",
+            },
+            fontFamily: {
+              "display": ["Newsreader", "serif"],
+              "sans": ["Noto Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        font-family: 'Newsreader', serif;
+      }
+      .form-input-custom {
+        border-color: #422927;
+        background-color: transparent;
+      }
+      .form-input-custom:focus {
+        border-color: #ca8349;
+        ring-color: #ca8349;
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-marron dark:text-white transition-colors duration-300">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden">
+<!-- Navigation -->
+<header class="flex items-center justify-between border-b border-solid border-marron/10 px-10 py-4 bg-background-light dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-4 text-marron dark:text-primary">
+<div class="size-6">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight uppercase font-display">Elsa Coiffure</h2>
+</div>
+<div class="flex flex-1 justify-end gap-10">
+<nav class="flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Services</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Gallery</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Book Now</a>
+<a class="text-sm font-medium text-primary" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-4 border-l border-marron/10 pl-10">
+<button class="flex min-w-[100px] items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-wide hover:bg-primary/90 transition-all">
+<span>Account</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-primary/20" data-alt="User profile avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBfBoBx7jPn7ysMnAcpJk4NHA-VKUYPrfQjS09kgrDsiUn8AlmbG2pfkL-p_3oZDu3Q8CoX_p0c-DYNQL6GyEnGrOy9GT_NFFzJy1GTxmdJ-Hm2iPsNNlL-DrI4G73nnRavVb8maiyrrP2QdmnIhUKcwEnZy1qHvHI9ZLyKJeqHm0aRvWjOpcv_smhBu5nDkPD98arvBDWuXsmYKtccmn6Ta0JJ8sYfmuPTCq5yqPDRoO8bRU5fhiSH2OUyjdyk32IX0shKTylq5o4");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Split -->
+<main class="flex flex-1 flex-col lg:flex-row h-full">
+<!-- Left: Styled Map Container -->
+<div class="relative w-full lg:w-1/2 min-h-[400px] lg:min-h-0 bg-[#f1ede9] dark:bg-background-dark">
+<div class="absolute inset-0 grayscale contrast-125 opacity-70 mix-blend-multiply dark:mix-blend-overlay">
+<!-- Simulated Map with a gold/cream overlay -->
+<div class="w-full h-full bg-cover bg-center" data-alt="Stylized gold and cream map of luxury salon location" data-location="Paris, France" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC00cgdeXe5LAfrie2Qqea9XCFc-pUE3ZN9umEOU98gAhvTnKuONvZMZAFogo4wgavFKThqwMBt6GkwS62aCT4PUoyurbXhM16UujAxpE7j67o4xtqEqq8OyhlIYNN-YgnevodsBbDrpF48WLIdhyIaojcr01igoBXZIF_l5eDeIJGtpcRZULOmKqa153eEQQuUXHl1-nXXZ7mmM61oads4liBrqHRKuclMOnohLDnifBOuxzcIQO37nGT91lGFzyMtLlfrlAxBQXU');"></div>
+</div>
+<!-- Decorative Marker -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<span class="material-symbols-outlined text-primary text-5xl drop-shadow-lg">location_on</span>
+<div class="mt-2 px-4 py-2 bg-white/90 dark:bg-marron/90 backdrop-blur-sm rounded-lg shadow-xl border border-primary/30">
+<p class="font-display font-bold text-sm tracking-wide">ELSA COIFFURE</p>
+<p class="text-[10px] italic">15 Avenue de Luxe, Paris</p>
+</div>
+</div>
+</div>
+<!-- Right: Form and Info -->
+<div class="w-full lg:w-1/2 flex flex-col p-8 lg:p-20 bg-background-light dark:bg-background-dark overflow-y-auto">
+<!-- Heading Section -->
+<div class="mb-12">
+<h1 class="text-marron dark:text-primary text-5xl font-display font-light mb-4">Contact &amp; Location</h1>
+<p class="text-marron/70 dark:text-white/60 text-lg italic font-display">Luxury Afro Hair Salon — Special Event Inquiries</p>
+</div>
+<!-- Form Section -->
+<div class="flex flex-col gap-8 max-w-lg">
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-xs uppercase tracking-widest font-bold text-marron/50 dark:text-white/40">Full Name</span>
+<input class="form-input-custom h-12 border-b-2 border-t-0 border-x-0 focus:ring-0 focus:border-primary px-0 text-lg transition-all placeholder:text-marron/20 dark:placeholder:text-white/20" placeholder="Aditi Taylor" type="text"/>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-xs uppercase tracking-widest font-bold text-marron/50 dark:text-white/40">Email Address</span>
+<input class="form-input-custom h-12 border-b-2 border-t-0 border-x-0 focus:ring-0 focus:border-primary px-0 text-lg transition-all placeholder:text-marron/20 dark:placeholder:text-white/20" placeholder="aditi@example.com" type="email"/>
+</label>
+</div>
+<label class="flex flex-col gap-2">
+<span class="text-xs uppercase tracking-widest font-bold text-marron/50 dark:text-white/40">Type of Inquiry</span>
+<select class="form-input-custom h-12 border-b-2 border-t-0 border-x-0 focus:ring-0 focus:border-primary px-0 text-lg transition-all appearance-none">
+<option>Wedding Styling</option>
+<option>Gala / Red Carpet</option>
+<option>Commercial Shoots</option>
+<option>Private Booking</option>
+</select>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-xs uppercase tracking-widest font-bold text-marron/50 dark:text-white/40">Message</span>
+<textarea class="form-input-custom border-b-2 border-t-0 border-x-0 focus:ring-0 focus:border-primary px-0 text-lg transition-all placeholder:text-marron/20 dark:placeholder:text-white/20 resize-none" placeholder="How can we assist you for your special event?" rows="4"></textarea>
+</label>
+<button class="w-full bg-primary text-white py-4 rounded-lg font-bold tracking-[0.1em] uppercase hover:bg-primary/90 transition-all shadow-lg shadow-primary/20" type="submit">
+                    Send Message
+                </button>
+</form>
+</div>
+<!-- Info Grid -->
+<div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-marron/10 pt-12">
+<div class="space-y-4">
+<h4 class="text-xs uppercase tracking-[0.2em] font-bold text-primary">The Salon</h4>
+<address class="not-italic text-lg leading-relaxed font-display text-marron dark:text-white/80">
+                    15 Avenue de Luxe<br/>
+                    75008 Paris, France
+                </address>
+<p class="text-sm">+33 1 23 45 67 89</p>
+</div>
+<div class="space-y-4">
+<h4 class="text-xs uppercase tracking-[0.2em] font-bold text-primary">Hours</h4>
+<ul class="text-sm space-y-1 font-sans text-marron/70 dark:text-white/60">
+<li class="flex justify-between"><span>Mon - Fri</span> <span>09:00 — 19:00</span></li>
+<li class="flex justify-between"><span>Saturday</span> <span>10:00 — 18:00</span></li>
+<li class="flex justify-between"><span>Sunday</span> <span>Closed</span></li>
+</ul>
+</div>
+</div>
+<!-- Social Icons -->
+<div class="mt-12 flex gap-6">
+<a class="text-marron/60 dark:text-white/40 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">camera_enhance</span>
+</a>
+<a class="text-marron/60 dark:text-white/40 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">movie</span>
+</a>
+<a class="text-marron/60 dark:text-white/40 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">mail</span>
+</a>
+</div>
+</div>
+</main>
+<!-- Footer Note -->
+<footer class="py-6 px-10 text-center text-[10px] uppercase tracking-[0.3em] text-marron/30 border-t border-marron/5 bg-background-light dark:bg-background-dark">
+        © 2024 Elsa Coiffure. All Rights Reserved. Luxury Afro Hair Care.
+    </footer>
+</div>
+</body></html>

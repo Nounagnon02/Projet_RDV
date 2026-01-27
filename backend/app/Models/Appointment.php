@@ -9,6 +9,8 @@ class Appointment extends Model
     protected $fillable = [
         'provider_id',
         'client_id',
+        'guest_name',
+        'guest_whatsapp',
         'service_id',
         'date',
         'start_time',

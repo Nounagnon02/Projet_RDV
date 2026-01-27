@@ -2,17 +2,19 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
+import { Button, Card } from '../components/ui';
 import {
-    Calendar,
-    Clock,
+    ArrowLeft,
+    ArrowRight,
     MapPin,
-    ChevronRight,
-    ChevronLeft,
+    Clock,
+    Sparkles,
     CheckCircle2,
     Loader2,
-    AlertCircle,
-    User,
-    Sparkles
+    Calendar as CalendarIcon,
+    ChevronLeft,
+    ChevronRight,
+    ShoppingCart
 } from 'lucide-react';
 import { format, addDays, isSameDay } from 'date-fns';
 import { fr } from 'date-fns/locale';
@@ -32,6 +34,8 @@ const BookingPage = () => {
     const [slotsLoading, setSlotsLoading] = useState(false);
     const [bookingLoading, setBookingLoading] = useState(false);
     const [booked, setBooked] = useState(false);
+    const [guestName, setGuestName] = useState('');
+    const [guestWhatsapp, setGuestWhatsapp] = useState('');
 
     useEffect(() => {
         fetchProviderData();
@@ -73,18 +77,25 @@ const BookingPage = () => {
     };
 
     const handleBooking = async () => {
-        if (!user) {
-            navigate('/login');
+        if (!user && (!guestName || !guestWhatsapp)) {
+            alert('Veuillez renseigner votre nom et numéro WhatsApp pour continuer.');
             return;
         }
 
         setBookingLoading(true);
         try {
-            await api.post(`/booking/${slug}/appointments`, {
+            const bookingData = {
                 service_id: selectedService.id,
                 date: format(selectedDate, 'yyyy-MM-dd'),
                 start_time: selectedSlot,
-            });
+            };
+
+            if (!user) {
+                bookingData.guest_name = guestName;
+                bookingData.guest_whatsapp = guestWhatsapp;
+            }
+
+            await api.post(`/booking/${slug}/appointments`, bookingData);
             setBooked(true);
         } catch (error) {
             alert(error.response?.data?.message || 'Erreur lors de la réservation');
@@ -95,10 +106,10 @@ const BookingPage = () => {
 
     if (loading) {
         return (
-            <div className="flex h-screen items-center justify-center">
+            <div className="flex h-screen items-center justify-center bg-[#fbfaf9]">
                 <div className="text-center">
-                    <Loader2 className="h-12 w-12 animate-spin text-indigo-500 mx-auto mb-4" />
-                    <p className="text-slate-500 font-medium">Chargement...</p>
+                    <Loader2 className="size-12 animate-spin text-primary mx-auto mb-4" />
+                    <p className="font-display italic text-maroon-dark">L'excellence patiente...</p>
                 </div>
             </div>
         );
@@ -106,216 +117,243 @@ const BookingPage = () => {
 
     if (booked) {
         return (
-            <div className="flex h-screen flex-col items-center justify-center p-6 text-center">
-                <div className="h-24 w-24 rounded-3xl bg-emerald-500/20 flex items-center justify-center mb-8 animate-pulse-glow">
-                    <CheckCircle2 className="h-12 w-12 text-emerald-400" />
+            <div className="flex h-screen flex-col items-center justify-center p-6 text-center bg-background-light">
+                <div className="size-24 rounded-full bg-primary/10 flex items-center justify-center mb-8 animate-fade-in shadow-2xl shadow-primary/10">
+                    <CheckCircle2 className="size-12 text-primary" />
                 </div>
-                <h1 className="text-4xl font-black text-white mb-4">Réservation confirmée !</h1>
-                <p className="text-slate-400 mb-10 text-lg max-w-md">
-                    Votre rendez-vous a bien été enregistré. Vous recevrez une confirmation par email.
+                <h1 className="text-5xl font-display font-medium italic text-maroon-dark mb-4">Votre transformation est réservée</h1>
+                <p className="text-maroon-dark/60 mb-10 text-lg max-w-md italic">
+                    Un email de confirmation premium vous a été envoyé. Elsa et son équipe ont hâte de vous sublimer.
                 </p>
-                <Link to="/dashboard" className="btn-primary inline-flex items-center gap-2">
-                    <Calendar className="h-5 w-5" />
-                    Voir mes rendez-vous
-                </Link>
+                <div className="flex gap-4">
+                    <Link to="/client/appointments">
+                        <Button variant="primary" size="lg" className="h-16 px-10 rounded-xl font-bold uppercase tracking-widest text-[10px]">MES RENDEZ-VOUS</Button>
+                    </Link>
+                    <Link to="/">
+                        <Button variant="outline" size="lg" className="h-16 px-10 rounded-xl border-maroon-dark/10 font-bold uppercase tracking-widest text-[10px]">RETOUR ACCUEIL</Button>
+                    </Link>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen pb-12">
-            {/* Header */}
-            <div className="relative h-72 w-full overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-indigo-600/20 via-purple-600/10 to-slate-950"></div>
-                <div className="orb orb-primary w-96 h-96 -top-48 -left-48"></div>
-                <div className="orb orb-purple w-80 h-80 -top-20 -right-40"></div>
-
-                <div className="container mx-auto h-full flex items-end p-6 md:p-12 relative">
-                    <div className="flex flex-col md:flex-row items-center gap-6 animate-fade-in-up">
-                        <div className="h-24 w-24 rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl shadow-indigo-500/30">
-                            <span className="text-4xl font-black text-white">{provider?.business_name?.charAt(0)}</span>
-                        </div>
-                        <div className="text-center md:text-left">
-                            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">{provider?.business_name}</h1>
-                            <div className="flex items-center justify-center md:justify-start gap-2 text-slate-400 mt-3 font-medium">
-                                <MapPin className="h-4 w-4" />
-                                <span>{provider?.city}, {provider?.address}</span>
-                            </div>
-                        </div>
+        <div className="min-h-screen flex flex-col lg:flex-row bg-[#fbfaf9] text-maroon-dark font-display">
+            {/* Left Side: Exact Mockup Experience Block */}
+            <div className="hidden lg:block lg:w-1/2 relative min-h-screen">
+                <div className="absolute inset-0 bg-cover bg-center overflow-hidden">
+                    <img
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvTunoiR7eLLiAim1GPXRv6kgUzHF2T_nlaqkRRCJDxwMgqQoXqt01KS4VOALgf35vgMDT7c2JOF_3p3O6IWOpahArNkySge8exD1TD8pDZcEmDVXb832o0vA_CiuliQTn-8hlJ_-xnhqtg0s-RV8bcWQqPVGTsU8i34C4dzvBCT6MifXXVBTo4SA83HGfqQbeFH5nYfR9FtOJ9MIIfG7Vh80_iFnLGuEauGurBxqGcf39X41LqFHnm8wV7n1kAXZLpZwmoIsXzbM"
+                        className="size-full object-cover"
+                        alt="The Experience"
+                    />
+                    <div className="absolute inset-0 bg-maroon-dark/20"></div>
+                </div>
+                <div className="absolute bottom-16 left-16 right-16 text-white z-10 animate-fade-in-up">
+                    <p className="text-primary uppercase tracking-[0.4em] font-black text-xs mb-4">The Experience</p>
+                    <h2 className="text-6xl font-display font-medium leading-tight mb-8">Artistry Tailored to Your Crown</h2>
+                    <div className="flex items-center gap-6">
+                        <div className="h-px w-16 bg-primary"></div>
+                        <p className="text-xl italic opacity-90">Luxury Goddess Braids Selection</p>
                     </div>
                 </div>
+
+                {/* Brand Logo Over Image */}
+                <Link to="/" className="absolute top-10 left-16 z-20 flex items-center gap-3 text-white">
+                    <span className="material-symbols-outlined text-primary text-3xl">flare</span>
+                    <h1 className="text-2xl font-bold tracking-tight">Elsa Coiffure</h1>
+                </Link>
             </div>
 
-            <div className="container mx-auto p-6 md:p-12">
-                {!selectedService ? (
-                    /* Service Selection */
-                    <div className="animate-fade-in-up">
-                        <div className="mb-10">
-                            <div className="flex items-center gap-2 mb-2">
-                                <Sparkles className="h-5 w-5 text-indigo-400" />
-                                <span className="text-sm font-semibold text-indigo-400">Étape 1</span>
+            {/* Right Side: Step-by-Step Selection */}
+            <div className="flex-1 overflow-y-auto px-8 py-12 lg:p-16">
+                <div className="max-w-xl mx-auto space-y-12">
+                    {!selectedService ? (
+                        /* Step 1: Services Panel */
+                        <div className="animate-fade-in-up">
+                            <div className="flex items-center gap-2 text-primary mb-2">
+                                <span className="material-symbols-outlined text-sm">arrow_back</span>
+                                <Link to="/" className="text-xs font-black uppercase tracking-widest hover:underline">RETOUR ACCUEIL</Link>
                             </div>
-                            <h2 className="text-3xl font-black text-white">Choisissez un service</h2>
-                        </div>
+                            <h2 className="text-4xl md:text-5xl font-display font-bold italic mb-6">Nos Prestations Signature</h2>
+                            <p className="text-accent-bronze/80 text-lg mb-12">Une expérience personnalisée, gravée dans l'excellence.</p>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {services.map((service, index) => (
-                                <button
-                                    key={service.id}
-                                    onClick={() => setSelectedService(service)}
-                                    className={`glass-card p-6 text-left transition-all hover:border-indigo-500/30 group animate-fade-in-up stagger-${(index % 5) + 1}`}
-                                >
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-bold uppercase border border-indigo-500/20">
-                                            {service.category || 'Service'}
+                            <div className="space-y-4">
+                                {services.map((service, idx) => (
+                                    <button
+                                        key={service.id}
+                                        onClick={() => setSelectedService(service)}
+                                        className="w-full text-left group"
+                                    >
+                                        <div className="bg-white border border-maroon-dark/5 p-8 rounded-xl shadow-sm hover:shadow-xl hover:border-primary/30 transition-all flex items-center justify-between group-hover:bg-primary group-hover:text-white group-hover:scale-[1.02] duration-500">
+                                            <div>
+                                                <p className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60 group-hover:text-white/60 mb-1">{service.category || 'Expérience'}</p>
+                                                <h3 className="text-2xl font-display italic font-medium">{service.name}</h3>
+                                                <p className="text-xs font-bold mt-2 opacity-40 group-hover:text-white/40 uppercase tracking-widest">{service.duration} MIN</p>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="text-2xl font-display font-medium italic text-primary group-hover:text-white">{service.price}€</p>
+                                                <ArrowRight className="size-5 mt-2 ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                                            </div>
                                         </div>
-                                        <span className="text-2xl font-black gradient-text-primary">{service.price}€</span>
-                                    </div>
-                                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">{service.name}</h3>
-                                    <p className="text-slate-500 text-sm line-clamp-2 mb-6">{service.description}</p>
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-2 text-slate-500 font-medium">
-                                            <Clock className="h-4 w-4" />
-                                            <span>{service.duration} min</span>
-                                        </div>
-                                        <ChevronRight className="h-5 w-5 text-slate-600 group-hover:text-indigo-400 group-hover:translate-x-1 transition-all" />
-                                    </div>
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                ) : (
-                    /* Date & Time Selection */
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 animate-fade-in-up">
-                        <div className="lg:col-span-8">
-                            <div className="flex items-center gap-4 mb-10">
-                                <button
-                                    onClick={() => setSelectedService(null)}
-                                    className="h-12 w-12 rounded-xl glass-card-light flex items-center justify-center text-slate-400 hover:text-white transition-colors"
-                                >
-                                    <ChevronLeft className="h-6 w-6" />
-                                </button>
-                                <div>
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <Sparkles className="h-4 w-4 text-indigo-400" />
-                                        <span className="text-xs font-semibold text-indigo-400">Étape 2</span>
-                                    </div>
-                                    <h2 className="text-2xl font-black text-white">Choisissez une date & heure</h2>
-                                </div>
+                                    </button>
+                                ))}
                             </div>
+                        </div>
+                    ) : (
+                        /* Step 2: Exact Calendar Reproduction */
+                        <div className="animate-fade-in">
+                            <button
+                                onClick={() => setSelectedService(null)}
+                                className="flex items-center gap-2 text-primary mb-6 group"
+                            >
+                                <span className="material-symbols-outlined text-sm group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.3em]">Back to services</span>
+                            </button>
 
-                            {/* Date Picker */}
-                            <div className="flex gap-3 overflow-x-auto pb-6 scrollbar-hide">
-                                {[...Array(14)].map((_, i) => {
-                                    const day = addDays(new Date(), i);
-                                    const isSelected = isSameDay(day, selectedDate);
-                                    return (
-                                        <button
-                                            key={i}
-                                            onClick={() => setSelectedDate(day)}
-                                            className={`
-                        flex flex-col items-center justify-center min-w-[80px] h-24 rounded-2xl border-2 transition-all shrink-0
-                        ${isSelected
-                                                    ? 'bg-gradient-to-b from-indigo-500 to-indigo-600 border-indigo-400 shadow-lg shadow-indigo-500/30'
-                                                    : 'glass-card-light border-transparent hover:border-slate-700'}
-                      `}
-                                        >
-                                            <span className={`text-xs font-bold uppercase tracking-widest ${isSelected ? 'text-indigo-200' : 'text-slate-500'}`}>
-                                                {format(day, 'EEE', { locale: fr })}
-                                            </span>
-                                            <span className={`text-2xl font-black mt-1 ${isSelected ? 'text-white' : 'text-slate-300'}`}>
-                                                {format(day, 'd')}
-                                            </span>
+                            <h2 className="text-4xl md:text-5xl font-display font-bold italic mb-4">Select Date & Time</h2>
+                            <p className="text-maroon-dark/60 text-lg mb-12 italic leading-relaxed">Your transformation begins with choosing the perfect moment.</p>
+
+                            {/* Calendar Block - Exact Mockup Style */}
+                            <div className="bg-white rounded-2xl shadow-xl shadow-maroon-dark/5 border border-maroon-dark/5 p-8 mb-12">
+                                <div className="flex items-center justify-between mb-8">
+                                    <h3 className="text-xl font-bold font-display italic capitalize">
+                                        {format(selectedDate, 'MMMM yyyy', { locale: fr })}
+                                    </h3>
+                                    <div className="flex gap-4 text-maroon-dark/40">
+                                        <button className="p-2 hover:bg-[#f7f3f0] hover:text-primary rounded-full transition-all group">
+                                            <ChevronLeft className="size-5" />
                                         </button>
-                                    );
-                                })}
-                            </div>
-
-                            {/* Slots Grid */}
-                            <div className="mt-8">
-                                {slotsLoading ? (
-                                    <div className="flex h-32 items-center justify-center">
-                                        <Loader2 className="h-8 w-8 animate-spin text-indigo-500" />
-                                    </div>
-                                ) : availableSlots.length > 0 ? (
-                                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-                                        {availableSlots.map(slot => (
-                                            <button
-                                                key={slot}
-                                                onClick={() => setSelectedSlot(slot)}
-                                                className={`
-                          h-12 rounded-xl border-2 font-bold transition-all
-                          ${selectedSlot === slot
-                                                        ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-500/25'
-                                                        : 'glass-card-light border-transparent text-slate-400 hover:border-indigo-500/30 hover:text-white'}
-                        `}
-                                            >
-                                                {slot}
-                                            </button>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <div className="glass-card border-2 border-dashed border-slate-800 p-12 text-center">
-                                        <div className="h-14 w-14 rounded-2xl bg-slate-900 flex items-center justify-center mx-auto mb-4">
-                                            <AlertCircle className="h-7 w-7 text-slate-700" />
-                                        </div>
-                                        <p className="text-slate-500 font-medium">Aucun créneau disponible pour cette date.</p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Summary Side */}
-                        <div className="lg:col-span-4">
-                            <div className="glass-card p-8 sticky top-8">
-                                <h3 className="text-xl font-bold text-white mb-6">Récapitulatif</h3>
-
-                                <div className="space-y-6">
-                                    <div className="flex gap-4">
-                                        <div className="h-12 w-12 rounded-xl bg-indigo-500/20 flex items-center justify-center shrink-0">
-                                            <CheckCircle2 className="h-6 w-6 text-indigo-400" />
-                                        </div>
-                                        <div>
-                                            <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Service</p>
-                                            <p className="font-bold text-white text-lg">{selectedService.name}</p>
-                                            <p className="text-sm text-slate-400">{selectedService.duration} min • {selectedService.price}€</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex gap-4">
-                                        <div className="h-12 w-12 rounded-xl bg-emerald-500/20 flex items-center justify-center shrink-0">
-                                            <Calendar className="h-6 w-6 text-emerald-400" />
-                                        </div>
-                                        <div>
-                                            <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Date & Heure</p>
-                                            <p className="font-bold text-white text-lg">{format(selectedDate, 'd MMMM yyyy', { locale: fr })}</p>
-                                            <p className="text-sm text-slate-400">{selectedSlot ? `À ${selectedSlot}` : 'Heure non choisie'}</p>
-                                        </div>
+                                        <button className="p-2 hover:bg-[#f7f3f0] hover:text-primary rounded-full transition-all group">
+                                            <ChevronRight className="size-5" />
+                                        </button>
                                     </div>
                                 </div>
+                                <div className="grid grid-cols-7 text-center gap-y-2">
+                                    {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
+                                        <div key={day} className="text-[9px] font-black uppercase tracking-[0.2em] text-maroon-dark/40 py-2">{day}</div>
+                                    ))}
+                                    {/* Simplified 14-day preview grid for demo alignment */}
+                                    {[...Array(14)].map((_, i) => {
+                                        const day = addDays(new Date(), i);
+                                        const isSelected = isSameDay(day, selectedDate);
+                                        return (
+                                            <div
+                                                key={i}
+                                                onClick={() => setSelectedDate(day)}
+                                                className={`py-4 font-bold text-sm cursor-pointer rounded-lg transition-all ${isSelected ? 'bg-primary text-white shadow-lg' : 'hover:bg-[#f7f3f0] text-maroon-dark opacity-90'}`}
+                                            >
+                                                {format(day, 'd')}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
 
-                                <button
-                                    disabled={!selectedSlot || bookingLoading}
-                                    onClick={handleBooking}
-                                    className="btn-primary w-full h-14 mt-10 disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    {bookingLoading ? (
-                                        <Loader2 className="h-6 w-6 animate-spin mx-auto" />
-                                    ) : (
-                                        user ? 'Confirmer la réservation' : 'Connectez-vous pour réserver'
+                            {/* Time Slots - Mockup Grid Style */}
+                            <div className="mb-12">
+                                <h3 className="text-xs font-black uppercase tracking-[0.4em] text-maroon-dark/40 mb-8">AVAILABLE TIME SLOTS</h3>
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                    {availableSlots.length > 0 ? availableSlots.map(slot => (
+                                        <button
+                                            key={slot}
+                                            onClick={() => setSelectedSlot(slot)}
+                                            className={`py-4 rounded-xl border font-bold text-sm transition-all ${selectedSlot === slot ? 'bg-primary text-white border-primary shadow-xl shadow-primary/20' : 'bg-white border-maroon-dark/5 hover:border-primary/50'}`}
+                                        >
+                                            {slot}
+                                        </button>
+                                    )) : (
+                                        <div className="col-span-full py-12 text-center bg-maroon-dark/5 rounded-2xl border border-dashed border-maroon-dark/10">
+                                            <p className="text-accent-bronze italic text-sm">Recherche des créneaux disponibles...</p>
+                                        </div>
                                     )}
-                                </button>
+                                </div>
+                            </div>
 
+                            {/* Summary Glass Card - Exact Mockup Selection Layout */}
+                            <div className="bg-maroon-dark text-white rounded-3xl p-8 mb-12 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 p-6 opacity-10">
+                                    <span className="material-symbols-outlined text-6xl">verified</span>
+                                </div>
+                                <div className="flex items-center justify-between mb-8 pb-8 border-b border-white/10">
+                                    <div>
+                                        <p className="text-[9px] font-black uppercase tracking-[0.3em] text-primary mb-2">Service</p>
+                                        <h4 className="text-xl font-display italic leading-none">{selectedService.name}</h4>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-[9px] font-black uppercase tracking-[0.3em] text-primary mb-2">Price</p>
+                                        <h4 className="text-xl font-display font-bold italic">{selectedService.price}€</h4>
+                                    </div>
+                                </div>
+                                <div className="flex flex-wrap gap-8 text-[10px] font-black uppercase tracking-[0.2em] opacity-80">
+                                    <div className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-base text-primary">calendar_month</span>
+                                        {format(selectedDate, 'd MMMM yyyy', { locale: fr })}
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-base text-primary">schedule</span>
+                                        {selectedSlot || '--:--'} ({selectedService.duration}m)
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* CTA Action */}
+                            <div className="space-y-8">
+                                {/* Guest Identification - Only for non-logged in users */}
                                 {!user && (
-                                    <p className="text-center text-slate-500 text-xs mt-4">
-                                        <Link to="/login" className="text-indigo-400 hover:text-indigo-300">Se connecter</Link> ou{' '}
-                                        <Link to="/register" className="text-indigo-400 hover:text-indigo-300">créer un compte</Link>
-                                    </p>
+                                    <div className="bg-white border border-primary/20 rounded-3xl p-8 animate-fade-in-up shadow-xl shadow-primary/5">
+                                        <div className="flex items-center gap-3 mb-6">
+                                            <span className="material-symbols-outlined text-primary">account_circle</span>
+                                            <h4 className="text-sm font-black uppercase tracking-widest text-maroon-dark">Finalisation Immédiate</h4>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <div className="relative">
+                                                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary opacity-50 text-sm">person</span>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Votre Nom Complet"
+                                                    value={guestName}
+                                                    onChange={(e) => setGuestName(e.target.value)}
+                                                    className="w-full h-14 pl-12 pr-6 bg-accent-cream/30 border-none rounded-xl text-sm font-bold placeholder:text-maroon-dark/30 focus:ring-2 focus:ring-primary/20 transition-all"
+                                                />
+                                            </div>
+                                            <div className="relative">
+                                                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary opacity-50 text-sm">call</span>
+                                                <input
+                                                    type="tel"
+                                                    placeholder="Numéro WhatsApp (ex: +33...)"
+                                                    value={guestWhatsapp}
+                                                    onChange={(e) => setGuestWhatsapp(e.target.value)}
+                                                    className="w-full h-14 pl-12 pr-6 bg-accent-cream/30 border-none rounded-xl text-sm font-bold placeholder:text-maroon-dark/30 focus:ring-2 focus:ring-primary/20 transition-all"
+                                                />
+                                            </div>
+                                        </div>
+                                        <p className="mt-6 text-[10px] text-accent-bronze italic text-center font-medium leading-relaxed">
+                                            Pas besoin de compte. Nous vous contacterons sur WhatsApp pour confirmer les détails.
+                                        </p>
+                                    </div>
                                 )}
+
+                                <Button
+                                    disabled={!selectedSlot || bookingLoading || (!user && (!guestName || !guestWhatsapp))}
+                                    onClick={handleBooking}
+                                    variant="primary"
+                                    className="w-full h-20 text-balance font-black uppercase tracking-[0.3em] shadow-2xl flex items-center justify-center gap-4 group"
+                                >
+                                    {bookingLoading ? <Loader2 className="animate-spin" /> : (
+                                        <>
+                                            CONFIRMER LA SÉANCE
+                                            <span className="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                                        </>
+                                    )}
+                                </Button>
+                                <p className="text-center text-[10px] text-maroon-dark/40 font-black uppercase tracking-widest italic font-medium">
+                                    {user ? 'Votre réservation sera prioritaire.' : 'Une expérience sans friction, centrée sur vous.'}
+                                </p>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </div>
     );

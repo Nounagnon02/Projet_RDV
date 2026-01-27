@@ -12,7 +12,19 @@ import BookingPage from './pages/BookingPage';
 import ClientAppointments from './pages/ClientAppointments';
 import ClientDashboard from './pages/ClientDashboard';
 import ProvidersPage from './pages/ProvidersPage';
+import Home from './pages/Home';
 import ClientsManagement from './pages/ClientsManagement';
+import MemberProfile from './pages/MemberProfile';
+import HairConsultation from './pages/HairConsultation';
+import BoutiqueCatalog from './pages/BoutiqueCatalog';
+import FAQ from './pages/FAQ';
+import About from './pages/About';
+import Contact from './pages/Contact';
+
+// Admin imports
+import ProductManagement from './pages/admin/ProductManagement';
+import ClientManagement from './pages/admin/ClientManagement';
+import BookingManagement from './pages/admin/BookingManagement';
 
 // Route protégée - vérifie l'authentification
 const PrivateRoute = ({ children }) => {
@@ -43,7 +55,7 @@ const ClientRoute = ({ children }) => {
 const RoleBasedRedirect = () => {
   const { user, loading } = useAuth();
   if (loading) return null;
-  if (!user) return <Navigate to="/login" />;
+  if (!user) return <Home />;
   return user.role === 'provider' ? <Navigate to="/dashboard" /> : <Navigate to="/client" />;
 };
 
@@ -57,10 +69,12 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-inter">
+    <div className="min-h-screen font-sans">
       <Routes>
         <Route path="/login" element={user ? <Navigate to={getRedirectPath()} /> : <Login />} />
         <Route path="/register" element={user ? <Navigate to={getRedirectPath()} /> : <Register />} />
+
+        <Route path="/" element={<Home />} />
 
         {/* Routes Prestataire */}
         <Route
@@ -75,23 +89,7 @@ function AppContent() {
           path="/dashboard/agenda"
           element={
             <ProviderRoute>
-              <Agenda />
-            </ProviderRoute>
-          }
-        />
-        <Route
-          path="/dashboard/services"
-          element={
-            <ProviderRoute>
-              <ServiceManagement />
-            </ProviderRoute>
-          }
-        />
-        <Route
-          path="/dashboard/availabilities"
-          element={
-            <ProviderRoute>
-              <AvailabilityManagement />
+              <BookingManagement />
             </ProviderRoute>
           }
         />
@@ -99,7 +97,15 @@ function AppContent() {
           path="/dashboard/clients"
           element={
             <ProviderRoute>
-              <ClientsManagement />
+              <ClientManagement />
+            </ProviderRoute>
+          }
+        />
+        <Route
+          path="/dashboard/products"
+          element={
+            <ProviderRoute>
+              <ProductManagement />
             </ProviderRoute>
           }
         />
@@ -109,7 +115,23 @@ function AppContent() {
           path="/client"
           element={
             <ClientRoute>
-              <ClientDashboard />
+              <MemberProfile />
+            </ClientRoute>
+          }
+        />
+        <Route
+          path="/client/consultation"
+          element={
+            <ClientRoute>
+              <HairConsultation />
+            </ClientRoute>
+          }
+        />
+        <Route
+          path="/client/shop"
+          element={
+            <ClientRoute>
+              <BoutiqueCatalog />
             </ClientRoute>
           }
         />
@@ -132,6 +154,19 @@ function AppContent() {
         <Route
           path="/providers"
           element={<ProvidersPage />}
+        />
+
+        <Route
+          path="/faq"
+          element={<FAQ />}
+        />
+        <Route
+          path="/about"
+          element={<About />}
+        />
+        <Route
+          path="/contact"
+          element={<Contact />}
         />
 
         {/* Redirection racine basée sur le rôle */}

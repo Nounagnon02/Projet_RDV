@@ -105,12 +105,20 @@ class BookingController extends Controller
     {
         $provider = Provider::where('slug', $slug)->firstOrFail();
 
-        $request->validate([
+        $rules = [
             'service_id' => 'required|exists:services,id',
             'date' => 'required|date|after_or_equal:today',
             'start_time' => 'required|date_format:H:i',
             'client_notes' => 'nullable|string',
-        ]);
+        ];
+
+        // Add guest rules if not authenticated
+        if (!$request->user()) {
+            $rules['guest_name'] = 'required|string|max:255';
+            $rules['guest_whatsapp'] = 'required|string|max:20';
+        }
+
+        $request->validate($rules);
 
         $service = Service::find($request->service_id);
         $startTime = Carbon::parse($request->date . ' ' . $request->start_time);
@@ -130,15 +138,33 @@ class BookingController extends Controller
             return response()->json(['message' => 'Ce créneau est déjà pris.'], 422);
         }
 
-        $appointment = $provider->appointments()->create([
-            'client_id' => $request->user()->id,
+        $appointmentData = [
+            'provider_id' => $provider->id,
             'service_id' => $request->service_id,
             'date' => $request->date,
             'start_time' => $request->start_time,
             'end_time' => $endTime->format('H:i'),
             'status' => 'pending',
             'client_notes' => $request->client_notes,
-        ]);
+        ];
+
+        if ($request->user()) {
+            $appointmentData['client_id'] = $request->user()->id;
+        } else {
+            $appointmentData['guest_name'] = $request->guest_name;
+            $appointmentData['guest_whatsapp'] = $request->guest_whatsapp;
+        }
+
+        $appointment = Appointment::create($appointmentData);
+
+        // Envoyer l'email de confirmation premium uniquement si l'utilisateur est connecté
+        if ($request->user()) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($request->user())->send(new \App\Mail\BookingConfirmation($appointment));
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('Erreur envoi email booking: ' . $e->getMessage());
+            }
+        }
 
         return response()->json($appointment, 201);
     }
@@ -155,6 +181,13 @@ class BookingController extends Controller
         }
 
         $appointment->update(['status' => 'cancelled']);
+
+        // Envoyer l'email d'annulation premium
+        try {
+            \Illuminate\Support\Facades\Mail::to($request->user())->send(new \App\Mail\CancellationConfirmation($appointment));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Erreur envoi email cancellation: ' . $e->getMessage());
+        }
 
         return response()->json(['message' => 'Rendez-vous annulé']);
     }

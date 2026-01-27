@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Exclusive Product Boutique | Elsa Coiffure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ca8349",
+                        "background-light": "#fbfaf9",
+                        "background-dark": "#1f1813",
+                        "maroon-dark": "#422927",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e3dbd3;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#191410] dark:text-[#fbfaf9]">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[#f1ede9] dark:border-[#332a22] bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-10 py-4">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-[#191410] dark:text-[#fbfaf9] text-xl font-extrabold leading-tight tracking-[-0.015em]">Elsa Coiffure</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-[#191410] dark:text-[#fbfaf9] text-sm font-semibold leading-normal hover:text-primary transition-colors" href="#">Shop</a>
+<a class="text-[#8c705a] dark:text-[#b49b87] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Salon</a>
+<a class="text-[#8c705a] dark:text-[#b49b87] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Gallery</a>
+<a class="text-[#8c705a] dark:text-[#b49b87] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Booking</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6">
+<label class="flex flex-col min-w-40 h-10 max-w-64 hidden lg:block">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-[#f1ede9] dark:bg-[#332a22]">
+<div class="text-[#8c705a] flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:ring-0 placeholder:text-[#8c705a] px-3 text-sm font-normal" placeholder="Search products..." value=""/>
+</div>
+</label>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f1ede9] dark:bg-[#332a22] text-[#191410] dark:text-[#fbfaf9] transition-all hover:bg-primary/20">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f1ede9] dark:bg-[#332a22] text-[#191410] dark:text-[#fbfaf9] transition-all hover:bg-primary/20">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</header>
+<div class="flex flex-1">
+<!-- Sidebar: Deep Marron Filter Bar -->
+<aside class="w-72 bg-maroon-dark text-white p-8 flex flex-col gap-8 hidden xl:flex">
+<div class="flex flex-col gap-2">
+<h1 class="text-[#ca8349] text-xs font-black uppercase tracking-widest">Shop Filters</h1>
+<p class="text-[#b49b87] text-sm font-light">Tailored for Afro-textured beauty</p>
+</div>
+<div class="flex flex-col gap-6">
+<div>
+<h3 class="text-sm font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">category</span> Categories
+                        </h3>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined text-lg">grid_view</span>
+<span class="text-sm font-medium">All Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#b49b87] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">opacity</span>
+<span class="text-sm font-medium">Oils &amp; Serums</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#b49b87] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">spa</span>
+<span class="text-sm font-medium">Moisturizers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#b49b87] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">checkroom</span>
+<span class="text-sm font-medium">Silk Accessories</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#b49b87] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">inventory_2</span>
+<span class="text-sm font-medium">Curated Kits</span>
+</a>
+</div>
+</div>
+<div>
+<h3 class="text-sm font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">filter_alt</span> Hair Goal
+                        </h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 text-sm text-[#b49b87]">
+<input class="rounded border-transparent bg-white/10 text-primary focus:ring-0" type="checkbox"/> Retention
+                            </label>
+<label class="flex items-center gap-3 text-sm text-[#b49b87]">
+<input class="rounded border-transparent bg-white/10 text-primary focus:ring-0" type="checkbox"/> Maximum Hydration
+                            </label>
+<label class="flex items-center gap-3 text-sm text-[#b49b87]">
+<input class="rounded border-transparent bg-white/10 text-primary focus:ring-0" type="checkbox"/> Scalp Health
+                            </label>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-8 border-t border-white/10">
+<div class="bg-primary/5 rounded-xl p-4 border border-primary/20">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary">account_circle</span>
+<p class="text-xs font-bold text-white uppercase tracking-wider">Hair Profile</p>
+</div>
+<p class="text-[11px] text-[#b49b87] leading-relaxed">Currently showing products for <span class="text-white font-medium">Type 4C • High Porosity</span></p>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0">
+<div class="max-w-[1200px] mx-auto w-full px-8 py-10 flex flex-col gap-10">
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between items-end gap-6">
+<div class="flex flex-col gap-2">
+<h1 class="text-[#191410] dark:text-[#fbfaf9] text-5xl font-black leading-tight tracking-[-0.04em]">The Curated Boutique</h1>
+<p class="text-[#8c705a] dark:text-[#b49b87] text-lg font-light max-w-lg">Premium, professional-grade treatments selected for the specific needs of Afro-textured and coiled hair.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center px-6 py-2.5 rounded-lg bg-[#f1ede9] dark:bg-[#332a22] text-[#191410] dark:text-[#fbfaf9] text-sm font-bold tracking-wide transition-all hover:bg-[#e3dbd3] dark:hover:bg-[#42372d]">
+                                Sort By: Newest
+                            </button>
+</div>
+</div>
+<!-- Recommended Panel -->
+<div class="@container">
+<div class="flex flex-1 flex-col items-start justify-between gap-6 rounded-xl border border-[#e3dbd3] dark:border-[#332a22] bg-[#fbfaf9] dark:bg-[#271e18] p-6 @[480px]:flex-row @[480px]:items-center shadow-sm">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">auto_awesome</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-[#191410] dark:text-[#fbfaf9] text-lg font-bold leading-tight tracking-tight">Personalized Selection</p>
+<p class="text-[#8c705a] dark:text-[#b49b87] text-sm font-normal">Based on your 4C Curl Pattern &amp; Low Porosity profile from your last salon visit.</p>
+</div>
+</div>
+<a class="text-sm font-bold leading-normal tracking-wide flex items-center gap-2 text-primary hover:underline" href="#">
+                                Update Hair Profile
+                                <span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Recommended Carousel -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold tracking-tight">Recommended for You</h2>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full border border-[#f1ede9] dark:border-[#332a22] flex items-center justify-center text-[#8c705a] hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-full border border-[#f1ede9] dark:border-[#332a22] flex items-center justify-center text-[#8c705a] hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex overflow-x-auto pb-4 [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden gap-6">
+<!-- Product 1 -->
+<div class="flex flex-col gap-4 group min-w-[280px]">
+<div class="relative w-full aspect-[3/4] bg-center bg-cover rounded-xl overflow-hidden shadow-sm" data-alt="Nourishing growth oil bottle on minimalist beige background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDvh2WsnWbyABEgWtRzFS-oc2Jr2JozhZWRCiKVxF1o67nYiirNwafBNp-06RFIEvddDbdx9Pz6LC72GIY2i6U-uc5qb_4rcs-hRnWlmaUllV8JKlLbElVnJlTTvUT2Ec4UQ5m65FD7Zxo_oI5WgNonPs5qz4zf65jZQ-6XSAf4puKqaaZKOdS3bkClf9yhv1Niv9jAkWSuMrxAsKullMCjTeRaDTanDN6zDUyev407fzMv5fJCzodTWOUBv75W2oHUmforhtk4en0");'>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-end p-4 opacity-0 group-hover:opacity-100">
+<button class="w-full py-3 bg-primary text-white font-bold rounded-lg text-sm shadow-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">shopping_cart</span> Add to Cart
+                                        </button>
+</div>
+<div class="absolute top-3 left-3 bg-white/90 dark:bg-black/90 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter text-primary">Essential</div>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<p class="text-[#191410] dark:text-[#fbfaf9] text-base font-bold leading-normal">Organic Marula Growth Oil</p>
+<p class="text-[#8c705a] dark:text-[#b49b87] text-sm font-medium">$52.00</p>
+</div>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="flex flex-col gap-4 group min-w-[280px]">
+<div class="relative w-full aspect-[3/4] bg-center bg-cover rounded-xl overflow-hidden shadow-sm" data-alt="Glass jar of shea butter curl cream on soft lighting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA0UdEnKmFX1wmcSnjm9Cd1JaZhv9EEIE8N--WSDYmxGSZ_1isrsJYlEZHLj8LOVaqWhCmOBK6XuxVNkSZhc7qxFgmKyeC6MStLEOVxXucHhIue73EPMlNuegCYTo2eBNKcLVPWaQBM0_oV2M5I0pHufJeSoGllG_HYbC4Jqv3ddG5afFCQKg0e9uQ9p0BbK20ff0zSHgDge3GKFNyR-ZIrQTWjILz0ZREQYa5s_GXYBwcwsBVNAQ3dhc8F7kIq2TgGDVzj9WZZ0Z4");'>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-end p-4 opacity-0 group-hover:opacity-100">
+<button class="w-full py-3 bg-primary text-white font-bold rounded-lg text-sm shadow-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">shopping_cart</span> Add to Cart
+                                        </button>
+</div>
+<div class="absolute top-3 left-3 bg-white/90 dark:bg-black/90 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter text-primary">High Porosity</div>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<p class="text-[#191410] dark:text-[#fbfaf9] text-base font-bold leading-normal">Whipped Shea Butter Mask</p>
+<p class="text-[#8c705a] dark:text-[#b49b87] text-sm font-medium">$45.00</p>
+</div>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="flex flex-col gap-4 group min-w-[280px]">
+<div class="relative w-full aspect-[3/4] bg-center bg-cover rounded-xl overflow-hidden shadow-sm" data-alt="Silk head wrap with luxury patterns draped over a mannequin head" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBJNpEPUGTFHAj2YZBAokDobp_wd_CYOGO8rHYET8CwHAAqO_xowEmG39LE9fThZ29NWD5f_iYYxBjkfXMZUjSRuPQrOb_rgsxOoBPPR9FLhppg8JSGrEtqT_HnvfRvRo8ZGFBraU5yibuvSpk4HIaiqAjgL8ISWfRausU5NhdNyEk8CAvHwtzmU-ibh8dbOYiiEHogNvvPSN7SVoBJdQ4gwP7wv9ZUkJUiiDXaB0a-tFyzIZQwgtDNw7QxTCW3oWYQtv-wNYTHKXo");'>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-end p-4 opacity-0 group-hover:opacity-100">
+<button class="w-full py-3 bg-primary text-white font-bold rounded-lg text-sm shadow-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">shopping_cart</span> Add to Cart
+                                        </button>
+</div>
+<div class="absolute top-3 left-3 bg-white/90 dark:bg-black/90 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter text-primary">Limited Edition</div>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<p class="text-[#191410] dark:text-[#fbfaf9] text-base font-bold leading-normal">Gold-Trim Silk Bonnet</p>
+<p class="text-[#8c705a] dark:text-[#b49b87] text-sm font-medium">$75.00</p>
+</div>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="flex flex-col gap-4 group min-w-[280px]">
+<div class="relative w-full aspect-[3/4] bg-center bg-cover rounded-xl overflow-hidden shadow-sm" data-alt="Complete hair care kit in aesthetic packaging" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDEhgqzzlzgrOa0G3Tx-Vi7pt3B10TCqI6QoApK_Q330IcBwHxvgAr55AH76rdCc-ximlh3X-cennAUG6DdqRjQFFY8kZ9OxYD6qxG2cH8JL5ddKLdr_2buayN959gCZKr-ek0862UEwIUAdWKhMd8NreIE-lmKRzq5-hLDcUXlY6bqQtIfju_l-vOt7TTEWVeJnj7jRdjWnGLD4pG6KQ9Nqu4Ko0gUtTikx84ck2Pr4HfYQ-L8sksZvxWVEsBiaTLPPJvThtwBOrQ");'>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-end p-4 opacity-0 group-hover:opacity-100">
+<button class="w-full py-3 bg-primary text-white font-bold rounded-lg text-sm shadow-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">shopping_cart</span> Add to Cart
+                                        </button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<p class="text-[#191410] dark:text-[#fbfaf9] text-base font-bold leading-normal">Deep Cleanse &amp; Hydrate Kit</p>
+<p class="text-[#8c705a] dark:text-[#b49b87] text-sm font-medium">$120.00</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Full Collection Grid -->
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-4">
+<h2 class="text-2xl font-black tracking-tight">Full Collection</h2>
+<div class="flex-1 h-px bg-[#f1ede9] dark:bg-[#332a22]"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8">
+<!-- Shop Item 1 -->
+<div class="flex flex-col gap-4 group">
+<div class="relative w-full aspect-square bg-[#f5f3f0] dark:bg-[#2a241f] rounded-xl overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Minimalist bottle of rose water spray" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBonM-_B5hKUFCbqSpngvEha-UZV-kAvN541JNkoNYzyzgo7bzcCERHu0NqxLnzpUO5JNnY52qhJ2GAyvn3q8dz1LoYSv5zIh8VgF4R3xK5YhLkXOIpdSd5o5-34Jyc0sfyBG96OXtKdKjjOcpO_S8t9KU4hbZIMgxMJ6JDryXUgioJdMNpvjpBJ1jJhqmioS5mLkTxxKnfHXGxjGcivQajf_VYWMe4D0bD_xHOK4ABsSqGmnIo_tLz1an2UpcAZMuSfuvzRqnqvU4"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all"></div>
+<button class="absolute bottom-4 right-4 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-1 px-1">
+<p class="text-[#8c705a] dark:text-[#b49b87] text-[10px] font-black uppercase tracking-widest">Scalp Care</p>
+<h3 class="text-[#191410] dark:text-[#fbfaf9] font-bold text-lg">Rose Hydrosol Mist</h3>
+<p class="text-[#191410] dark:text-[#fbfaf9] font-medium opacity-70">$28.00</p>
+</div>
+</div>
+<!-- Shop Item 2 -->
+<div class="flex flex-col gap-4 group">
+<div class="relative w-full aspect-square bg-[#f5f3f0] dark:bg-[#2a241f] rounded-xl overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Luxury styling cream in white tub" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDhfNWYBFTm79K_6_fI1QQ_z3Wl9fQx2x2aOo2_fashPR2g4MBRyOTLWlNZaGMyY5HNCyPsbF1g_nUvbp3ShOhmLwqMue7YHq-9bED-U1wisJMABUAXuiZhvDiUF6tGeXR-_PopMYCld17MOvlvQk2idGYcsCRNlBmvYCwZhKo3_I9-wObCoDDt_x8yd2fgQMlnqt2UarMvDsWYkfvJfF25uBLJXPmBAi0EmM657j0GsZLpxPuIwcAei-OPNTwGwQwJh5qvHwL958"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all"></div>
+<button class="absolute bottom-4 right-4 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-1 px-1">
+<p class="text-[#8c705a] dark:text-[#b49b87] text-[10px] font-black uppercase tracking-widest">Styling</p>
+<h3 class="text-[#191410] dark:text-[#fbfaf9] font-bold text-lg">Edge Defining Pomade</h3>
+<p class="text-[#191410] dark:text-[#fbfaf9] font-medium opacity-70">$22.00</p>
+</div>
+</div>
+<!-- Shop Item 3 -->
+<div class="flex flex-col gap-4 group">
+<div class="relative w-full aspect-square bg-[#f5f3f0] dark:bg-[#2a241f] rounded-xl overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Black sandalwood wide tooth comb on marble" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBARa7XISq9KoVZaG9kIq3y2dK2HMgz_2btrJJctgbbgO7naigA4KMKrCIas8v2p8E9jFkakY0ZlNP_NKZR1wAf8qOMxFCE5hedEz2Os235aI7lJPHGRkk3wfC6LsXAOtwGnyT_NwNAa_4aKsEFKQzclZ5vXfBsj1l-SgkTbIuRxPqQ_e9NmglRR3PL-6SdJdVhOEHgtdb7BS10rDxV6cqqulOQXDhA-QggUYO4WO9JylSvspkpV9VQWytKQ9z_e8MqQxjE7cyUF-U"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all"></div>
+<button class="absolute bottom-4 right-4 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-1 px-1">
+<p class="text-[#8c705a] dark:text-[#b49b87] text-[10px] font-black uppercase tracking-widest">Tools</p>
+<h3 class="text-[#191410] dark:text-[#fbfaf9] font-bold text-lg">Sandalwood Detangling Comb</h3>
+<p class="text-[#191410] dark:text-[#fbfaf9] font-medium opacity-70">$35.00</p>
+</div>
+</div>
+<!-- Shop Item 4 -->
+<div class="flex flex-col gap-4 group">
+<div class="relative w-full aspect-square bg-[#f5f3f0] dark:bg-[#2a241f] rounded-xl overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Dropper bottle with amber liquid" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzucTatHe4PCdxGSKg1F6Wv2rFLVczsrEC55oAwFoTCyBo1jtbJ3dfCo_NvX7ivAKbjSS49_QBwHCqeF8fGzYymt-mZ_LFtctxarL8wAZ9VAlOe1uGoDIlAUqxuAJbUKSzEKQ6Lznd_IZFiIzQlqGMgMjGcrKfIVItDKGMvwE0EiTBkPczMdWWG4PcdzAkUvCLIqn21gGcf4Vx4aY4eDJoV-vd5e24DfVoxwEhU0aFl0tij-OdeUbhmk39CAblI1pTU-jj1aur70I"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all"></div>
+<button class="absolute bottom-4 right-4 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-1 px-1">
+<p class="text-[#8c705a] dark:text-[#b49b87] text-[10px] font-black uppercase tracking-widest">Sealant</p>
+<h3 class="text-[#191410] dark:text-[#fbfaf9] font-bold text-lg">Black Seed Scalp Serum</h3>
+<p class="text-[#191410] dark:text-[#fbfaf9] font-medium opacity-70">$48.00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Callout -->
+<div class="py-20 flex flex-col items-center text-center gap-6 border-t border-[#f1ede9] dark:border-[#332a22] mt-10">
+<span class="material-symbols-outlined text-4xl text-primary">verified</span>
+<h2 class="text-3xl font-black max-w-lg leading-tight">Expertly curated by the Elsa Coiffure team</h2>
+<p class="text-[#8c705a] dark:text-[#b49b87] max-w-md">Every product in our shop is tested and used in our salon daily. We stand by the efficacy and quality of every ingredient.</p>
+<button class="mt-4 px-10 py-4 bg-primary text-white font-bold rounded-full shadow-xl hover:bg-primary/90 transition-all hover:scale-105">
+                            Shop All Collections
+                        </button>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

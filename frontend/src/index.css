@@ -5,43 +5,64 @@
    ===================================================== */
 
 @theme {
-  /* Premium Color Palette */
-  --color-primary-50: #eef2ff;
-  --color-primary-100: #e0e7ff;
-  --color-primary-200: #c7d2fe;
-  --color-primary-300: #a5b4fc;
-  --color-primary-400: #818cf8;
-  --color-primary-500: #6366f1;
-  --color-primary-600: #4f46e5;
-  --color-primary-700: #4338ca;
-  --color-primary-800: #3730a3;
-  --color-primary-900: #312e81;
+  /* =====================================================
+     ELSA COIFFURE - Premium Color Palette
+     ===================================================== */
 
-  --color-surface-50: #f8fafc;
-  --color-surface-100: #f1f5f9;
-  --color-surface-200: #e2e8f0;
-  --color-surface-300: #cbd5e1;
-  --color-surface-400: #94a3b8;
-  --color-surface-500: #64748b;
-  --color-surface-600: #475569;
-  --color-surface-700: #334155;
-  --color-surface-800: #1e293b;
-  --color-surface-900: #0f172a;
-  --color-surface-950: #020617;
+  /* Primary - Copper/Bronze */
+  --color-primary: #ca8349;
+  --color-primary-dark: #b56f35;
+  --color-primary-50: #fef8f3;
+  --color-primary-100: #fdeee3;
+  --color-primary-200: #fad9c2;
+  --color-primary-300: #f7c09c;
+  --color-primary-400: #f3a376;
+  --color-primary-500: #ca8349;
+  --color-primary-600: #b56f35;
+  --color-primary-700: #9a5d2c;
+  --color-primary-800: #7f4c24;
+  --color-primary-900: #643c1d;
+
+  /* Maroon Dark - Deep Brown */
+  --color-maroon-dark: #422927;
+  --color-maroon-50: #f9f5f5;
+  --color-maroon-100: #ede7e6;
+  --color-maroon-200: #d4c7c5;
+  --color-maroon-300: #b5a09d;
+  --color-maroon-400: #8f7370;
+  --color-maroon-500: #6d524f;
+  --color-maroon-600: #5a3835;
+  --color-maroon-700: #422927;
+  --color-maroon-800: #2f1e1c;
+  --color-maroon-900: #1f1813;
+
+  /* Neutrals - Warm Beige/Cream */
+  --color-neutral-50: #f8f7f6;
+  --color-neutral-100: #f1ede9;
+  --color-neutral-200: #e3dbd3;
+  --color-neutral-300: #d4c7ba;
+  --color-neutral-400: #b49b87;
+  --color-neutral-500: #8c705a;
+  --color-neutral-600: #6d5545;
+  --color-neutral-700: #524033;
+  --color-neutral-800: #3a2d24;
+  --color-neutral-900: #191410;
 
   /* Accent Colors */
+  --color-accent-gold: #d4af37;
   --color-accent-emerald: #10b981;
-  --color-accent-amber: #f59e0b;
   --color-accent-rose: #f43f5e;
-  --color-accent-cyan: #06b6d4;
 
   /* Glassmorphism */
-  --glass-bg: rgba(15, 23, 42, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --glass-bg-light: rgba(248, 247, 246, 0.6);
+  --glass-bg-dark: rgba(31, 24, 19, 0.6);
+  --glass-border-light: rgba(255, 255, 255, 0.3);
+  --glass-border-dark: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --glass-shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.3);
 
   /* Shadows */
-  --shadow-glow-primary: 0 0 40px rgba(99, 102, 241, 0.15);
+  --shadow-glow-primary: 0 0 40px rgba(202, 131, 73, 0.15);
   --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
   --shadow-elevated: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 
@@ -50,8 +71,8 @@
   --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   /* Font */
+  --font-display: 'Newsreader', Georgia, serif;
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
 }
 
 /* =====================================================
@@ -62,9 +83,9 @@
   font-family: var(--font-sans);
   line-height: 1.6;
   font-weight: 400;
-  color-scheme: dark;
-  color: #e2e8f0;
-  background-color: #020617;
+  color-scheme: light dark;
+  color: #191410;
+  background-color: #f8f7f6;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -75,8 +96,13 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%);
+  background: linear-gradient(135deg, #f8f7f6 0%, #f1ede9 50%, #e3dbd3 100%);
   background-attachment: fixed;
+}
+
+/* Dark mode base - Let utility classes handle colors but define color-scheme */
+.dark {
+  color-scheme: dark;
 }
 
 /* Premium Scrollbar */
@@ -86,65 +112,76 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5);
+  background: rgba(66, 41, 39, 0.1);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #4f46e5 0%, #6366f1 100%);
+  background: linear-gradient(180deg, #ca8349 0%, #b56f35 100%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #6366f1 0%, #818cf8 100%);
+  background: linear-gradient(180deg, #d89a66 0%, #ca8349 100%);
 }
 
 /* Selection */
 ::selection {
-  background: rgba(99, 102, 241, 0.3);
-  color: #fff;
+  background: rgba(202, 131, 73, 0.3);
+  color: inherit;
 }
 
 /* =====================================================
    UTILITY CLASSES
    ===================================================== */
 
-/* Glass Cards */
+/* Glass Cards - Elsa Coiffure Style */
 .glass-card {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(202, 131, 73, 0.2);
   border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass-card {
+  background: rgba(31, 24, 19, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .glass-card-light {
-  background: rgba(30, 41, 59, 0.5);
+  background: rgba(248, 247, 246, 0.5);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(202, 131, 73, 0.15);
   border-radius: 1rem;
 }
 
-/* Gradient Text */
+.dark .glass-card-light {
+  background: rgba(47, 30, 28, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Gradient Text - Copper/Bronze Theme */
 .gradient-text {
-  background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+  background: linear-gradient(135deg, #ca8349 0%, #d4af37 50%, #b56f35 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-text-primary {
-  background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+  background: linear-gradient(135deg, #ca8349 0%, #d89a66 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Premium Buttons */
+/* Premium Buttons - Elsa Coiffure Style */
 .btn-primary {
-  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #b56f35 0%, #ca8349 100%);
   color: white;
   font-weight: 700;
   padding: 0.875rem 1.75rem;
@@ -152,7 +189,7 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 4px 14px rgba(202, 131, 73, 0.25);
   position: relative;
   overflow: hidden;
 }
@@ -170,7 +207,7 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+  box-shadow: 0 8px 25px rgba(202, 131, 73, 0.35);
 }
 
 .btn-primary:hover::before {
@@ -182,20 +219,31 @@ body {
 }
 
 .btn-secondary {
-  background: rgba(30, 41, 59, 0.8);
-  color: #e2e8f0;
+  background: rgba(248, 247, 246, 0.8);
+  color: #422927;
   font-weight: 600;
   padding: 0.875rem 1.75rem;
   border-radius: 0.875rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(202, 131, 73, 0.2);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
+.dark .btn-secondary {
+  background: rgba(66, 41, 39, 0.8);
+  color: #f8f7f6;
+  border-color: rgba(202, 131, 73, 0.3);
+}
+
 .btn-secondary:hover {
-  background: rgba(51, 65, 85, 0.8);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(227, 219, 211, 0.8);
+  border-color: rgba(202, 131, 73, 0.4);
   transform: translateY(-1px);
+}
+
+.dark .btn-secondary:hover {
+  background: rgba(90, 56, 53, 0.8);
+  border-color: rgba(202, 131, 73, 0.5);
 }
 
 /* Premium Inputs */
@@ -260,15 +308,15 @@ body {
 }
 
 .orb-primary {
-  background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+  background: radial-gradient(circle, #ca8349 0%, transparent 70%);
 }
 
 .orb-purple {
-  background: radial-gradient(circle, #a855f7 0%, transparent 70%);
+  background: radial-gradient(circle, #422927 0%, transparent 70%);
 }
 
 .orb-cyan {
-  background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+  background: radial-gradient(circle, #8c705a 0%, transparent 70%);
 }
 
 /* Animations */
@@ -381,7 +429,7 @@ h6 {
 
 /* Focus States */
 *:focus-visible {
-  outline: 2px solid #6366f1;
+  outline: 2px solid var(--color-primary-500);
   outline-offset: 2px;
 }
 

@@ -3,19 +3,21 @@ import api from '../api/axios';
 import DashboardLayout from '../layouts/DashboardLayout';
 import {
     Users,
-    Calendar,
+    Calendar as CalendarIcon,
     TrendingUp,
     Clock,
-    CheckCircle2,
     AlertCircle,
     Loader2,
     ChevronRight,
     Sparkles,
-    ArrowUpRight
+    ArrowUpRight,
+    ShoppingBag,
+    Star
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { Card, Button } from '../components/ui';
 
 const DashboardHome = () => {
     const [stats, setStats] = useState({
@@ -57,34 +59,26 @@ const DashboardHome = () => {
         {
             name: 'Rendez-vous totaux',
             value: stats.totalAppointments,
-            icon: Calendar,
-            gradient: 'from-blue-500 to-cyan-500',
-            bg: 'bg-blue-500/10',
-            iconBg: 'bg-blue-500/20'
+            icon: CalendarIcon,
+            color: 'text-primary'
         },
         {
             name: 'En attente',
             value: stats.pendingAppointments,
             icon: AlertCircle,
-            gradient: 'from-amber-500 to-orange-500',
-            bg: 'bg-amber-500/10',
-            iconBg: 'bg-amber-500/20'
+            color: 'text-accent-rose'
         },
         {
             name: 'Services actifs',
             value: stats.totalServices,
             icon: TrendingUp,
-            gradient: 'from-emerald-500 to-teal-500',
-            bg: 'bg-emerald-500/10',
-            iconBg: 'bg-emerald-500/20'
+            color: 'text-accent-emerald'
         },
         {
             name: 'Aujourd\'hui',
             value: stats.todayAppointments.length,
             icon: Clock,
-            gradient: 'from-indigo-500 to-purple-500',
-            bg: 'bg-indigo-500/10',
-            iconBg: 'bg-indigo-500/20'
+            color: 'text-primary'
         },
     ];
 
@@ -93,8 +87,8 @@ const DashboardHome = () => {
             <DashboardLayout>
                 <div className="flex h-[60vh] items-center justify-center">
                     <div className="text-center">
-                        <Loader2 className="h-12 w-12 animate-spin text-indigo-500 mx-auto mb-4" />
-                        <p className="text-slate-500 font-medium">Chargement du tableau de bord...</p>
+                        <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto mb-4" />
+                        <p className="text-accent-bronze font-medium">Chargement du salon...</p>
                     </div>
                 </div>
             </DashboardLayout>
@@ -103,63 +97,61 @@ const DashboardHome = () => {
 
     return (
         <DashboardLayout>
-            <div className="max-w-7xl mx-auto space-y-10">
+            <div className="max-w-7xl mx-auto space-y-12">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                    <div className="animate-fade-in-up">
-                        <div className="flex items-center gap-2 mb-2">
-                            <Sparkles className="h-5 w-5 text-indigo-400" />
-                            <span className="text-sm font-semibold text-indigo-400">Bienvenue</span>
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-maroon-dark/5 dark:border-white/5 pb-8">
+                    <div className="animate-fade-in group">
+                        <div className="flex items-center gap-2 mb-3">
+                            <span className="text-xs font-black text-primary uppercase tracking-[0.3em]">Management Console</span>
                         </div>
-                        <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-                            Tableau de Bord
+                        <h1 className="text-4xl md:text-6xl font-display font-medium italic text-maroon-dark dark:text-text-light leading-none">
+                            Vue d'ensemble
                         </h1>
-                        <p className="text-slate-400 mt-2 text-lg">
+                        <p className="text-accent-bronze mt-4 text-lg font-medium">
                             {format(new Date(), "EEEE d MMMM yyyy", { locale: fr })}
                         </p>
                     </div>
 
-                    <Link
-                        to="/dashboard/agenda"
-                        className="btn-primary inline-flex items-center gap-2 animate-fade-in-up stagger-1"
-                    >
-                        <Calendar className="h-5 w-5" />
-                        Voir l'agenda complet
-                        <ArrowUpRight className="h-4 w-4" />
+                    <Link to="/dashboard/agenda">
+                        <Button variant="primary" size="lg" className="h-14 px-8 shadow-xl shadow-primary/20">
+                            Agenda Complet <ArrowUpRight className="ml-2 h-4 w-4" />
+                        </Button>
                     </Link>
                 </div>
 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {statCards.map((stat, index) => (
-                        <div
+                        <Card
                             key={stat.name}
-                            className={`glass-card p-6 animate-fade-in-up stagger-${index + 1}`}
+                            variant="elevated"
+                            hover
+                            className={`p-6 border-t-2 border-t-primary/20 animate-fade-in stagger-${index + 1}`}
                         >
-                            <div className="flex items-center justify-between mb-4">
-                                <div className={`h-12 w-12 rounded-xl ${stat.iconBg} flex items-center justify-center`}>
-                                    <stat.icon className={`h-6 w-6 bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`} style={{ WebkitTextStroke: '2px currentColor' }} />
+                            <div className="flex items-center justify-between mb-6">
+                                <div className={`size-12 rounded-xl bg-primary/5 flex items-center justify-center`}>
+                                    <stat.icon className={`size-6 ${stat.color}`} />
                                 </div>
-                                <div className={`px-3 py-1 rounded-full ${stat.bg} text-xs font-bold text-slate-300`}>
-                                    +0%
+                                <div className="text-[10px] font-black text-accent-bronze uppercase tracking-widest bg-maroon-dark/5 dark:bg-white/5 px-2 py-1 rounded">
+                                    Live
                                 </div>
                             </div>
-                            <p className="text-slate-400 text-sm font-medium mb-1">{stat.name}</p>
-                            <p className="text-4xl font-black text-white">{stat.value}</p>
-                        </div>
+                            <p className="text-accent-bronze text-xs font-black uppercase tracking-widest mb-1">{stat.name}</p>
+                            <p className="text-4xl font-display font-bold text-maroon-dark dark:text-text-light">{stat.value}</p>
+                        </Card>
                     ))}
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                     {/* Today's Agenda */}
-                    <div className="lg:col-span-2 space-y-6 animate-fade-in-up stagger-2">
-                        <div className="flex items-center justify-between">
+                    <div className="lg:col-span-2 space-y-8 animate-fade-in stagger-2">
+                        <div className="flex items-center justify-between border-b border-maroon-dark/5 dark:border-white/5 pb-4">
                             <div>
-                                <h2 className="text-xl font-bold text-white">Rendez-vous du jour</h2>
-                                <p className="text-slate-500 text-sm mt-1">{stats.todayAppointments.length} rendez-vous prévus</p>
+                                <h2 className="text-2xl font-display font-bold text-maroon-dark dark:text-text-light italic">Rendez-vous du jour</h2>
+                                <p className="text-accent-bronze text-xs font-bold uppercase tracking-widest mt-1">Timeline</p>
                             </div>
-                            <Link to="/dashboard/agenda" className="text-sm font-medium text-indigo-400 hover:text-indigo-300 flex items-center gap-1 group">
-                                Tout voir <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                            <Link to="/dashboard/agenda" className="text-xs font-black text-primary uppercase tracking-widest hover:underline flex items-center gap-1 group">
+                                Tout voir <ChevronRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                             </Link>
                         </div>
 
@@ -168,57 +160,67 @@ const DashboardHome = () => {
                                 stats.todayAppointments.slice(0, 4).map((app, index) => (
                                     <div
                                         key={app.id}
-                                        className={`glass-card-light p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in-up stagger-${index + 1}`}
+                                        className={`glass-card p-5 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:translate-x-1 transition-transform animate-fade-in stagger-${index + 1}`}
                                     >
-                                        <div className="flex items-center gap-5">
-                                            <div className="text-center min-w-[60px] border-r border-slate-800 pr-5">
-                                                <p className="text-xl font-black text-white leading-none">{app.start_time.substring(0, 5)}</p>
-                                                <p className="text-[10px] text-slate-500 font-bold mt-1 uppercase tracking-wide">Début</p>
+                                        <div className="flex items-center gap-6">
+                                            <div className="text-center min-w-[70px] border-r border-maroon-dark/10 dark:border-white/10 pr-6">
+                                                <p className="text-xl font-bold text-maroon-dark dark:text-text-light leading-none italic">{app.start_time.substring(0, 5)}</p>
+                                                <p className="text-[9px] text-accent-bronze font-black mt-2 uppercase tracking-tighter">Heure</p>
                                             </div>
-                                            <div>
-                                                <h3 className="text-base font-bold text-white leading-snug">{app.service?.name}</h3>
-                                                <p className="text-slate-400 text-sm flex items-center gap-2 mt-1">
-                                                    <Users className="h-3.5 w-3.5" /> {app.client?.name || 'Client inconnu'}
+                                            <div className="space-y-1">
+                                                <h3 className="text-lg font-bold text-maroon-dark dark:text-text-light leading-tight">{app.service?.name}</h3>
+                                                <p className="text-accent-bronze text-sm font-medium flex items-center gap-2">
+                                                    <Users className="size-3.5 text-primary" /> {app.client?.name || 'Client inconnu'}
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className={`px-4 py-1.5 rounded-full text-xs font-bold border capitalize text-center md:text-left ${app.status === 'confirmed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                                                app.status === 'pending' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                                                    'bg-slate-500/10 text-slate-400 border-slate-500/20'
-                                            }`}>
+                                        <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20 bg-primary/5 text-primary`}>
                                             {app.status}
                                         </div>
                                     </div>
                                 ))
                             ) : (
-                                <div className="glass-card border-2 border-dashed border-slate-800 p-12 text-center">
-                                    <div className="h-16 w-16 rounded-2xl bg-slate-900 flex items-center justify-center mx-auto mb-4">
-                                        <Calendar className="h-8 w-8 text-slate-700" />
+                                <Card variant="light" className="p-16 text-center border-dashed border-2 border-accent-cream/50">
+                                    <div className="size-20 rounded-full bg-accent-cream/30 flex items-center justify-center mx-auto mb-6 text-accent-bronze">
+                                        <CalendarIcon className="size-10" />
                                     </div>
-                                    <p className="text-slate-500 font-medium">Aucun rendez-vous prévu pour aujourd'hui.</p>
-                                    <p className="text-slate-600 text-sm mt-2">Profitez de votre journée ! 🎉</p>
-                                </div>
+                                    <p className="text-accent-bronze font-bold text-lg mb-2">Aucun rendez-vous prévu</p>
+                                    <p className="text-accent-bronze/60 text-sm italic font-medium">Profitez de ce moment de calme pour préparer le salon. ✨</p>
+                                </Card>
                             )}
                         </div>
                     </div>
 
                     {/* Quick Actions */}
-                    <div className="space-y-6 animate-fade-in-up stagger-3">
-                        <h2 className="text-xl font-bold text-white">Actions rapides</h2>
+                    <div className="space-y-8 animate-fade-in stagger-3">
+                        <h2 className="text-2xl font-display font-medium text-maroon-dark dark:text-text-light italic">Actions rapides</h2>
                         <div className="grid grid-cols-1 gap-4">
-                            <Link to="/dashboard/services" className="glass-card p-6 hover:border-indigo-500/30 transition-all group">
-                                <div className="h-12 w-12 rounded-xl bg-indigo-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                    <CheckCircle2 className="h-6 w-6 text-indigo-400" />
-                                </div>
-                                <h3 className="font-bold text-white">Nouveau Service</h3>
-                                <p className="text-slate-500 text-sm mt-1">Ajoutez une prestation à votre catalogue.</p>
+                            <Link to="/dashboard/services" className="group">
+                                <Card variant="elevated" hover className="p-6 border-l-4 border-l-primary group-hover:bg-primary group-hover:text-white transition-all">
+                                    <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-white/20 transition-colors">
+                                        <Scissors className="size-6 text-primary group-hover:text-white" />
+                                    </div>
+                                    <h3 className="font-bold text-maroon-dark dark:text-text-light group-hover:text-white">Nouveau Service</h3>
+                                    <p className="text-accent-bronze text-xs font-bold mt-1 group-hover:text-white/60">Ajoutez une prestation premium.</p>
+                                </Card>
                             </Link>
-                            <Link to="/dashboard/availabilities" className="glass-card p-6 hover:border-emerald-500/30 transition-all group">
-                                <div className="h-12 w-12 rounded-xl bg-emerald-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                    <Clock className="h-6 w-6 text-emerald-400" />
-                                </div>
-                                <h3 className="font-bold text-white">Horaires de Travail</h3>
-                                <p className="text-slate-500 text-sm mt-1">Modifiez vos heures d'ouverture.</p>
+                            <Link to="/dashboard/products" className="group">
+                                <Card variant="elevated" hover className="p-6 border-l-4 border-l-accent-emerald group-hover:bg-accent-emerald group-hover:text-white transition-all">
+                                    <div className="size-12 rounded-xl bg-accent-emerald/10 flex items-center justify-center mb-4 group-hover:bg-white/20 transition-colors">
+                                        <ShoppingBag className="size-6 text-accent-emerald group-hover:text-white" />
+                                    </div>
+                                    <h3 className="font-bold text-maroon-dark dark:text-text-light group-hover:text-white">Boutique</h3>
+                                    <p className="text-accent-bronze text-xs font-bold mt-1 group-hover:text-white/60">Gérez le catalogue produits.</p>
+                                </Card>
+                            </Link>
+                            <Link to="/dashboard/loyalty" className="group">
+                                <Card variant="elevated" hover className="p-6 border-l-4 border-l-accent-bronze group-hover:bg-accent-bronze group-hover:text-white transition-all">
+                                    <div className="size-12 rounded-xl bg-accent-bronze/10 flex items-center justify-center mb-4 group-hover:bg-white/20 transition-colors">
+                                        <Star className="size-6 text-accent-bronze group-hover:text-white" />
+                                    </div>
+                                    <h3 className="font-bold text-maroon-dark dark:text-text-light group-hover:text-white">Fidélité</h3>
+                                    <p className="text-accent-bronze text-xs font-bold mt-1 group-hover:text-white/60">Récompensez vos clients.</p>
+                                </Card>
                             </Link>
                         </div>
                     </div>

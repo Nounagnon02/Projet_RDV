@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Digital Hair Consultation | Elsa Coiffure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4d125",
+                        "background-light": "#fcfbf8",
+                        "background-dark": "#221f10",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .luxury-shadow {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#1c190d] dark:text-[#fcfbf8] font-display min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4f1e7] dark:border-b-[#3d3a2d] px-10 py-3 bg-background-light dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-4 text-[#1c190d] dark:text-[#fcfbf8]">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-[#1c190d] dark:text-[#fcfbf8] text-xl font-extrabold leading-tight tracking-[-0.015em] uppercase">Elsa Coiffure</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9">
+<a class="text-[#1c190d] dark:text-[#fcfbf8] text-sm font-semibold leading-normal hover:text-primary transition-colors" href="#">Consultation</a>
+<a class="text-[#1c190d] dark:text-[#fcfbf8] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Bookings</a>
+<a class="text-[#1c190d] dark:text-[#fcfbf8] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Stylists</a>
+<a class="text-[#1c190d] dark:text-[#fcfbf8] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Shop</a>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCe_b4vkQEoatI8OCDB69b-kzrAOyvHyDli64SZeaXjaxFpzYVsvJt6wngiov0t53yNfnj6ggks78EIsUGX5pxnYuEUG2Za3Fihosa3MdbR9MhONzf9U8TL52a7936fpC5ojYG2IoQzIg0cWvgxT_Ap0Z552vQA8xdbAsDGrQKTiG9UhH0NWoapPznZc02XwwIz4xwwhTNlRPQe8b-5OdOV94q5Xf2NxlMdsJ5ajbUkj7MwR1qO7ii9Np7g5-4uD5iV1Yd1yrB2NVs");'></div>
+</div>
+</header>
+<main class="flex-1 flex justify-center py-10 px-4 md:px-10 lg:px-40">
+<div class="layout-content-container flex flex-col max-w-[1000px] flex-1">
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between gap-3 p-4">
+<div class="flex min-w-72 flex-col gap-2">
+<p class="text-[#1c190d] dark:text-[#fcfbf8] text-4xl font-black leading-tight tracking-[-0.033em]">Scientific Hair Diagnostic</p>
+<p class="text-[#9c8e49] text-lg font-medium leading-normal">Tailoring the perfect care routine for your unique texture.</p>
+</div>
+</div>
+<!-- Progress Bar Component -->
+<div class="flex flex-col gap-3 p-4 mb-6">
+<div class="flex gap-6 justify-between">
+<p class="text-[#1c190d] dark:text-[#fcfbf8] text-sm font-bold uppercase tracking-widest leading-normal">Step 2: Texture &amp; Porosity</p>
+<p class="text-[#1c190d] dark:text-[#fcfbf8] text-sm font-bold leading-normal">66% Complete</p>
+</div>
+<div class="rounded-full bg-[#e8e4ce] dark:bg-[#3d3a2d] h-3 overflow-hidden">
+<div class="h-full rounded-full bg-primary" style="width: 66%;"></div>
+</div>
+<p class="text-[#9c8e49] text-sm font-normal leading-normal italic">Precision is key to luxury hair care. Almost there!</p>
+</div>
+<!-- Section 1: Porosity -->
+<div class="flex items-center gap-2 px-4 pt-5">
+<h2 class="text-[#1c190d] dark:text-[#fcfbf8] text-2xl font-bold leading-tight tracking-[-0.015em]">1. Porosity Level</h2>
+<span class="material-symbols-outlined text-[#9c8e49] cursor-help text-lg" title="Porosity refers to how your hair absorbs and retains moisture.">info</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+<!-- Low Porosity -->
+<div class="flex flex-col gap-3 pb-3 p-4 rounded-xl border-2 border-[#e8e4ce] dark:border-[#3d3a2d] hover:border-primary transition-all cursor-pointer bg-white dark:bg-black/20 group">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg mb-2" data-alt="Microscopic view of low porosity hair cuticles" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDEIHMDtnl1MnQgABLPm8ztUpbxWgWdE2o-PzJCWHS7LkX-sMkKuFYjMs3gfb2nAKV-EfX0X5q8CgmyLoMH4Mrq9zIeN7uVkQXcfkNpToZW58A03PiyjxN0ptekVkFnC8VuFjtcMicIC-1tsMnBv_v6Mi6Jr6HG3wdYmLrm2nNhFiE6LdiljAy7UShH0PbkQxRlDh9hEPHwtA4Or50OuJPrP2INpC49fBSd1g9X1OcnvLHpJMDZgM_xpwmiFoKlONXUFKQdr2GAlYE");'></div>
+<div>
+<p class="text-[#1c190d] dark:text-[#fcfbf8] text-base font-bold leading-normal group-hover:text-primary transition-colors">Low Porosity</p>
+<p class="text-[#9c8e49] text-sm font-normal leading-normal">Cuticles are tightly closed. Water beads up on surface.</p>
+</div>
+</div>
+<!-- Medium Porosity -->
+<div class="flex flex-col gap-3 pb-3 p-4 rounded-xl border-2 border-primary bg-primary/5 transition-all cursor-pointer dark:bg-primary/10 relative overflow-hidden">
+<div class="absolute top-2 right-2 bg-primary text-[#1c190d] p-1 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-sm font-bold">check</span>
+</div>
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg mb-2" data-alt="Medium porosity hair cuticle structure" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZuOzrnERW4K3IFwhQsnn9eqkDTQmxhy_folKsy4NgrE2It2A5JUXr9rDL3q7HA0e3Z1xW6LfcbgtLT5ukGKM14tHB14rocQisfDMs9eJCyWobJv4ABkOvyKubwAeAy6k1Jf1__Ve19Lx0RuBGOLS_Ea9ealJd5z_-H2b-cvz3pOtw-Cqm1SoJ1-tthZcmcu6TfxAH6bdrMB57S469wCCSwovFpArRzq9HM_GsOz-mL_rAgsLD-54sVquf8kGLj2lQLKORBA35E0c");'></div>
+<div>
+<p class="text-[#1c190d] dark:text-[#fcfbf8] text-base font-bold leading-normal">Medium Porosity</p>
+<p class="text-[#9c8e49] text-sm font-normal leading-normal">Ideal balance. Easily absorbs and retains moisture.</p>
+</div>
+</div>
+<!-- High Porosity -->
+<div class="flex flex-col gap-3 pb-3 p-4 rounded-xl border-2 border-[#e8e4ce] dark:border-[#3d3a2d] hover:border-primary transition-all cursor-pointer bg-white dark:bg-black/20 group">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg mb-2" data-alt="High porosity hair cuticle view" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjB4skqDED6u4uetiMe2cpegXjm6OGmB8nZyaYqEfdtgwhux9bFSNMCbeN5f-aZN2VZLgNopvMX11bcyyYvAKu7Bye2I97kjDYiYEsoNUv3rNtapf-6P_e8qpd4nPr6lfiq9G_b78O-Uvl3_PizwTWWanbeNUyIolTAMG2bh5LS_kDHogde2mO4Y7tiraqBL48diouvBMsYOgjJtj2hUpJFHHLGOqSsAwj9aZ-a5u5ZtGcnrPAyvpfHwnM7evnDsudwrevzL-8798");'></div>
+<div>
+<p class="text-[#1c190d] dark:text-[#fcfbf8] text-base font-bold leading-normal group-hover:text-primary transition-colors">High Porosity</p>
+<p class="text-[#9c8e49] text-sm font-normal leading-normal">Raised cuticles. Absorbs water quickly but loses it fast.</p>
+</div>
+</div>
+</div>
+<!-- Section 2: Curl Pattern -->
+<div class="px-4 pb-3 pt-8">
+<h2 class="text-[#1c190d] dark:text-[#fcfbf8] text-2xl font-bold leading-tight tracking-[-0.015em]">2. Curl Pattern Selection</h2>
+<p class="text-[#9c8e49] text-sm mt-1">Identify your natural Type 4 coil architecture.</p>
+</div>
+<div class="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 p-4">
+<div class="flex flex-col gap-3 pb-3 p-4 rounded-xl border-2 border-[#e8e4ce] dark:border-[#3d3a2d] hover:border-primary transition-all cursor-pointer bg-white dark:bg-black/20 group">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Type 4A hair texture close up" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAaa_NL7xDxzE2xbbWiL8b2WRdINeYhIKejDMRBTosrvydE6pC12fw2pCAz37IfnRopvXYxsyKA3kApv5cJIYME5pDW4vCkIM2zqj1tCWnoeGRe-wvgOuFBLRaxtRhVgllAEiKUvtp3J5sz9tvK0oWbU9-e64u3KYdgS0NJ7e7XjTGN-FWYbnc1s51N-OacgvGnBIeKiRoMSAgGuJf5xNJ-aJpMbvFiaC-PYBn0ddrqNa689KgNGgjfj41LXNvN9EU9fnHbN0u8-6A");'></div>
+<div>
+<p class="text-[#1c190d] dark:text-[#fcfbf8] text-lg font-bold leading-normal group-hover:text-primary transition-colors">Type 4A</p>
+<p class="text-[#9c8e49] text-sm font-normal leading-normal">Dense, springy S-shaped coils that are about the width of a crochet needle.</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 pb-3 p-4 rounded-xl border-2 border-[#e8e4ce] dark:border-[#3d3a2d] hover:border-primary transition-all cursor-pointer bg-white dark:bg-black/20 group">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Type 4B hair texture close up" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvmMABU0gaYrGpcSLJPrYe9hdzIp5s5rM4dCnFZYKJt-_bfl9fQeo662ryn_NaL_Jag7Pz3BJpCDIasLbjx_hUTbcs8-CNj6QRwrby4wnoLNr1elpNT8wZzuMgRUXcCj_vygB7J0PMsO7pf_cQDpq-lp7bAbg8QANZm8ooRWcxx025JNygXnajP2-zp80UR5AfOYnMo-42KHOfoqdPfWUmw2Sn57TYfOZq0H2Zx0IjPo-Wuno626n_Hsh4zVcfMDzDBGjDxCutZVE");'></div>
+<div>
+<p class="text-[#1c190d] dark:text-[#fcfbf8] text-lg font-bold leading-normal group-hover:text-primary transition-colors">Type 4B</p>
+<p class="text-[#9c8e49] text-sm font-normal leading-normal">Sharp Z-shaped patterns. Less defined curl shape, high density and volume.</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 pb-3 p-4 rounded-xl border-2 border-[#e8e4ce] dark:border-[#3d3a2d] hover:border-primary transition-all cursor-pointer bg-white dark:bg-black/20 group">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Type 4C hair texture close up" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9mZEMdfFyYTwZYpSkyfMiuJT9jQMl-ciOw_rJHfQgG95YazsVkvU4q525SkOUdWT_6z7Ft51YcdrGKcUTOtiywFr6QoFV-oASDGcHXaPSTWjzYGYNgQU9nU05922E7qQWSb7VWwXu7hncVKlKk14ifd2L3yMm5gJFkjjSb7DdtsL5o7MojSnyrmMmQT0nFcBZyvr728xoDRETVYqyXIjhqNArWDpawNkK-uZFVR2wA9Qb_nO475A_k-qNF7DvEXAtGiOQ4hJw-vA");'></div>
+<div>
+<p class="text-[#1c190d] dark:text-[#fcfbf8] text-lg font-bold leading-normal group-hover:text-primary transition-colors">Type 4C</p>
+<p class="text-[#9c8e49] text-sm font-normal leading-normal">Tightest coils, very dense. Shrinkage up to 75% of length. Fragile beauty.</p>
+</div>
+</div>
+</div>
+<!-- Section 3: Photo Upload -->
+<div class="px-4 pb-3 pt-8">
+<h2 class="text-[#1c190d] dark:text-[#fcfbf8] text-2xl font-bold leading-tight tracking-[-0.015em]">3. Your Hair Journey</h2>
+<p class="text-[#9c8e49] text-sm mt-1">Upload a recent photo for our stylists to analyze.</p>
+</div>
+<div class="p-4">
+<div class="border-2 border-dashed border-[#e8e4ce] dark:border-[#3d3a2d] rounded-xl p-12 flex flex-col items-center justify-center bg-white dark:bg-black/10 luxury-shadow group hover:border-primary transition-colors">
+<div class="size-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-4xl">photo_camera</span>
+</div>
+<p class="text-[#1c190d] dark:text-[#fcfbf8] text-lg font-bold">Drag and drop your photo</p>
+<p class="text-[#9c8e49] text-sm mb-6">High resolution, natural lighting preferred (JPG, PNG)</p>
+<button class="bg-primary hover:bg-primary/90 text-[#1c190d] px-8 py-3 rounded-lg font-bold transition-all shadow-lg active:scale-95">
+                                Select File
+                            </button>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<div class="flex items-center justify-between p-4 mt-8 border-t border-[#f4f1e7] dark:border-[#3d3a2d] pt-8 mb-20">
+<button class="flex items-center gap-2 text-[#1c190d] dark:text-[#fcfbf8] font-bold px-6 py-2 rounded-lg hover:bg-[#e8e4ce] dark:hover:bg-[#3d3a2d] transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+                            Back
+                        </button>
+<button class="bg-primary hover:bg-primary/90 text-[#1c190d] px-10 py-3 rounded-lg font-bold transition-all shadow-xl flex items-center gap-2">
+                            Review Diagnostic
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Sticky Summary (Sidebar Style if desired, but here as footer overlay for desktop feel) -->
+<div class="fixed bottom-6 right-6 hidden xl:block w-72 bg-white dark:bg-[#1c190d] border border-primary/30 p-6 rounded-xl shadow-2xl z-50">
+<h3 class="text-sm font-black uppercase tracking-widest text-primary mb-4 border-b border-primary/20 pb-2">Consultation Summary</h3>
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="text-xs text-[#9c8e49] font-bold">Porosity</span>
+<span class="text-xs text-[#1c190d] dark:text-white font-black">Medium</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-[#9c8e49] font-bold">Curl Pattern</span>
+<span class="text-xs italic text-[#1c190d] dark:text-white">Not Selected</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-[#9c8e49] font-bold">Photo Upload</span>
+<span class="text-xs italic text-[#1c190d] dark:text-white">Pending</span>
+</div>
+<div class="pt-2">
+<div class="w-full bg-primary/20 h-1 rounded-full">
+<div class="bg-primary h-1 rounded-full" style="width: 33%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

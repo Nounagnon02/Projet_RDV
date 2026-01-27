@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Select Stylist - Elsa Coiffure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#cb834a",
+                        "deep-maroon": "#422927",
+                        "vibrant-gold": "#cb834a",
+                        "cream": "#fbfaf9",
+                        "off-white": "#fcfcfc",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Newsreader', serif;
+        }
+        .stylist-card:hover .stylist-image {
+            transform: scale(1.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cb834a;
+        }
+    </style>
+</head>
+<body class="bg-cream text-deep-maroon transition-colors duration-300">
+<header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md border-b border-deep-maroon/5">
+<div class="max-w-[1200px] mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="text-vibrant-gold">
+<span class="material-symbols-outlined text-4xl">flare</span>
+</div>
+<h2 class="text-2xl font-bold tracking-tight text-deep-maroon">Elsa Coiffure</h2>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-xs uppercase tracking-widest font-semibold hover:text-vibrant-gold transition-colors" href="#">Collections</a>
+<a class="text-xs uppercase tracking-widest font-semibold hover:text-vibrant-gold transition-colors" href="#">Services</a>
+<a class="text-xs uppercase tracking-widest font-semibold text-vibrant-gold" href="#">Stylists</a>
+<a class="text-xs uppercase tracking-widest font-semibold hover:text-vibrant-gold transition-colors" href="#">About</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-deep-maroon p-2">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-[1200px] mx-auto px-6 py-12">
+<div class="mb-12">
+<div class="flex items-center gap-2 mb-4 opacity-60">
+<span class="text-xs uppercase tracking-widest">Booking</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-xs uppercase tracking-widest">Service</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-xs uppercase tracking-widest font-bold text-deep-maroon">Select Stylist</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-5xl font-bold tracking-tight mb-4">Choose Your Expert</h1>
+<p class="text-xl italic opacity-80 max-w-2xl">Our master stylists are specialized in luxury afro textures and high-fashion aesthetics. Select an artisan to bring your vision to life.</p>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 px-4 py-2 border border-deep-maroon/10 rounded-lg hover:bg-white transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                    Specialty
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 border border-deep-maroon/10 rounded-lg hover:bg-white transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-sm">sort</span>
+                    Availability
+                </button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="stylist-card group bg-white rounded-xl overflow-hidden border border-deep-maroon/5 shadow-sm hover:shadow-xl hover:shadow-deep-maroon/5 transition-all duration-500">
+<div class="relative aspect-[4/5] overflow-hidden">
+<div class="stylist-image w-full h-full bg-cover bg-center transition-transform duration-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCWQ3tLAsCwkvUoZTDdkEEqfbUH40-8hOYT1h4HOdjoP4RmlAQyIeSV6ZXX67mG2eDw38Gyzio1atk_LFDwQeaiTbzZEaZQ9oz56MX3QGdWfy8haS49ttwlJdm1p2zmlNzAOBSCn5mkWQgbj9kc8T72g-d-GtHw0S2voDWtRZTHcawabbgIPLp_oIIj4Rl05Kbn8n7S2GGzpVE-ZUvgsQhjO7PzXZUYrVIW2whn5AaHbY2sJwYTA7bnpLqqAc0av1FsVCu1NOIpoeA');"></div>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-vibrant-gold text-sm fill-1">star</span>
+<span class="text-xs font-bold text-deep-maroon">4.9</span>
+</div>
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-2xl font-bold text-deep-maroon">Amara Diallo</h3>
+<span class="text-xs uppercase tracking-tighter bg-vibrant-gold/10 text-vibrant-gold px-2 py-0.5 rounded font-bold">Senior Artisan</span>
+</div>
+<p class="text-sm opacity-70 mb-6 italic leading-relaxed">Specialist in Luxury Goddess Braids and intricate protective styles with 12 years of editorial experience.</p>
+<div class="space-y-3 mb-8">
+<div class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-vibrant-gold text-sm">event_available</span>
+<span>Next available: Tomorrow, 10:00 AM</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-vibrant-gold text-sm">payments</span>
+<span>Service Premium: +$20</span>
+</div>
+</div>
+<button class="w-full bg-vibrant-gold hover:bg-vibrant-gold/90 text-white py-4 rounded-lg font-bold transition-all flex items-center justify-center gap-2">
+                    Select Amara
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="stylist-card group bg-white rounded-xl overflow-hidden border border-deep-maroon/5 shadow-sm hover:shadow-xl hover:shadow-deep-maroon/5 transition-all duration-500">
+<div class="relative aspect-[4/5] overflow-hidden">
+<div class="stylist-image w-full h-full bg-cover bg-center transition-transform duration-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC63u92czC31-v7w7H8ISnHaHJ6-B9al7vmvSkwmtLS2dWz3c_b5gJPHqGNDDKaEUbus12DiWlFgREVjvoizSBRUjI8XgHLB3CJ_LLlh82flfWBOcEm2tbc5WBnCvvEY0Mj3TdnVbgpTvk0bYCUKAAXN3sx5hYbMKkWhwSjzQPzE6zTx61KXVeWTinNXJlcfSN9L8SHFiZp8ODLIGI338ktSft1aXcWpXBfvzeYWOarDOWmXDG0MmRcVapTpmNimLLIqpfDy-rKomU');"></div>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-vibrant-gold text-sm fill-1">star</span>
+<span class="text-xs font-bold text-deep-maroon">5.0</span>
+</div>
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-2xl font-bold text-deep-maroon">Imani Kouassi</h3>
+<span class="text-xs uppercase tracking-tighter bg-vibrant-gold/10 text-vibrant-gold px-2 py-0.5 rounded font-bold">Creative Lead</span>
+</div>
+<p class="text-sm opacity-70 mb-6 italic leading-relaxed">Master of sculptural afro styling and contemporary twists. Features in Paris Fashion Week 2023.</p>
+<div class="space-y-3 mb-8">
+<div class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-vibrant-gold text-sm">event_available</span>
+<span>Next available: Wednesday, Oct 12</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-vibrant-gold text-sm">payments</span>
+<span>Service Premium: +$45</span>
+</div>
+</div>
+<button class="w-full bg-vibrant-gold hover:bg-vibrant-gold/90 text-white py-4 rounded-lg font-bold transition-all flex items-center justify-center gap-2">
+                    Select Imani
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="stylist-card group bg-white rounded-xl overflow-hidden border border-deep-maroon/5 shadow-sm hover:shadow-xl hover:shadow-deep-maroon/5 transition-all duration-500">
+<div class="relative aspect-[4/5] overflow-hidden">
+<div class="stylist-image w-full h-full bg-cover bg-center transition-transform duration-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA_UcLV2Zn5FF4261q8W5GHiWQgsn2d2ye6-ZPxZ_jU2kCZfNkwhQ5mU3qx06vuv0WuhsN3RjKe8Kq_V7eWsvQbJ6CdstG9qfgIRwYAAjM4U13PbPo9nyv3gxXN341Zq-CCYrG94fCraRmUl3Ps6ulefGCM_Tk2ZRIOk8ZL5VoAM3THMZWT0KUZHOGfZUX9m3u5I8pMNGO3wc6H_ldtosPzzwc4DDhHXNnWiJBCiLzdnVFQcaeH3e-ozB8xF1y0Ij7uVmkxRZk9Uc0');"></div>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-vibrant-gold text-sm fill-1">star</span>
+<span class="text-xs font-bold text-deep-maroon">4.8</span>
+</div>
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-2xl font-bold text-deep-maroon">Zuri Mbeki</h3>
+<span class="text-xs uppercase tracking-tighter bg-vibrant-gold/10 text-vibrant-gold px-2 py-0.5 rounded font-bold">Artisan</span>
+</div>
+<p class="text-sm opacity-70 mb-6 italic leading-relaxed">Expert in hair health and luxury hydration treatments paired with seamless extensions.</p>
+<div class="space-y-3 mb-8">
+<div class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-vibrant-gold text-sm">event_available</span>
+<span>Next available: Today, 3:30 PM</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-vibrant-gold text-sm">payments</span>
+<span>Standard Pricing</span>
+</div>
+</div>
+<button class="w-full bg-vibrant-gold hover:bg-vibrant-gold/90 text-white py-4 rounded-lg font-bold transition-all flex items-center justify-center gap-2">
+                    Select Zuri
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-20 border-t border-deep-maroon/10 pt-12">
+<div class="flex flex-col md:flex-row items-center justify-between gap-8 bg-white p-8 rounded-2xl border border-deep-maroon/5 shadow-lg">
+<div class="flex gap-6 items-center">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBvTunoiR7eLLiAim1GPXRv6kgUzHF2T_nlaqkRRCJDxwMgqQoXqt01KS4VOALgf35vgMDT7c2JOF_3p3O6IWOpahArNkySge8exD1TD8pDZcEmDVXb832o0vA_CiuliQTn-8hlJ_-xnhqtg0s-RV8bcWQqPVGTsU8i34C4dzvBCT6MifXXVBTo4SA83HGfqQbeFH5nYfR9FtOJ9MIIfG7Vh80_iFnLGuEauGurBxqGcf39X41LqFHnm8wV7n1kAXZLpZwmoIsXzbM');"></div>
+<div>
+<h4 class="text-sm uppercase tracking-widest font-bold text-vibrant-gold mb-1">Current Selection</h4>
+<p class="text-xl font-bold">Luxury Goddess Braids</p>
+<p class="text-sm opacity-60">4 Hours • $320</p>
+</div>
+</div>
+<div class="h-10 w-[1px] bg-deep-maroon/10 hidden md:block"></div>
+<div class="text-center md:text-left">
+<p class="text-sm opacity-60 mb-1">Step 2 of 4</p>
+<div class="flex gap-2">
+<div class="h-1.5 w-12 bg-vibrant-gold rounded-full"></div>
+<div class="h-1.5 w-12 bg-vibrant-gold rounded-full"></div>
+<div class="h-1.5 w-12 bg-deep-maroon/10 rounded-full"></div>
+<div class="h-1.5 w-12 bg-deep-maroon/10 rounded-full"></div>
+</div>
+</div>
+<button class="px-8 py-4 border-2 border-deep-maroon text-deep-maroon font-bold rounded-lg hover:bg-deep-maroon hover:text-white transition-all uppercase tracking-widest text-xs">
+                Back to services
+            </button>
+</div>
+</div>
+</main>
+<footer class="bg-deep-maroon text-cream/60 py-16">
+<div class="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-2">
+<div class="flex items-center gap-3 text-white mb-6">
+<span class="material-symbols-outlined text-vibrant-gold">flare</span>
+<h2 class="text-2xl font-bold tracking-tight">Elsa Coiffure</h2>
+</div>
+<p class="max-w-md leading-relaxed mb-8">
+                Defining the standard for luxury afro hair care and high-fashion braiding since 2012. Our passion is the artistry of your crown.
+            </p>
+<div class="flex gap-6">
+<a class="hover:text-vibrant-gold transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="hover:text-vibrant-gold transition-colors" href="#"><span class="material-symbols-outlined">camera</span></a>
+<a class="hover:text-vibrant-gold transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+</div>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 uppercase tracking-widest text-xs">Atelier Paris</h4>
+<p class="text-sm leading-loose">
+                124 Avenue des Champs-Élysées<br/>
+                75008 Paris, France<br/>
+                +33 1 42 25 12 34
+            </p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 uppercase tracking-widest text-xs">Hours</h4>
+<ul class="text-sm space-y-2">
+<li class="flex justify-between"><span>Mon - Fri</span><span>9:00 - 20:00</span></li>
+<li class="flex justify-between"><span>Saturday</span><span>10:00 - 18:00</span></li>
+<li class="flex justify-between text-vibrant-gold"><span>Sunday</span><span>Closed</span></li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto px-6 mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em]">
+<p>© 2024 Elsa Coiffure. Excellence in Artistry.</p>
+<div class="flex gap-8">
+<a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-white transition-colors" href="#">Terms &amp; Conditions</a>
+</div>
+</div>
+</footer>
+
+</body></html>

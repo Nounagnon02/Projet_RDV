@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Booking Confirmation - Elsa Coiffure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ca8349",
+                        "background-light": "#fbfaf9",
+                        "background-dark": "#1f1813",
+                        "deep-maroon": "#422927",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(202, 131, 73, 0.15);
+        }
+        .dark .glass-card {
+            background: rgba(31, 24, 19, 0.7);
+            border: 1px solid rgba(202, 131, 73, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Email Container (Centered Column) -->
+<div class="mx-auto flex w-full max-w-[650px] flex-col bg-white dark:bg-[#191410] shadow-2xl my-10 overflow-hidden rounded-xl border border-primary/10">
+<!-- Header Component (Deep Maroon) -->
+<header class="bg-deep-maroon px-10 py-8 flex flex-col items-center justify-center gap-4 text-center">
+<div class="text-primary size-10">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-primary text-2xl font-bold tracking-widest uppercase leading-tight">Elsa Coiffure</h2>
+</header>
+<main class="flex flex-col flex-1 px-8 py-12">
+<!-- HeadlineText Component -->
+<div class="layout-content-container flex flex-col flex-1 mb-8">
+<h1 class="text-deep-maroon dark:text-primary tracking-tight text-[36px] font-semibold leading-tight text-center pb-4">
+                            Your appointment is confirmed, Sarah
+                        </h1>
+<p class="text-[#8c705a] text-center text-lg max-w-md mx-auto leading-relaxed">
+                            We are delighted to welcome you to our salon. Everything is prepared for your transformation.
+                        </p>
+</div>
+<!-- Card Component (Glassmorphism Style) -->
+<div class="p-1 @container mb-8">
+<div class="flex flex-col items-stretch justify-start rounded-xl overflow-hidden glass-card shadow-lg">
+<div class="w-full bg-center bg-no-repeat aspect-[21/9] bg-cover" data-alt="Modern luxury hair salon interior with golden accents" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAnorjKAtkbyd-uRHhgM392QATakGpBb3wPxmCkTJbv8tz-8NpPF1S6eNmQ5IOGaiXqqGvT41us5ADciYU4vPWIdASNvrhtoVZ4ShK1kmJIpYTtCVAQtmKbKzNdVQoznn3TaA5ucTlvRAbq5LAIi7hIW3kbYt_HTddBIbIKyuMnD24E_KabNjTMaFjSHLT1VN_JoKvvGNO1WNoFaxF0uLdQtfSpb4yqqe2jsLpc-ubmUERQk6ApvStnQeIv7qr97sluccslByynTGk");'>
+</div>
+<div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-4 py-6 px-8">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-deep-maroon dark:text-white text-2xl font-bold leading-tight tracking-[-0.015em]">Luxury Goddess Braids</p>
+<p class="text-primary text-base font-medium mt-1 uppercase tracking-wider">with Senior Stylist Elsa</p>
+</div>
+<div class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-bold">
+                                        Confirmed
+                                    </div>
+</div>
+<div class="h-px bg-primary/20 w-full"></div>
+<!-- DescriptionList Component -->
+<div class="grid grid-cols-1 gap-y-3">
+<div class="flex justify-between gap-x-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">schedule</span>
+<p class="text-[#8c705a] text-sm font-medium uppercase tracking-tight">Duration</p>
+</div>
+<p class="text-deep-maroon dark:text-white text-sm font-bold text-right">4h 30m</p>
+</div>
+<div class="flex justify-between gap-x-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">calendar_today</span>
+<p class="text-[#8c705a] text-sm font-medium uppercase tracking-tight">Date</p>
+</div>
+<p class="text-deep-maroon dark:text-white text-sm font-bold text-right">Thursday, Nov 14, 2024</p>
+</div>
+<div class="flex justify-between gap-x-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">alarm</span>
+<p class="text-[#8c705a] text-sm font-medium uppercase tracking-tight">Time</p>
+</div>
+<p class="text-deep-maroon dark:text-white text-sm font-bold text-right">10:00 AM</p>
+</div>
+<div class="flex justify-between gap-x-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">location_on</span>
+<p class="text-[#8c705a] text-sm font-medium uppercase tracking-tight">Location</p>
+</div>
+<p class="text-deep-maroon dark:text-white text-sm font-bold text-right">125 Luxury Row, Beverly Hills</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ButtonGroup Component -->
+<div class="flex justify-center mb-12">
+<div class="flex flex-1 gap-4 flex-wrap max-w-[500px] justify-center">
+<button class="flex min-w-[200px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-6 bg-primary text-white text-base font-bold leading-normal tracking-[0.05em] grow shadow-lg hover:brightness-110 transition-all">
+<span class="material-symbols-outlined mr-2">event</span>
+<span class="truncate">ADD TO CALENDAR</span>
+</button>
+<button class="flex min-w-[200px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-6 bg-deep-maroon text-primary text-base font-bold leading-normal tracking-[0.05em] grow shadow-lg hover:brightness-125 transition-all">
+<span class="material-symbols-outlined mr-2">edit_calendar</span>
+<span class="truncate">MANAGE BOOKING</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col items-center gap-2 text-center border-t border-primary/10 pt-8">
+<p class="text-[#8c705a] text-sm italic">Need to reschedule? Please let us know at least 24 hours in advance.</p>
+</div>
+</main>
+<!-- Footer Section (Deep Maroon) -->
+<footer class="bg-deep-maroon px-10 py-12 flex flex-col items-center gap-8 border-t border-primary/20">
+<div class="flex gap-8">
+<a class="text-primary hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-3xl">language</span>
+</a>
+<a class="text-primary hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-3xl">photo_camera</span>
+</a>
+<a class="text-primary hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-3xl">mail</span>
+</a>
+</div>
+<div class="text-center">
+<p class="text-primary/80 text-sm font-medium tracking-widest uppercase mb-2">Elsa Coiffure Maison de Beauté</p>
+<p class="text-white/60 text-xs leading-relaxed max-w-xs mx-auto">
+                            125 Luxury Row, Beverly Hills, CA 90210<br/>
+                            +1 (555) 000- luxury<br/>
+                            concierge@elsacoiffure.com
+                        </p>
+</div>
+<div class="flex flex-col items-center gap-4 mt-4">
+<div class="flex gap-4 opacity-40">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"></path></svg>
+</div>
+</div>
+<p class="text-white/30 text-[10px] uppercase tracking-[0.2em]">© 2024 Elsa Coiffure. All Rights Reserved.</p>
+</div>
+</footer>
+</div>
+</div>
+</div>
+</body></html>

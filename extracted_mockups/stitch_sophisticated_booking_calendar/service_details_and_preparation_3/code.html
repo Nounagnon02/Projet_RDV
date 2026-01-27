@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Member Dashboard - Elsa Coiffure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "deep-maroon": "#422927",
+                        "vibrant-gold": "#cb834a",
+                        "cream-bg": "#fbfaf7",
+                        "sidebar-text": "#e5d1cf",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply font-sans bg-cream-bg text-deep-maroon;
+            }
+            h1, h2, h3, .serif-font {
+                @apply font-display;
+            }
+        }
+        .sidebar-item-active {
+            @apply bg-vibrant-gold/10 border-r-4 border-vibrant-gold text-vibrant-gold;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(66, 41, 39, 0.05);
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<aside class="w-72 bg-deep-maroon text-sidebar-text fixed h-full flex flex-col z-50">
+<div class="p-8">
+<div class="flex items-center gap-3 text-white mb-10">
+<span class="material-symbols-outlined text-vibrant-gold text-3xl">flare</span>
+<h1 class="text-2xl font-bold tracking-tight">Elsa Coiffure</h1>
+</div>
+<nav class="space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg sidebar-item-active group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-medium">My Bookings</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">content_cut</span>
+<span class="font-medium">Service History</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">loyalty</span>
+<span class="font-medium text-vibrant-gold">Royal Perks</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Profile Settings</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-8">
+<div class="bg-white/5 rounded-xl p-6 border border-white/10">
+<div class="flex items-center gap-2 text-vibrant-gold mb-2">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1">stars</span>
+<span class="text-xs font-bold uppercase tracking-widest">Gold Member</span>
+</div>
+<p class="text-white text-sm font-medium mb-4">2,450 points to Platinum</p>
+<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-vibrant-gold h-full w-[65%]"></div>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 ml-72 flex flex-col">
+<header class="h-20 bg-white/50 backdrop-blur-sm border-b border-deep-maroon/5 px-10 flex items-center justify-between sticky top-0 z-40">
+<div>
+<h2 class="text-xl font-medium">Welcome back, <span class="text-vibrant-gold serif-font italic">Isabella</span></h2>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 text-deep-maroon/60 hover:text-deep-maroon">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-vibrant-gold rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-6 border-l border-deep-maroon/10">
+<div class="w-10 h-10 rounded-full bg-vibrant-gold/20 flex items-center justify-center text-vibrant-gold font-bold">IB</div>
+<span class="material-symbols-outlined text-deep-maroon/40">expand_more</span>
+</div>
+</div>
+</header>
+<div class="p-10 max-w-7xl">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+<div class="lg:col-span-2 glass-card rounded-2xl p-8 flex items-center justify-between shadow-sm border-l-8 border-vibrant-gold">
+<div class="max-w-md">
+<h3 class="text-3xl font-bold mb-2">Gold Status Loyalty</h3>
+<p class="text-deep-maroon/70 mb-4">You're currently in the top 5% of our community. Enjoy complimentary steam treatments and priority weekend booking.</p>
+<button class="bg-vibrant-gold text-white px-6 py-2.5 rounded-lg font-bold text-sm tracking-wide hover:bg-vibrant-gold/90 transition-all">
+                            View My Rewards
+                        </button>
+</div>
+<div class="hidden md:block">
+<span class="material-symbols-outlined text-8xl text-vibrant-gold/20" style="font-variation-settings: 'FILL' 1">workspace_premium</span>
+</div>
+</div>
+<div class="bg-deep-maroon rounded-2xl p-8 text-white flex flex-col justify-between">
+<div>
+<p class="text-sidebar-text text-sm uppercase tracking-widest font-bold mb-1">Next Appointment</p>
+<h3 class="text-2xl font-bold serif-font mb-4">Luxury Goddess Braids</h3>
+</div>
+<div class="flex items-center gap-4">
+<div class="bg-vibrant-gold/20 p-3 rounded-lg text-vibrant-gold">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div>
+<p class="font-bold">May 24th, 2024</p>
+<p class="text-sidebar-text text-sm">10:00 AM • 4 Hours</p>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+<div class="glass-card p-6 rounded-xl shadow-sm border border-deep-maroon/5">
+<p class="text-xs font-bold uppercase tracking-widest text-deep-maroon/50 mb-2">Total Points</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-vibrant-gold">monetization_on</span>
+<h4 class="text-3xl font-bold">12,450</h4>
+</div>
+</div>
+<div class="glass-card p-6 rounded-xl shadow-sm border border-deep-maroon/5">
+<p class="text-xs font-bold uppercase tracking-widest text-deep-maroon/50 mb-2">Visits in 2024</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-vibrant-gold">event_repeat</span>
+<h4 class="text-3xl font-bold">8</h4>
+</div>
+</div>
+<div class="glass-card p-6 rounded-xl shadow-sm border border-deep-maroon/5">
+<p class="text-xs font-bold uppercase tracking-widest text-deep-maroon/50 mb-2">Preferred Stylist</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-vibrant-gold">person</span>
+<h4 class="text-xl font-bold">Camille D.</h4>
+</div>
+</div>
+<button class="bg-vibrant-gold hover:bg-vibrant-gold/90 text-white rounded-xl shadow-lg shadow-vibrant-gold/20 transition-all flex flex-col items-center justify-center gap-2 group p-6">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">add_circle</span>
+<span class="font-bold">Book Service</span>
+</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+<div class="lg:col-span-2">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-2xl font-bold">Service History</h3>
+<a class="text-vibrant-gold text-sm font-bold flex items-center gap-1 hover:underline" href="#">
+                            View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="space-y-4">
+<div class="bg-white p-5 rounded-xl border border-deep-maroon/5 flex items-center justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBvTunoiR7eLLiAim1GPXRv6kgUzHF2T_nlaqkRRCJDxwMgqQoXqt01KS4VOALgf35vgMDT7c2JOF_3p3O6IWOpahArNkySge8exD1TD8pDZcEmDVXb832o0vA_CiuliQTn-8hlJ_-xnhqtg0s-RV8bcWQqPVGTsU8i34C4dzvBCT6MifXXVBTo4SA83HGfqQbeFH5nYfR9FtOJ9MIIfG7Vh80_iFnLGuEauGurBxqGcf39X41LqFHnm8wV7n1kAXZLpZwmoIsXzbM');"></div>
+<div>
+<h5 class="font-bold text-lg">Signature Knotless Braids</h5>
+<p class="text-sm text-deep-maroon/60">Completed April 12, 2024 • Stylist: Camille D.</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-vibrant-gold">$280.00</p>
+<button class="text-xs font-bold text-deep-maroon/40 hover:text-vibrant-gold transition-colors">Rebook this</button>
+</div>
+</div>
+<div class="bg-white p-5 rounded-xl border border-deep-maroon/5 flex items-center justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAhzK4T4EfU8lEo9umkynFZmMx7kItZFvEpYQKzI_DPGS-J-Fe2zB8t4PI9YjCo_BzoBxEJnJs92VTi2uEOIahJH1BSYtjNsEGIcedxN8JbvKFQyFCQN_sPDr5DoO2-3XWpxabQHny6P-N97rJIbWddrvigwlzoba6ynUyGrKAuL4_I9KokGIS-ATI4ubh32MJuSuOp_LijF8cxR3JgnJx63Ri1iAVI-VP5hg1zLXnvUMPQeMaIAcCOx7jIuw8Fffdlff1ZcQ7j8jg');"></div>
+<div>
+<h5 class="font-bold text-lg">Scalp Detox &amp; Steam Mask</h5>
+<p class="text-sm text-deep-maroon/60">Completed March 05, 2024 • Stylist: Sarah P.</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-vibrant-gold">$120.00</p>
+<button class="text-xs font-bold text-deep-maroon/40 hover:text-vibrant-gold transition-colors">Rebook this</button>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-bold mb-6">Discovery</h3>
+<div class="bg-white rounded-xl border border-deep-maroon/5 overflow-hidden shadow-sm">
+<div class="aspect-video w-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBK9kOScyuHO7GPVwvUKg1fD1QRejH9kbVdaJeakRs9BOyRyv6qxmYaE-jHTyVZP8KRUMbDB_jgrxiDcxyKlDhS1OGrxmaghRZeAVAbEkKI9zrwD93BJN3SWPOyNXBDSZ_D2WGAUzZeMMy28aCJfIv5hDjOF0r81bh0BM1qZ26axTYpmczp37ibFmzuwaBRq4uDOSZ7r2a-Hk2yvgSZzra3IZ7ISlwKMweO-sxWwXsCfT4gwnKJ0c3412K7ga-yF87winIH4PB2JwM');"></div>
+<div class="p-6">
+<span class="text-xs font-bold text-vibrant-gold uppercase tracking-widest mb-2 block">New For You</span>
+<h4 class="text-xl font-bold serif-font mb-2">Spring Silk Press Bundle</h4>
+<p class="text-sm text-deep-maroon/70 mb-4 leading-relaxed">Includes deep hydration and trim. Perfect for seasonal transitions.</p>
+<button class="w-full border border-vibrant-gold text-vibrant-gold py-3 rounded-lg font-bold text-sm hover:bg-vibrant-gold hover:text-white transition-all">
+                                Learn More
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="bg-deep-maroon text-sidebar-text py-10 px-10 mt-auto">
+<div class="max-w-7xl flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-3 text-white">
+<span class="material-symbols-outlined text-vibrant-gold">flare</span>
+<h2 class="text-lg font-bold">Elsa Coiffure</h2>
+</div>
+<div class="flex gap-10 text-sm">
+<a class="hover:text-vibrant-gold transition-colors" href="#">Support</a>
+<a class="hover:text-vibrant-gold transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-vibrant-gold transition-colors" href="#">Terms of Service</a>
+</div>
+<p class="text-xs opacity-50">© 2024 Elsa Coiffure Dashboard. All Rights Reserved.</p>
+</div>
+</footer>
+</main>
+
+</body></html>

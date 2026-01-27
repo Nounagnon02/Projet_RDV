@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Member Profile &amp; History | Elsa Coiffure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ca8349",
+                        "maroon-dark": "#422927",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#1f1813",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-card {
+            background: rgba(31, 24, 19, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#191410] dark:text-[#f8f7f6]">
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="w-72 bg-maroon-dark text-white flex flex-col h-screen sticky top-0">
+<div class="p-8 flex flex-col h-full">
+<!-- Brand -->
+<div class="mb-12 flex items-center gap-3">
+<div class="size-12 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-3xl">content_cut</span>
+</div>
+<div>
+<h1 class="text-xl font-bold leading-none tracking-tight">Elsa Coiffure</h1>
+<p class="text-primary text-xs uppercase tracking-widest mt-1">Luxury Afro Hair</p>
+</div>
+</div>
+<!-- Nav Links -->
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg bg-white/10 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-medium">Appointments</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-medium">Gallery</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">workspace_premium</span>
+<span class="font-medium">Rewards</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-medium">Profile Settings</span>
+</a>
+</nav>
+<!-- Footer Nav -->
+<div class="pt-8 border-t border-white/10 space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-medium">Help Center</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors text-white/60" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-medium">Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto">
+<div class="max-w-5xl mx-auto px-12 py-10">
+<!-- Profile Header -->
+<header class="flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
+<div class="flex items-center gap-6">
+<div class="relative">
+<div class="size-32 rounded-full border-4 border-primary/20 p-1">
+<img class="size-full rounded-full object-cover shadow-xl" data-alt="Close up portrait of a elegant Black woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFcPkLV6fUia0s0J9Y4Hsvefi4yaoh4YLGpYh5a4kF9bQhyfqClSMMp7mVnUZJrer6LPjEiYjZdYn5slsBFUWEv7mX8Y3RJ1nV5zd3NRvwS05AQ-83mKKCV35sCkiz5M2NL9y-7e91LJL6TNvqtLTfMoer9HcnlpH3n1vFMqjJfkx0CCcJS70HnaG4sd0uN_fxxznCBxpYJjDKZfU67p7UEWUBpfemuEfcj76aau1Ju_jNfCUSvmxO2nnR6Ukk5zkEpwpnnUv-wTc"/>
+</div>
+<div class="absolute -bottom-1 -right-1 bg-primary text-white p-1.5 rounded-full border-2 border-background-light dark:border-background-dark">
+<span class="material-symbols-outlined text-sm block">verified</span>
+</div>
+</div>
+<div class="text-center md:text-left">
+<h2 class="text-4xl font-bold text-maroon-dark dark:text-white leading-tight">Aaliyah Johnson</h2>
+<div class="flex flex-wrap items-center gap-3 mt-2 justify-center md:justify-start">
+<span class="px-3 py-1 bg-primary/10 text-primary text-sm font-bold rounded-full border border-primary/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">stars</span> Gold Member
+                                </span>
+<span class="text-[#8c705a] text-sm">Member since June 2023</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 bg-white dark:bg-white/5 border border-maroon-dark/10 dark:border-white/10 rounded-lg text-maroon-dark dark:text-white font-bold hover:bg-gray-50 transition-colors">
+                            Edit Profile
+                        </button>
+</div>
+</header>
+<!-- Loyalty Quick Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<div class="bg-white dark:bg-white/5 p-6 rounded-xl shadow-sm border border-maroon-dark/5 dark:border-white/5">
+<p class="text-sm text-[#8c705a] uppercase tracking-wider mb-1">Loyalty Points</p>
+<p class="text-3xl font-bold text-primary">2,450</p>
+<div class="w-full bg-gray-200 dark:bg-white/10 h-1.5 rounded-full mt-4 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 75%"></div>
+</div>
+<p class="text-[11px] text-[#8c705a] mt-2">550 points until Platinum status</p>
+</div>
+<div class="bg-white dark:bg-white/5 p-6 rounded-xl shadow-sm border border-maroon-dark/5 dark:border-white/5">
+<p class="text-sm text-[#8c705a] uppercase tracking-wider mb-1">Total Visits</p>
+<p class="text-3xl font-bold text-maroon-dark dark:text-white">14</p>
+<p class="text-[11px] text-[#8c705a] mt-2">+2 in the last 30 days</p>
+</div>
+<div class="bg-white dark:bg-white/5 p-6 rounded-xl shadow-sm border border-maroon-dark/5 dark:border-white/5">
+<p class="text-sm text-[#8c705a] uppercase tracking-wider mb-1">Reward Vouchers</p>
+<p class="text-3xl font-bold text-maroon-dark dark:text-white">2</p>
+<p class="text-[11px] text-primary font-bold mt-2 cursor-pointer hover:underline">View rewards</p>
+</div>
+</div>
+<!-- Upcoming Appointments -->
+<section class="mb-14">
+<div class="flex items-center justify-between px-2 mb-6">
+<h3 class="text-2xl font-bold text-maroon-dark dark:text-white">Upcoming Appointments</h3>
+<button class="text-primary text-sm font-bold flex items-center gap-1 hover:opacity-80">
+                            Book New <span class="material-symbols-outlined text-lg">add_circle</span>
+</button>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<!-- Glassmorphism Appointment Card -->
+<div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-center shadow-lg transition-transform hover:scale-[1.01]">
+<div class="size-32 rounded-xl overflow-hidden flex-shrink-0">
+<img class="size-full object-cover" data-alt="Stylized close up of textured Afro hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7hxr_-6Wrbxcr6k6bod0osvACT64kdnDL9aPM23aX6gp50iVLZy1nDqTm10vyjcTbfP09fdLlaRg3Q0kWGyZian7cqZxBUagH-zTsA6gV12dr7wmsojm4cwA_4ROfgVtjCRTHti3sD-BtO8ASwMnnfM2J5gI8r8SG8TezYyrC6XZ1XRuaoKCmG6eQcezyvBUUQkDc8aX_3TaJLXDd4Q-GxiLk2h-b07ESgvXj-ooZHA6_mPi5agmf8OWVw2eD7qhfuyveMqm7CJE"/>
+</div>
+<div class="flex-1 text-center md:text-left">
+<div class="flex items-center gap-2 justify-center md:justify-start mb-1">
+<span class="text-xs font-bold text-primary uppercase tracking-widest">Next Visit</span>
+<span class="w-1 h-1 bg-primary rounded-full"></span>
+<span class="text-xs text-[#8c705a]">12 days away</span>
+</div>
+<h4 class="text-2xl font-bold text-maroon-dark dark:text-white">Premium Silk Press &amp; Deep Steam Treatment</h4>
+<div class="mt-4 flex flex-wrap items-center justify-center md:justify-start gap-y-2 gap-x-6 text-[#8c705a]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">calendar_today</span>
+<span>Tuesday, Oct 24, 2024</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">schedule</span>
+<span>10:00 AM (2 hrs)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">person_pin</span>
+<span>Stylist: Elena M.</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 w-full md:w-auto min-w-[160px]">
+<button class="w-full py-2.5 bg-primary text-white rounded-lg font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all">
+                                    Reschedule
+                                </button>
+<button class="w-full py-2.5 border border-maroon-dark/10 dark:border-white/10 rounded-lg text-sm font-medium hover:bg-white/50 transition-colors">
+                                    Cancel
+                                </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Past Services Table -->
+<section>
+<div class="flex items-center justify-between px-2 mb-6">
+<h3 class="text-2xl font-bold text-maroon-dark dark:text-white">Past Services History</h3>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#8c705a]">filter_list</span>
+<span class="text-sm text-[#8c705a]">Filter by date</span>
+</div>
+</div>
+<div class="bg-white dark:bg-white/5 rounded-2xl overflow-hidden shadow-sm border border-maroon-dark/5 dark:border-white/5">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-maroon-dark/5 dark:bg-white/5 text-[#8c705a] text-xs uppercase tracking-widest">
+<th class="px-8 py-5 font-bold">Service Details</th>
+<th class="px-6 py-5 font-bold">Stylist</th>
+<th class="px-6 py-5 font-bold">Date</th>
+<th class="px-6 py-5 font-bold text-right">Price</th>
+<th class="px-8 py-5 font-bold text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-maroon-dark/5 dark:divide-white/5">
+<tr class="hover:bg-maroon-dark/5 dark:hover:bg-white/5 transition-colors group">
+<td class="px-8 py-6">
+<p class="font-bold text-maroon-dark dark:text-white">Signature Box Braids (Medium)</p>
+<p class="text-sm text-[#8c705a]">Maintenance &amp; Edge Care included</p>
+</td>
+<td class="px-6 py-6 text-[#191410] dark:text-[#f8f7f6]">Elena M.</td>
+<td class="px-6 py-6 text-[#191410] dark:text-[#f8f7f6]">Aug 12, 2024</td>
+<td class="px-6 py-6 text-right font-bold">$185.00</td>
+<td class="px-8 py-6 text-right">
+<button class="px-4 py-1.5 bg-primary/10 text-primary text-xs font-bold rounded-lg border border-primary/20 hover:bg-primary hover:text-white transition-all">
+                                            Rebook
+                                        </button>
+</td>
+</tr>
+<tr class="hover:bg-maroon-dark/5 dark:hover:bg-white/5 transition-colors group">
+<td class="px-8 py-6">
+<p class="font-bold text-maroon-dark dark:text-white">Scalp Detox &amp; Hydration Mask</p>
+<p class="text-sm text-[#8c705a]">Add-on: Lavender Essential Oil</p>
+</td>
+<td class="px-6 py-6 text-[#191410] dark:text-[#f8f7f6]">Sarah K.</td>
+<td class="px-6 py-6 text-[#191410] dark:text-[#f8f7f6]">Jul 05, 2024</td>
+<td class="px-6 py-6 text-right font-bold">$75.00</td>
+<td class="px-8 py-6 text-right">
+<button class="px-4 py-1.5 bg-primary/10 text-primary text-xs font-bold rounded-lg border border-primary/20 hover:bg-primary hover:text-white transition-all">
+                                            Rebook
+                                        </button>
+</td>
+</tr>
+<tr class="hover:bg-maroon-dark/5 dark:hover:bg-white/5 transition-colors group">
+<td class="px-8 py-6">
+<p class="font-bold text-maroon-dark dark:text-white">Wash &amp; Go Styling</p>
+<p class="text-sm text-[#8c705a]">Natural Curl Definition</p>
+</td>
+<td class="px-6 py-6 text-[#191410] dark:text-[#f8f7f6]">Elena M.</td>
+<td class="px-6 py-6 text-[#191410] dark:text-[#f8f7f6]">Jun 14, 2024</td>
+<td class="px-6 py-6 text-right font-bold">$65.00</td>
+<td class="px-8 py-6 text-right">
+<button class="px-4 py-1.5 bg-primary/10 text-primary text-xs font-bold rounded-lg border border-primary/20 hover:bg-primary hover:text-white transition-all">
+                                            Rebook
+                                        </button>
+</td>
+</tr>
+<tr class="hover:bg-maroon-dark/5 dark:hover:bg-white/5 transition-colors group">
+<td class="px-8 py-6">
+<p class="font-bold text-maroon-dark dark:text-white">Trim &amp; Dusting</p>
+<p class="text-sm text-[#8c705a]">Split-end removal on natural hair</p>
+</td>
+<td class="px-6 py-6 text-[#191410] dark:text-[#f8f7f6]">Sarah K.</td>
+<td class="px-6 py-6 text-[#191410] dark:text-[#f8f7f6]">May 22, 2024</td>
+<td class="px-6 py-6 text-right font-bold">$45.00</td>
+<td class="px-8 py-6 text-right">
+<button class="px-4 py-1.5 bg-primary/10 text-primary text-xs font-bold rounded-lg border border-primary/20 hover:bg-primary hover:text-white transition-all">
+                                            Rebook
+                                        </button>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="px-8 py-4 bg-maroon-dark/5 dark:bg-white/5 flex justify-center">
+<button class="text-sm text-primary font-bold hover:underline">View All History</button>
+</div>
+</div>
+</section>
+<!-- Help Footer -->
+<footer class="mt-20 pt-8 border-t border-maroon-dark/10 dark:border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[#8c705a] text-sm pb-12">
+<p>© 2024 Elsa Coiffure. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Salon Guidelines</a>
+</div>
+</footer>
+</div>
+</main>
+</div>
+</body></html>

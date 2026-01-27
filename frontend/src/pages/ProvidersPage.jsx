@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/axios';
+import { Card, Button, Input } from '../components/ui';
 import {
     Search,
     Loader2,
     MapPin,
     Scissors,
-    Star,
     ChevronRight,
+    ArrowRight,
     Sparkles,
-    Building2
+    Building2,
+    ArrowLeft
 } from 'lucide-react';
 
 const ProvidersPage = () => {
@@ -39,115 +41,123 @@ const ProvidersPage = () => {
     };
 
     return (
-        <div className="min-h-screen pb-16">
-            {/* Hero */}
-            <div className="relative overflow-hidden py-20 px-6">
-                <div className="orb orb-primary w-96 h-96 -top-48 -left-48"></div>
-                <div className="orb orb-purple w-80 h-80 -top-20 -right-40"></div>
-                <div className="orb orb-cyan w-64 h-64 bottom-0 left-1/2 -translate-x-1/2 opacity-20"></div>
-
-                <div className="max-w-4xl mx-auto text-center relative">
-                    <div className="animate-fade-in-up">
-                        <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20">
-                            <Sparkles className="h-4 w-4 text-indigo-400" />
-                            <span className="text-sm font-semibold text-indigo-400">Découvrez</span>
-                        </div>
-                        <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight mb-6">
-                            Trouvez votre <span className="gradient-text">prestataire</span>
-                        </h1>
-                        <p className="text-slate-400 text-lg max-w-xl mx-auto mb-10">
-                            Parcourez notre liste de professionnels et réservez votre rendez-vous en quelques clics.
-                        </p>
-
-                        {/* Search Bar */}
-                        <form onSubmit={handleSearch} className="max-w-xl mx-auto">
-                            <div className="glass-card p-2 flex items-center gap-2">
-                                <div className="relative flex-1">
-                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500" />
-                                    <input
-                                        type="text"
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                        placeholder="Rechercher un prestataire..."
-                                        className="w-full h-12 pl-12 pr-4 bg-transparent border-none text-white placeholder:text-slate-500 focus:outline-none"
-                                    />
-                                </div>
-                                <button type="submit" className="btn-primary h-12 px-6">
-                                    Rechercher
-                                </button>
-                            </div>
-                        </form>
+        <div className="min-h-screen bg-background-light dark:bg-background-dark font-display">
+            {/* Header / Nav (Minimal) */}
+            <nav className="h-24 px-8 flex items-center justify-between border-b border-maroon-dark/5">
+                <Link to="/" className="flex items-center gap-3">
+                    <div className="size-10 rounded-full bg-primary flex items-center justify-center">
+                        <span className="material-symbols-outlined text-white text-xl">flare</span>
                     </div>
+                    <h1 className="text-xl font-bold tracking-[0.2em] text-maroon-dark dark:text-text-light uppercase">Elsa Coiffure</h1>
+                </Link>
+                <Link to="/" className="text-[10px] font-black uppercase tracking-[0.3em] text-accent-bronze hover:text-primary transition-all flex items-center gap-2">
+                    <ArrowLeft className="size-3" /> RETOUR
+                </Link>
+            </nav>
+
+            {/* Elite Hero */}
+            <div className="relative py-24 px-6 overflow-hidden">
+                <div className="absolute top-0 right-0 w-1/2 h-full bg-maroon-dark/5 -skew-x-12 translate-x-1/2"></div>
+
+                <div className="max-w-4xl mx-auto text-center relative z-10 animate-fade-in-up">
+                    <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em] block mb-6">L'Expertise à Votre Service</span>
+                    <h1 className="text-5xl md:text-7xl font-display italic text-maroon-dark dark:text-text-light leading-[1.1] mb-8">
+                        Rencontrez Nos <span className="text-primary italic">Maîtres Artisans</span>.
+                    </h1>
+                    <p className="text-accent-bronze text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
+                        Chaque prestataire Elsa Coiffure est sélectionné pour son excellence technique et sa passion pour le cheveu texturé.
+                    </p>
+
+                    {/* Sophisticated Search Bar */}
+                    <form onSubmit={handleSearch} className="max-w-xl mx-auto">
+                        <div className="flex gap-3">
+                            <div className="relative flex-1 group">
+                                <Search className="absolute left-6 top-1/2 -translate-y-1/2 size-5 text-accent-bronze group-focus-within:text-primary transition-colors" />
+                                <Input
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    placeholder="Rechercher un atelier ou un artiste..."
+                                    className="h-16 pl-14 bg-white dark:bg-white/5 border-maroon-dark/10 focus:border-primary shadow-2xl shadow-maroon-dark/5"
+                                />
+                            </div>
+                            <Button type="submit" variant="primary" className="h-16 px-10 font-black uppercase tracking-widest text-xs hidden sm:flex">
+                                TROUVER
+                            </Button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
-            {/* Providers Grid */}
-            <div className="max-w-6xl mx-auto px-6">
+            {/* Artsy List Section */}
+            <div className="max-w-7xl mx-auto px-6 pb-32">
                 {loading ? (
-                    <div className="flex h-48 items-center justify-center">
-                        <Loader2 className="h-12 w-12 animate-spin text-indigo-500" />
+                    <div className="flex h-64 items-center justify-center">
+                        <Loader2 className="size-12 animate-spin text-primary" />
                     </div>
                 ) : providers.length > 0 ? (
-                    <>
-                        <div className="flex items-center justify-between mb-8">
-                            <p className="text-slate-400 font-medium">
-                                <span className="text-white font-bold">{providers.length}</span> prestataire{providers.length > 1 ? 's' : ''} trouvé{providers.length > 1 ? 's' : ''}
-                            </p>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {providers.map((provider, index) => (
-                                <Link
-                                    key={provider.id}
-                                    to={`/b/${provider.slug}`}
-                                    className={`glass-card p-6 block hover:border-indigo-500/30 transition-all group animate-fade-in-up stagger-${(index % 5) + 1}`}
-                                >
-                                    <div className="flex items-start gap-4 mb-5">
-                                        <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow">
-                                            <span className="text-2xl font-black text-white">{provider.business_name?.charAt(0)}</span>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {providers.map((provider, index) => (
+                            <Link
+                                key={provider.id}
+                                to={`/b/${provider.slug}`}
+                                className="group block"
+                            >
+                                <Card variant="elevated" hover className="p-0 overflow-hidden border-none bg-white dark:bg-white/5 shadow-xl shadow-maroon-dark/5 group-hover:shadow-primary/10 transition-all duration-700">
+                                    <div className="relative h-64 overflow-hidden">
+                                        <div className="absolute inset-0 bg-maroon-dark/10 group-hover:bg-transparent transition-colors duration-700 z-10"></div>
+                                        <img
+                                            src={`https://images.unsplash.com/photo-${1600000000000 + index}?auto=format&fit=crop&q=80&w=800`}
+                                            className="size-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
+                                            alt={provider.business_name}
+                                        />
+                                        <div className="absolute bottom-6 left-6 z-20">
+                                            <div className="bg-primary text-white px-3 py-1 text-[9px] font-black uppercase tracking-[0.2em] shadow-lg">
+                                                PLATINUM MEMBER
+                                            </div>
                                         </div>
-                                        <div className="flex-1 min-w-0">
-                                            <h3 className="text-xl font-bold text-white mb-1 truncate group-hover:text-indigo-400 transition-colors">
+                                    </div>
+                                    <div className="p-8">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <h3 className="text-2xl font-display font-medium italic text-maroon-dark dark:text-text-light group-hover:text-primary transition-colors">
                                                 {provider.business_name}
                                             </h3>
-                                            {provider.city && (
-                                                <p className="text-slate-500 text-sm flex items-center gap-1.5">
-                                                    <MapPin className="h-4 w-4 shrink-0" /> {provider.city}
-                                                </p>
-                                            )}
                                         </div>
-                                    </div>
 
-                                    {provider.description && (
-                                        <p className="text-slate-400 text-sm line-clamp-2 mb-5">
-                                            {provider.description}
+                                        <div className="flex items-center gap-2 text-accent-bronze text-sm mb-6 font-medium">
+                                            <MapPin className="size-4 text-primary" />
+                                            {provider.city || 'Paris, France'}
+                                        </div>
+
+                                        <p className="text-accent-bronze/70 text-sm line-clamp-2 mb-8 italic">
+                                            {provider.description || "Spécialiste de la haute coiffure africaine et des soins capillaires d'exception."}
                                         </p>
-                                    )}
 
-                                    <div className="flex items-center justify-between pt-4 border-t border-slate-800/50">
-                                        <div className="flex items-center gap-2 text-slate-500">
-                                            <Scissors className="h-4 w-4 text-indigo-400" />
-                                            <span className="text-sm font-medium">{provider.services?.length || 0} service{(provider.services?.length || 0) > 1 ? 's' : ''}</span>
-                                        </div>
-                                        <div className="flex items-center gap-1 text-indigo-400 group-hover:gap-2 transition-all">
-                                            <span className="text-sm font-semibold">Réserver</span>
-                                            <ChevronRight className="h-4 w-4" />
+                                        <div className="flex items-center justify-between pt-6 border-t border-maroon-dark/5 dark:border-white/5">
+                                            <div className="flex items-center gap-3">
+                                                <div className="size-8 rounded-full bg-maroon-dark/5 dark:bg-white/5 flex items-center justify-center text-primary">
+                                                    <Scissors className="size-4" />
+                                                </div>
+                                                <span className="text-[10px] font-black uppercase tracking-widest text-maroon-dark dark:text-text-light">
+                                                    {provider.services?.length || 3} SERVICES
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-[10px] group-hover:gap-4 transition-all">
+                                                RÉSERVER <ArrowRight className="size-4" />
+                                            </div>
                                         </div>
                                     </div>
-                                </Link>
-                            ))}
-                        </div>
-                    </>
-                ) : (
-                    <div className="glass-card border-2 border-dashed border-slate-800 p-16 text-center">
-                        <div className="h-20 w-20 rounded-3xl bg-slate-900 flex items-center justify-center mx-auto mb-6">
-                            <Building2 className="h-10 w-10 text-slate-700" />
-                        </div>
-                        <h3 className="text-xl font-bold text-white mb-2">Aucun prestataire trouvé</h3>
-                        <p className="text-slate-500 font-medium">
-                            {searchTerm ? 'Essayez avec d\'autres termes de recherche.' : 'Aucun prestataire n\'est encore inscrit.'}
-                        </p>
+                                </Card>
+                            </Link>
+                        ))}
                     </div>
+                ) : (
+                    <Card variant="light" className="p-24 text-center border-dashed border-2 bg-accent-cream/20">
+                        <Building2 className="size-16 mx-auto text-accent-cream mb-6 opacity-20" />
+                        <h3 className="text-2xl font-display italic text-maroon-dark mb-4">L'atelier est momentanément fermé</h3>
+                        <p className="text-accent-bronze max-w-sm mx-auto">
+                            Aucun prestataire n'est disponible pour le moment. Veuillez revenir très prochainement.
+                        </p>
+                    </Card>
                 )}
             </div>
         </div>
