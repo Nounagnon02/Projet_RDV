@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const AccordionItem = ({ title, children, isOpen, onClick }) => {
     return (
-        <div className="border border-maroon-dark/20 dark:border-white/10 rounded-xl overflow-hidden bg-white/40 dark:bg-maroon-dark/40 backdrop-blur-sm transition-all duration-300">
+        <div className="border border-maroon-dark/20 dark:border-white/10 rounded-xl overflow-hidden bg-white/40 /40 backdrop-blur-sm transition-all duration-300">
             <button
                 onClick={onClick}
                 className="w-full flex cursor-pointer items-center justify-between p-5 text-left focus:outline-none"

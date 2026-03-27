@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import 'normalize.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useSiteSettings } from '../context/SiteSettingsContext';
 import { Mail, Lock, User, Phone, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
 import { Button, Card, Input } from '../components/ui';
 
 const Register = () => {
+    const { settings } = useSiteSettings();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -43,32 +46,32 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-background-light via-neutral-100 to-accent-cream dark:from-background-dark dark:via-maroon-800 dark:to-maroon-900">
+        <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-[#fdfbf8] via-neutral-100 to-[#f7f3f0]">
             {/* Decorative Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-20 right-10 w-96 h-96 bg-maroon-dark/10 rounded-full blur-3xl"></div>
+                <div className="absolute top-20 left-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-20 right-10 w-[30rem] h-[30rem] bg-maroon-dark/[0.03] rounded-full blur-3xl"></div>
             </div>
 
             <div className="w-full max-w-2xl relative z-10">
                 {/* Logo & Brand */}
-                <div className="flex flex-col items-center mb-10 animate-fade-in-up">
+                <div className="flex flex-col items-center mb-8 md:mb-10 animate-fade-in">
                     <div className="flex items-center gap-3">
-                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-primary-glow">
+                        <div className="h-12 w-12 md:h-14 md:w-14 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-primary-glow">
                             <span className="material-symbols-outlined text-white text-3xl">flare</span>
                         </div>
                         <div>
-                            <h1 className="text-2xl font-display font-bold text-maroon-dark dark:text-text-light tracking-tight">Elsa Coiffure</h1>
-                            <p className="text-[10px] text-primary uppercase tracking-[0.4em] font-black">L'Atelier de Luxe</p>
+                            <h1 className="text-xl md:text-2xl font-display font-bold text-maroon-dark tracking-tight">{settings.site_name || 'Elsa Coiffure'}</h1>
+                            <p className="text-[8px] md:text-[10px] text-primary uppercase tracking-[0.4em] font-black">L'Atelier de Luxe</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Main Card */}
-                <Card className="p-8 md:p-12 animate-fade-in-up stagger-1">
-                    <div className="text-center mb-10">
-                        <h2 className="text-3xl font-display font-bold text-maroon-dark dark:text-text-light mb-2 italic">Rejoindre l'Elite</h2>
-                        <p className="text-accent-bronze text-sm italic">Créez votre profil pour une expérience sur-mesure</p>
+                <Card className="p-6 sm:p-8 md:p-12 animate-fade-in-up stagger-1 border-none shadow-2xl shadow-maroon-dark/5 bg-white/80 backdrop-blur-xl">
+                    <div className="text-center mb-8 md:mb-10">
+                        <h2 className="text-2xl md:text-3xl font-display font-bold text-maroon-dark mb-2 italic">Rejoindre l'Elite</h2>
+                        <p className="text-accent-bronze text-xs md:text-sm italic">Créez votre profil pour une expérience sur-mesure</p>
                     </div>
 
                     {error && (
@@ -167,7 +170,7 @@ const Register = () => {
                 </Card>
 
                 <p className="text-center text-accent-bronze/40 text-[10px] font-black uppercase tracking-widest mt-8 animate-fade-in-up stagger-2">
-                    En créant un compte, vous intégrez le cercle privé Elsa Coiffure.
+                    En créant un compte, vous intégrez le cercle privé {settings.site_name || 'Elsa Coiffure'}.
                 </p>
             </div>
         </div>

@@ -79,6 +79,72 @@
    BASE STYLES
    ===================================================== */
 
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-display: 'Newsreader', serif;
+
+    /* Fluid Typography - scaled between 320px and 1440px */
+    --text-h1: clamp(2.5rem, 1.5rem + 5vw, 4.5rem);
+    --text-h2: clamp(2rem, 1.2rem + 4vw, 3.5rem);
+    --text-h3: clamp(1.5rem, 1rem + 2.5vw, 2.25rem);
+    --text-body-lg: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  }
+
+  html {
+    scrollbar-gutter: stable;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Global box-sizing and form control normalization */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  /* Normalize form control appearance across browsers (targeted, not global hacks) */
+  input, textarea, select, button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: inherit;
+  }
+
+  /* Remove Firefox inner button padding/border so sizing matches WebKit */
+  button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+
+  /* ... existing reset code ... */
+
+  /* Resetting Autofill colors (Firefox & Chrome) */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #fdfbf8 inset !important;
+    -webkit-text-fill-color: #3d1c1c !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /* Firefox specific autofill correction - Enhanced */
+  input:-moz-autofill,
+  input:-moz-autofill:hover,
+  input:-moz-autofill:focus,
+  input:-moz-autofill:active {
+    box-shadow: 0 0 0 1000px white inset !important;
+    -moz-text-fill-color: #3d1c1c !important;
+    filter: none !important;
+    background-color: transparent !important;
+  }
+}
+
 :root {
   font-family: var(--font-sans);
   line-height: 1.6;
@@ -436,4 +502,5 @@ h6 {
 /* Smooth Page Transitions */
 #root {
   min-height: 100vh;
+  width: 100%;
 }

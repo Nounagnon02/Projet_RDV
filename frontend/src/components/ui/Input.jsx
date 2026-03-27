@@ -26,7 +26,7 @@ const Input = forwardRef(({
 }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
 
-    const baseInputStyles = 'w-full px-4 py-3 bg-white/60 dark:bg-maroon-dark/60 border rounded-xl text-text-dark dark:text-text-light placeholder:text-accent-bronze/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50 backdrop-blur-sm';
+    const baseInputStyles = 'w-full px-4 py-3 bg-white/60 border rounded-xl text-text-dark dark:text-text-light placeholder:text-accent-bronze/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50 backdrop-blur-sm';
 
     const errorStyles = error
         ? 'border-accent-rose focus:ring-accent-rose/50'

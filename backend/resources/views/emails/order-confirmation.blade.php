@@ -47,13 +47,13 @@
                         <p class="item-name">{{ $item->product->name }}</p>
                         <p class="item-qty">Quantité: {{ $item->quantity }}</p>
                     </div>
-                    <p class="item-price">{{ number_format($item->price * $item->quantity, 2) }} €</p>
+                    <p class="item-price">{{ number_format($item->price * $item->quantity, 2) }} FCFA</p>
                 </div>
                 @endforeach
                 
                 <div class="total-row">
                     <span class="total-label">Total</span>
-                    <span class="total-price">{{ number_format($order->total, 2) }} €</span>
+                    <span class="total-price">{{ number_format($order->total, 2) }} FCFA</span>
                 </div>
             </div>
 

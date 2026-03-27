@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 import ClientHeader from '../components/ClientHeader';
+import Footer from '../components/Footer';
 import {
     Calendar,
     Clock,
@@ -55,15 +55,15 @@ const ClientDashboard = () => {
                         <div className="absolute bottom-0 left-0 w-80 h-80 bg-maroon-dark/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
                     </div>
 
-                    <div className="max-w-7xl mx-auto relative animate-fade-in-up">
+                    <div className="max-w-7xl mx-auto relative animate-fade-in px-4">
                         <div className="flex items-center gap-3 mb-6">
                             <Sparkles className="size-5 text-primary" />
                             <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em]">Bienvenue dans l'Excellence</span>
                         </div>
-                        <h1 className="text-5xl lg:text-7xl font-display font-black text-maroon-dark dark:text-text-light italic leading-none mb-6">
+                        <h1 className="font-display font-black text-maroon-dark dark:text-text-light italic leading-[1.1] mb-6" style={{ fontSize: 'var(--text-h1)' }}>
                             Bonjour, {user?.name?.split(' ')[0]}
                         </h1>
-                        <p className="text-xl text-accent-bronze font-medium max-w-2xl italic">
+                        <p className="text-lg md:text-xl text-accent-bronze font-medium max-w-2xl italic leading-relaxed">
                             Votre espace privé Elsa Coiffure. Gérez vos transformations et accédez à nos services exclusifs.
                         </p>
                     </div>
@@ -92,38 +92,38 @@ const ClientDashboard = () => {
                                     <Loader2 className="size-10 animate-spin text-primary opacity-40" />
                                 </div>
                             ) : upcomingAppointments.length > 0 ? (
-                                <div className="space-y-6">
+                                <div className="grid grid-cols-1 gap-6">
                                     {upcomingAppointments.map((app, index) => (
                                         <div
                                             key={app.id}
-                                            className="bg-white dark:bg-white/5 border border-maroon-dark/5 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-10 shadow-xl shadow-maroon-dark/5 relative overflow-hidden group animate-fade-in-up shadow-sm hover:shadow-2xl hover:border-primary/20 transition-all duration-700"
+                                            className="bg-white dark:bg-white/5 border border-maroon-dark/5 rounded-[2.5rem] p-6 md:p-10 flex flex-col md:flex-row items-center gap-8 md:gap-12 group hover:shadow-2xl hover:border-primary/20 transition-all duration-700 relative overflow-hidden"
                                         >
-                                            <div className="absolute left-0 top-0 h-full w-2 bg-primary"></div>
+                                            <div className="absolute left-0 top-0 h-2 md:h-full w-full md:w-2 bg-primary"></div>
 
-                                            <div className="md:w-1/4 text-center space-y-2">
-                                                <p className="text-5xl font-display font-black text-maroon-dark dark:text-text-light italic">
+                                            <div className="flex flex-col items-center md:w-1/4 space-y-1">
+                                                <p className="text-4xl md:text-6xl font-display font-black text-maroon-dark dark:text-text-light italic leading-none">
                                                     {format(parseISO(app.date), 'dd')}
                                                 </p>
-                                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">
+                                                <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-primary">
                                                     {format(parseISO(app.date), 'MMMM yyyy', { locale: fr })}
                                                 </p>
                                             </div>
 
-                                            <div className="flex-1 space-y-4">
-                                                <div className="flex items-center gap-3">
-                                                    <span className="text-[9px] font-black uppercase tracking-widest px-3 py-1 bg-primary/10 text-primary rounded-full">Soin Signature</span>
-                                                    <span className="text-[9px] font-black uppercase tracking-widest px-3 py-1 bg-maroon-dark/5 text-accent-bronze rounded-full capitalize">{app.status}</span>
+                                            <div className="flex-1 space-y-5 text-center md:text-left">
+                                                <div className="flex flex-wrap justify-center md:justify-start gap-2">
+                                                    <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-primary/10 text-primary rounded-full">Soin Signature</span>
+                                                    <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-maroon-dark/5 text-accent-bronze rounded-full capitalize">{app.status}</span>
                                                 </div>
-                                                <h3 className="text-2xl font-display italic font-bold text-maroon-dark dark:text-text-light">{app.service?.name}</h3>
-                                                <div className="flex flex-wrap items-center gap-6 text-accent-bronze text-sm font-medium">
-                                                    <span className="flex items-center gap-2"><User className="size-4 text-primary" /> {app.provider?.business_name}</span>
+                                                <h3 className="text-2xl md:text-3xl font-display italic font-bold text-maroon-dark dark:text-text-light leading-snug">{app.service?.name}</h3>
+                                                <div className="flex flex-wrap justify-center md:justify-start items-center gap-y-4 gap-x-8 text-accent-bronze text-sm font-medium">
+                                                    <span className="flex items-center gap-2 pr-4 border-r border-maroon-dark/10"><User className="size-4 text-primary" /> {app.provider?.business_name}</span>
                                                     <span className="flex items-center gap-2"><Clock className="size-4 text-primary" /> {app.start_time?.substring(0, 5)}</span>
                                                 </div>
                                             </div>
 
-                                            <div className="md:w-1/4 flex justify-end">
-                                                <Button variant="outline" className="size-14 rounded-full border-maroon-dark/5 hover:border-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                                                    <ArrowRight className="size-5" />
+                                            <div className="flex justify-center md:w-1/4">
+                                                <Button variant="outline" className="size-16 rounded-full border-maroon-dark/5 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-500">
+                                                    <ArrowRight className="size-6" />
                                                 </Button>
                                             </div>
                                         </div>
@@ -193,44 +193,7 @@ const ClientDashboard = () => {
                 </div>
             </main>
 
-            {/* Premium Multi-Column Footer Integration */}
-            <footer className="bg-maroon-dark text-white py-24 xl:px-40 lg:px-20 px-8 border-t border-white/5">
-                <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
-                    <div className="col-span-1 md:col-span-2 space-y-8">
-                        <div className="flex items-center gap-4 text-primary">
-                            <span className="material-symbols-outlined text-4xl">flare</span>
-                            <h2 className="text-3xl font-display font-medium italic tracking-tight">Elsa Coiffure</h2>
-                        </div>
-                        <p className="text-slate-400 text-lg leading-relaxed max-w-sm italic">
-                            Élever les standards du soin capillaire afro à travers une expérience de luxe et une excellence artistique inégalée.
-                        </p>
-                    </div>
-                    <div>
-                        <h4 className="text-white font-black uppercase text-[10px] tracking-[0.4em] mb-10 opacity-40">Navigation</h4>
-                        <ul className="space-y-6 text-[10px] font-black tracking-[0.2em] uppercase text-slate-200">
-                            <li><Link className="hover:text-primary transition-colors" to="/about">Notre Histoire</Link></li>
-                            <li><Link className="hover:text-primary transition-colors" to="/client/shop">E-Boutique</Link></li>
-                            <li><Link className="hover:text-primary transition-colors" to="/client/consultation">Diagnostic</Link></li>
-                            <li><Link className="hover:text-primary transition-colors" to="/contact">Conciergerie</Link></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 className="text-white font-black uppercase text-[10px] tracking-[0.4em] mb-10 opacity-40">Conciergerie</h4>
-                        <ul className="space-y-6 text-[10px] font-black tracking-[0.2em] uppercase text-slate-300">
-                            <li className="flex items-center gap-4"><span className="material-symbols-outlined text-primary text-base">mail</span> concierge@elsacoiffure.fr</li>
-                            <li className="flex items-center gap-4"><span className="material-symbols-outlined text-primary text-base">call</span> +33 1 23 45 67 89</li>
-                            <li className="flex items-center gap-4"><span className="material-symbols-outlined text-primary text-base">location_on</span> 75 Av. des Champs-Élysées, Paris</li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="max-w-[1200px] mx-auto border-t border-white/5 mt-20 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-[0.4em] text-white/40 font-sans">
-                    <p>© 2026 ELSA COIFFURE PARIS. TOUS DROITS RÉSERVÉS.</p>
-                    <div className="flex gap-10">
-                        <a className="hover:text-white transition-colors" href="#">Vie Privée</a>
-                        <a className="hover:text-white transition-colors" href="#">Conditions de Réservation</a>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 };

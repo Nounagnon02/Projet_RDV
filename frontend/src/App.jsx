@@ -1,42 +1,49 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { SiteSettingsProvider } from './context/SiteSettingsContext';
+import { CartProvider } from './context/CartContext';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import './index.css';
 
-import ServiceManagement from './pages/ServiceManagement';
-import AvailabilityManagement from './pages/AvailabilityManagement';
-import Agenda from './pages/Agenda';
-import DashboardHome from './pages/DashboardHome';
-import BookingPage from './pages/BookingPage';
-import ClientAppointments from './pages/ClientAppointments';
-import ClientDashboard from './pages/ClientDashboard';
-import ProvidersPage from './pages/ProvidersPage';
+// Public & Client imports
 import Home from './pages/Home';
-import ClientsManagement from './pages/ClientsManagement';
-import MemberProfile from './pages/MemberProfile';
-import HairConsultation from './pages/HairConsultation';
-import BoutiqueCatalog from './pages/BoutiqueCatalog';
-import FAQ from './pages/FAQ';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import FAQ from './pages/FAQ';
+import BoutiqueCatalog from './pages/BoutiqueCatalog';
+import ProvidersPage from './pages/ProvidersPage';
+import BookingPage from './pages/BookingPage';
+import HairConsultation from './pages/HairConsultation';
+import ClientDashboard from './pages/ClientDashboard';
+import ClientAppointments from './pages/ClientAppointments';
+import MemberProfile from './pages/MemberProfile';
+import DashboardHome from './pages/DashboardHome';
 
 // Admin imports
 import ProductManagement from './pages/admin/ProductManagement';
 import ClientManagement from './pages/admin/ClientManagement';
 import BookingManagement from './pages/admin/BookingManagement';
+import ServiceManagement from './pages/admin/ServiceManagement';
+import AvailabilityManagement from './pages/admin/AvailabilityManagement';
+import Agenda from './pages/admin/Agenda';
+import LoyaltyManagement from './pages/admin/LoyaltyManagement';
+import SiteSettings from './pages/admin/SiteSettings';
+import ContactMessages from './pages/admin/ContactMessages';
+import Checkout from './pages/Checkout';
+import PaymentSuccess from './pages/PaymentSuccess';
 
 // Route protégée - vérifie l'authentification
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return null;
+  if (loading) return <Home />;
   return user ? children : <Navigate to="/login" />;
 };
 
 // Route protégée pour les prestataires uniquement
 const ProviderRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return null;
+  if (loading) return <Home />;
   if (!user) return <Navigate to="/login" />;
   if (user.role !== 'provider') return <Navigate to="/client" />;
   return children;
@@ -45,7 +52,7 @@ const ProviderRoute = ({ children }) => {
 // Route protégée pour les clients uniquement
 const ClientRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return null;
+  if (loading) return <Home />;
   if (!user) return <Navigate to="/login" />;
   if (user.role === 'provider') return <Navigate to="/dashboard" />;
   return children;
@@ -54,7 +61,7 @@ const ClientRoute = ({ children }) => {
 // Redirection intelligente basée sur le rôle
 const RoleBasedRedirect = () => {
   const { user, loading } = useAuth();
-  if (loading) return null;
+  if (loading) return <Home />; // show public home while auth resolves to avoid blank screen
   if (!user) return <Home />;
   return user.role === 'provider' ? <Navigate to="/dashboard" /> : <Navigate to="/client" />;
 };
@@ -74,8 +81,6 @@ function AppContent() {
         <Route path="/login" element={user ? <Navigate to={getRedirectPath()} /> : <Login />} />
         <Route path="/register" element={user ? <Navigate to={getRedirectPath()} /> : <Register />} />
 
-        <Route path="/" element={<Home />} />
-
         {/* Routes Prestataire */}
         <Route
           path="/dashboard"
@@ -89,7 +94,23 @@ function AppContent() {
           path="/dashboard/agenda"
           element={
             <ProviderRoute>
-              <BookingManagement />
+              <Agenda />
+            </ProviderRoute>
+          }
+        />
+        <Route
+          path="/dashboard/services"
+          element={
+            <ProviderRoute>
+              <ServiceManagement />
+            </ProviderRoute>
+          }
+        />
+        <Route
+          path="/dashboard/availabilities"
+          element={
+            <ProviderRoute>
+              <AvailabilityManagement />
             </ProviderRoute>
           }
         />
@@ -106,6 +127,30 @@ function AppContent() {
           element={
             <ProviderRoute>
               <ProductManagement />
+            </ProviderRoute>
+          }
+        />
+        <Route
+          path="/dashboard/loyalty"
+          element={
+            <ProviderRoute>
+              <LoyaltyManagement />
+            </ProviderRoute>
+          }
+        />
+        <Route
+          path="/dashboard/settings"
+          element={
+            <ProviderRoute>
+              <SiteSettings />
+            </ProviderRoute>
+          }
+        />
+        <Route
+          path="/dashboard/messages"
+          element={
+            <ProviderRoute>
+              <ContactMessages />
             </ProviderRoute>
           }
         />
@@ -168,9 +213,25 @@ function AppContent() {
           path="/contact"
           element={<Contact />}
         />
+        <Route
+          path="/checkout"
+          element={
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/payment/success"
+          element={
+            <PrivateRoute>
+              <PaymentSuccess />
+            </PrivateRoute>
+          }
+        />
 
-        {/* Redirection racine basée sur le rôle */}
-        <Route path="/" element={<RoleBasedRedirect />} />
+        {/* Page d'accueil publique */}
+        <Route path="/" element={<Home />} />
       </Routes>
     </div>
   );
@@ -180,10 +241,18 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <AppContent />
+        <SiteSettingsProvider>
+          <CartProvider>
+            <AppContent />
+          </CartProvider>
+        </SiteSettingsProvider>
       </AuthProvider>
     </Router>
   );
 }
 
 export default App;
+
+
+
+

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -72,5 +74,84 @@ class ProductController extends Controller
         $products = $query->take(4)->get();
 
         return response()->json(['data' => $products]);
+    }
+
+    /**
+     * Store a new product
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'category' => 'nullable|string',
+            'hair_goal' => 'nullable|string',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
+        ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
+
+        $product = Product::create([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name) . '-' . Str::random(5),
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'category' => $request->category,
+            'hair_goal' => $request->hair_goal,
+            'description' => $request->description,
+            'is_featured' => $request->boolean('is_featured', false),
+            'images' => $imagePath ? [$imagePath] : null,
+        ]);
+
+        return response()->json($product, 201);
+    }
+
+    /**
+     * Update product
+     */
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'price' => 'sometimes|numeric|min:0',
+            'stock' => 'sometimes|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
+        ]);
+
+        $data = $request->except('image');
+        if ($request->has('name')) {
+            $data['slug'] = Str::slug($request->name) . '-' . Str::random(5);
+        }
+
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($product->images && count($product->images) > 0) {
+                Storage::disk('public')->delete($product->images[0]);
+            }
+            $imagePath = $request->file('image')->store('products', 'public');
+            $data['images'] = [$imagePath];
+        }
+
+        $product->update($data);
+
+        return response()->json($product);
+    }
+
+    /**
+     * Delete product
+     */
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return response()->json(['message' => 'Produit supprimé']);
     }
 }

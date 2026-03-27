@@ -3,7 +3,7 @@ import { Card, Button } from '../ui';
 
 const CartDrawer = ({ isOpen, onClose, items, onRemove, onUpdateQuantity }) => {
     const total = items.reduce((sum, item) => {
-        const price = parseFloat(item.price.replace('$', ''));
+        const price = parseFloat(item.price.toString().replace(' FCFA', '').replace(/\s/g, ''));
         return sum + (price * item.quantity);
     }, 0);
 
@@ -86,7 +86,7 @@ const CartDrawer = ({ isOpen, onClose, items, onRemove, onUpdateQuantity }) => {
                     <div className="space-y-2">
                         <div className="flex justify-between text-sm">
                             <span className="text-accent-bronze font-medium">Subtotal</span>
-                            <span className="text-maroon-dark dark:text-text-light font-bold">${total.toFixed(2)}</span>
+                            <span className="text-maroon-dark dark:text-text-light font-bold">{Math.round(total).toLocaleString('fr-FR')} FCFA</span>
                         </div>
                         <div className="flex justify-between text-sm">
                             <span className="text-accent-bronze font-medium">Shipping</span>
@@ -94,7 +94,7 @@ const CartDrawer = ({ isOpen, onClose, items, onRemove, onUpdateQuantity }) => {
                         </div>
                         <div className="flex justify-between text-xl border-t border-accent-cream/30 pt-4 mt-2">
                             <span className="font-display font-bold text-maroon-dark dark:text-text-light">Total</span>
-                            <span className="font-display font-bold text-primary">${total.toFixed(2)}</span>
+                            <span className="font-display font-bold text-primary">{Math.round(total).toLocaleString('fr-FR')} FCFA</span>
                         </div>
                     </div>
 
@@ -102,7 +102,7 @@ const CartDrawer = ({ isOpen, onClose, items, onRemove, onUpdateQuantity }) => {
                         Checkout Now
                     </Button>
                     <p className="text-[10px] text-accent-bronze text-center font-bold italic">
-                        Free delivery on orders over $100
+                        Free delivery on orders over 65 000 FCFA
                     </p>
                 </footer>
             </aside>

@@ -69,8 +69,8 @@ const PhotoUpload = ({ photo, onUpload }) => {
 
                 <div
                     className={`relative border-2 border-dashed rounded-3xl p-10 flex flex-col items-center justify-center transition-all duration-300 min-h-[300px] ${dragActive
-                            ? 'border-primary bg-primary/5'
-                            : 'border-accent-cream dark:border-maroon-light bg-white/40 dark:bg-maroon-dark/40'
+                        ? 'border-primary bg-primary/5'
+                        : 'border-accent-cream dark:border-maroon-light bg-white/40 /40'
                         }`}
                     onDragEnter={handleDrag}
                     onDragLeave={handleDrag}

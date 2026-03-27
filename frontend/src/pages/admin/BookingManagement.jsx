@@ -14,7 +14,8 @@ import {
     Scissors,
     AlertCircle,
     ChevronRight,
-    Plus
+    Plus,
+    Loader2
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
@@ -73,40 +74,40 @@ const BookingManagement = () => {
 
     return (
         <DashboardLayout>
-            <div className="max-w-7xl mx-auto space-y-8">
+            <div className="max-w-7xl mx-auto space-y-12">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-maroon-dark/5 dark:border-white/5 pb-8">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-maroon-dark/5 dark:border-white/5 pb-8 animate-fade-in">
                     <div>
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="flex items-center gap-2 mb-3">
                             <span className="text-xs font-black text-primary uppercase tracking-[0.3em]">Operations</span>
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-display font-medium italic text-maroon-dark dark:text-text-light leading-none">
-                            Agenda des RDV
+                        <h1 className="font-display font-medium italic text-maroon-dark dark:text-text-light leading-none" style={{ fontSize: 'var(--text-h2)' }}>
+                            Gestion des Réservations
                         </h1>
-                        <p className="text-accent-bronze mt-4 text-sm font-medium">
-                            Suivez vos réservations et gérez le flux de travail quotidien.
+                        <p className="text-accent-bronze mt-4 text-lg font-medium italic">
+                            Pilotez votre planning d'exception et validez l'excellence de chaque rendez-vous.
                         </p>
                     </div>
 
-                    <div className="flex gap-3">
-                        <Button variant="secondary" size="sm" leftIcon={<CalendarIcon className="size-4" />}>
+                    <div className="flex gap-4">
+                        <Button variant="outline" size="lg" className="h-14 px-8 font-black uppercase text-[10px] tracking-widest shadow-xl" leftIcon={<CalendarIcon className="size-4" />}>
                             Vue Calendrier
                         </Button>
-                        <Button variant="primary" size="sm" leftIcon={<Plus className="size-4" />}>
-                            Réserver Manuellement
+                        <Button variant="primary" size="lg" className="h-14 px-8 font-black uppercase text-[10px] tracking-widest shadow-xl" leftIcon={<Plus className="size-4" />}>
+                            Réservation Manuelle
                         </Button>
                     </div>
                 </div>
 
                 {/* Filter Tabs */}
-                <div className="flex gap-2 p-1 bg-maroon-dark/5 dark:bg-white/5 rounded-xl w-fit">
+                <div className="flex gap-3 p-2 bg-maroon-dark/5 dark:bg-white/5 rounded-2xl w-fit backdrop-blur-xl">
                     {['upcoming', 'today', 'completed', 'cancelled'].map((tab) => (
                         <button
                             key={tab}
                             onClick={() => setFilter(tab)}
-                            className={`px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all ${filter === tab
-                                ? 'bg-white dark:bg-maroon-dark text-primary shadow-sm'
-                                : 'text-accent-bronze hover:text-maroon-dark dark:hover:text-text-light'
+                            className={`px-8 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${filter === tab
+                                ? 'bg-white text-primary shadow-luxury border border-primary/10'
+                                : 'text-accent-bronze hover:text-maroon-dark hover:bg-white/50'
                                 }`}
                         >
                             {tab}
@@ -115,55 +116,62 @@ const BookingManagement = () => {
                 </div>
 
                 {/* Main List */}
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 gap-6">
                     {loading ? (
                         <div className="flex justify-center py-20">
                             <Loader2 className="size-10 animate-spin text-primary" />
                         </div>
                     ) : appointments.length > 0 ? (
-                        appointments.map((app, index) => (
-                            <Card key={app.id} variant="elevated" className="overflow-hidden p-0 border border-maroon-dark/5 dark:border-white/5 group hover:shadow-lg transition-all">
-                                <div className="flex flex-col md:flex-row md:items-center">
+                        appointments.map((app) => (
+                            <Card key={app.id} hover variant="elevated" className="overflow-hidden p-0 border border-maroon-dark/5 group transition-all duration-700 shadow-xl shadow-maroon-dark/5">
+                                <div className="flex flex-col md:flex-row md:items-stretch">
                                     {/* Date/Time Block */}
-                                    <div className="p-6 md:w-48 border-b md:border-b-0 md:border-r border-maroon-dark/5 dark:border-white/5 bg-maroon-dark/5 dark:bg-white/5 text-center">
-                                        <p className="text-2xl font-display font-bold text-maroon-dark dark:text-text-light italic">{app.start_time}</p>
-                                        <p className="text-[10px] font-black uppercase tracking-widest text-primary mt-1">
-                                            {format(new Date(app.date), 'EEEE d MMM', { locale: fr })}
-                                        </p>
+                                    <div className="p-10 md:w-56 border-b md:border-b-0 md:border-r border-maroon-dark/5 bg-maroon-dark/5 dark:bg-white/5 flex flex-col items-center justify-center text-center">
+                                        <p className="text-4xl font-display font-black text-maroon-dark dark:text-text-light italic leading-none">{app.start_time}</p>
+                                        <div className="mt-4 flex flex-col items-center gap-1">
+                                            <p className="text-[10px] font-black uppercase tracking-widest text-primary">
+                                                {format(new Date(app.date), 'EEEE d MMM', { locale: fr })}
+                                            </p>
+                                            <p className="text-[9px] font-medium text-accent-bronze italic">Saison 2026</p>
+                                        </div>
                                     </div>
 
                                     {/* Main Content */}
-                                    <div className="p-6 flex-1 flex flex-col md:flex-row md:items-center gap-6">
-                                        <div className="flex-1 space-y-2">
-                                            <div className="flex items-center gap-2">
-                                                <Scissors className="size-4 text-primary" />
-                                                <h3 className="text-lg font-bold text-maroon-dark dark:text-text-light">{app.service?.name}</h3>
+                                    <div className="p-10 flex-1 flex flex-col md:flex-row md:items-center gap-10">
+                                        <div className="flex-1 space-y-6">
+                                            <div className="flex flex-col gap-2">
+                                                <div className="flex items-center gap-3">
+                                                    <Scissors className="size-5 text-primary" />
+                                                    <h3 className="text-2xl font-display font-bold text-maroon-dark dark:text-text-light italic group-hover:text-primary transition-colors">{app.service?.name}</h3>
+                                                </div>
+                                                <div className="flex flex-wrap items-center gap-4">
+                                                    <div className="flex items-center gap-2 text-sm font-bold text-maroon-dark">
+                                                        <User className="size-4 text-primary" />
+                                                        {app.client?.name}
+                                                    </div>
+                                                    <span className="text-maroon-dark/10 h-4 w-px hidden sm:block"></span>
+                                                    <p className="text-2xl font-display font-black text-primary">{Math.round(app.service?.price || 0).toLocaleString('fr-FR')} FCFA</p>
+                                                </div>
                                             </div>
-                                            <div className="flex flex-wrap gap-4">
-                                                <p className="text-sm font-medium text-accent-bronze flex items-center gap-1.5">
-                                                    <User className="size-3.5" /> {app.client?.name}
-                                                </p>
-                                                <span className="text-accent-bronze/40">•</span>
-                                                <p className="text-sm font-bold text-primary">${app.service?.price}</p>
-                                            </div>
+
                                             {app.addons && app.addons.length > 0 && (
-                                                <div className="flex gap-2 pt-1">
+                                                <div className="flex flex-wrap gap-2 pt-2">
                                                     {app.addons.map((a, i) => (
-                                                        <span key={i} className="px-2 py-0.5 bg-accent-cream/50 text-maroon-dark text-[9px] font-black border border-accent-cream rounded uppercase tracking-tighter">
-                                                            {a}
+                                                        <span key={i} className="px-3 py-1 bg-primary/5 text-primary text-[9px] font-black border border-primary/20 rounded-full uppercase tracking-tighter italic">
+                                                            + {a}
                                                         </span>
                                                     ))}
                                                 </div>
                                             )}
                                         </div>
 
-                                        <div className="flex items-center gap-3">
+                                        <div className="flex items-center gap-4">
                                             {app.status === 'pending' && (
-                                                <>
+                                                <div className="flex gap-4">
                                                     <Button
-                                                        variant="ghost"
+                                                        variant="outline"
                                                         size="sm"
-                                                        className="text-accent-rose hover:bg-accent-rose/10 h-10 px-4"
+                                                        className="h-12 px-8 font-black uppercase tracking-widest text-[9px] border-rose-500/20 text-rose-500 hover:bg-rose-500/5"
                                                         onClick={() => handleStatusUpdate(app.id, 'cancelled')}
                                                     >
                                                         Refuser
@@ -171,32 +179,32 @@ const BookingManagement = () => {
                                                     <Button
                                                         variant="primary"
                                                         size="sm"
-                                                        className="h-10 px-6"
+                                                        className="h-12 px-10 font-black uppercase tracking-widest text-[9px] shadow-lg shadow-primary/20"
                                                         onClick={() => handleStatusUpdate(app.id, 'confirmed')}
                                                     >
                                                         Confirmer
                                                     </Button>
-                                                </>
+                                                </div>
                                             )}
                                             {app.status === 'confirmed' && (
-                                                <div className="flex items-center gap-2 px-6 py-2 bg-accent-emerald/10 text-accent-emerald rounded-full border border-accent-emerald/20">
+                                                <div className="flex items-center gap-3 px-8 py-3 bg-emerald-500/10 text-emerald-600 rounded-full border border-emerald-500/20 shadow-sm">
                                                     <CheckCircle2 className="size-4" />
-                                                    <span className="text-[10px] font-black uppercase tracking-widest">Confirmé</span>
+                                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] italic">CONFIRMÉ EXCELLENCE</span>
                                                 </div>
                                             )}
                                             {app.status === 'cancelled' && (
-                                                <div className="flex items-center gap-2 px-6 py-2 bg-accent-rose/10 text-accent-rose rounded-full border border-accent-rose/20">
+                                                <div className="flex items-center gap-3 px-8 py-3 bg-rose-500/10 text-rose-500 rounded-full border border-rose-500/20 shadow-sm opacity-60">
                                                     <XCircle className="size-4" />
-                                                    <span className="text-[10px] font-black uppercase tracking-widest">Annulé</span>
+                                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] italic">SESSION ANNULÉE</span>
                                                 </div>
                                             )}
                                         </div>
                                     </div>
 
                                     {/* More Menu */}
-                                    <div className="p-6 md:w-[60px] flex items-center justify-center border-t md:border-t-0 md:border-l border-maroon-dark/5 dark:border-white/5">
-                                        <button className="size-10 rounded-full hover:bg-maroon-dark/5 dark:hover:bg-white/5 flex items-center justify-center text-accent-bronze">
-                                            <MoreHorizontal className="size-5" />
+                                    <div className="p-8 md:w-[100px] flex items-center justify-center border-t md:border-t-0 md:border-l border-maroon-dark/5 bg-maroon-dark/[0.02] group-hover:bg-primary transition-all duration-500">
+                                        <button className="size-14 rounded-full bg-white flex items-center justify-center text-maroon-dark group-hover:scale-110 transition-transform shadow-lg group-hover:text-primary">
+                                            <MoreHorizontal className="size-6" />
                                         </button>
                                     </div>
                                 </div>

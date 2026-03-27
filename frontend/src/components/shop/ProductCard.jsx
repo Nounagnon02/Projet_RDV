@@ -40,7 +40,7 @@ const ProductCard = ({ product, onAddToCart, onViewDetails }) => {
                 )}
 
                 {hair_goal && (
-                    <div className="absolute bottom-4 right-4 bg-white/90 dark:bg-maroon-dark/90 backdrop-blur-sm px-3 py-1 rounded-lg border border-accent-cream/20 shadow-md">
+                    <div className="absolute bottom-4 right-4 bg-white/90 /90 backdrop-blur-sm px-3 py-1 rounded-lg border border-accent-cream/20 shadow-md">
                         <p className="text-[10px] font-bold text-primary uppercase tracking-widest">{hair_goal}</p>
                     </div>
                 )}

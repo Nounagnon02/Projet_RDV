@@ -65,4 +65,29 @@ class AvailabilityController extends Controller
 
         return response()->json($provider->availabilities()->get(), 201);
     }
+
+    public function getOpeningHours()
+    {
+        $provider = Provider::first();
+        if (!$provider) {
+            return response()->json([
+                'monday_friday' => '09:00 — 19:00',
+                'saturday' => '10:00 — 18:00',
+                'sunday' => 'Fermé'
+            ]);
+        }
+
+        $availabilities = $provider->availabilities()->where('is_active', true)->get();
+        
+        $weekDays = [1, 2, 3, 4, 5];
+        $mondayFriday = $availabilities->whereIn('day_of_week', $weekDays)->first();
+        $saturday = $availabilities->where('day_of_week', 6)->first();
+        $sunday = $availabilities->where('day_of_week', 0)->first();
+
+        return response()->json([
+            'monday_friday' => $mondayFriday ? substr($mondayFriday->start_time, 0, 5) . ' — ' . substr($mondayFriday->end_time, 0, 5) : '09:00 — 19:00',
+            'saturday' => $saturday ? substr($saturday->start_time, 0, 5) . ' — ' . substr($saturday->end_time, 0, 5) : '10:00 — 18:00',
+            'sunday' => $sunday ? substr($sunday->start_time, 0, 5) . ' — ' . substr($sunday->end_time, 0, 5) : 'Fermé'
+        ]);
+    }
 }

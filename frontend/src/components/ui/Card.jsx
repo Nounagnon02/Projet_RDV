@@ -22,7 +22,7 @@ const Card = ({
     const variants = {
         default: 'glass-card',
         light: 'glass-card-light',
-        elevated: 'bg-white dark:bg-maroon-dark shadow-elevated border border-accent-cream/20 dark:border-maroon-light/20',
+        elevated: 'bg-white  shadow-elevated border border-accent-cream/20 dark:border-maroon-light/20',
     };
 
     const hoverStyles = hover ? 'hover:scale-[1.01] hover:shadow-glass-dark cursor-pointer' : '';

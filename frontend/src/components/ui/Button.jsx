@@ -29,7 +29,7 @@ const Button = forwardRef(({
 
     const variants = {
         primary: 'bg-gradient-to-r from-primary-dark to-primary text-white shadow-primary-glow hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-98',
-        secondary: 'bg-background-light dark:bg-maroon-dark text-maroon-dark dark:text-text-light border border-primary/20 dark:border-primary/30 hover:bg-accent-cream dark:hover:bg-maroon-light hover:border-primary/40',
+        secondary: 'bg-background-light  text-maroon-dark dark:text-text-light border border-primary/20 dark:border-primary/30 hover:bg-accent-cream dark:hover:bg-maroon-light hover:border-primary/40',
         ghost: 'text-maroon-dark dark:text-text-light hover:bg-accent-cream/50 dark:hover:bg-maroon-dark/50',
         outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-white',
     };

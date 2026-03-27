@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import api from '../api/axios';
 import { Card, Button, Input } from '../components/ui';
 import {
@@ -41,27 +43,16 @@ const ProvidersPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-background-light dark:bg-background-dark font-display">
-            {/* Header / Nav (Minimal) */}
-            <nav className="h-24 px-8 flex items-center justify-between border-b border-maroon-dark/5">
-                <Link to="/" className="flex items-center gap-3">
-                    <div className="size-10 rounded-full bg-primary flex items-center justify-center">
-                        <span className="material-symbols-outlined text-white text-xl">flare</span>
-                    </div>
-                    <h1 className="text-xl font-bold tracking-[0.2em] text-maroon-dark dark:text-text-light uppercase">Elsa Coiffure</h1>
-                </Link>
-                <Link to="/" className="text-[10px] font-black uppercase tracking-[0.3em] text-accent-bronze hover:text-primary transition-all flex items-center gap-2">
-                    <ArrowLeft className="size-3" /> RETOUR
-                </Link>
-            </nav>
+        <div className="min-h-screen bg-background-light dark:bg-background-dark font-display overflow-x-hidden">
+            <Navbar />
 
             {/* Elite Hero */}
             <div className="relative py-24 px-6 overflow-hidden">
                 <div className="absolute top-0 right-0 w-1/2 h-full bg-maroon-dark/5 -skew-x-12 translate-x-1/2"></div>
 
-                <div className="max-w-4xl mx-auto text-center relative z-10 animate-fade-in-up">
+                <div className="max-w-4xl mx-auto text-center relative z-10 animate-fade-in">
                     <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em] block mb-6">L'Expertise à Votre Service</span>
-                    <h1 className="text-5xl md:text-7xl font-display italic text-maroon-dark dark:text-text-light leading-[1.1] mb-8">
+                    <h1 className="font-display italic text-maroon-dark dark:text-text-light leading-[1.1] mb-8" style={{ fontSize: 'var(--text-h1)' }}>
                         Rencontrez Nos <span className="text-primary italic">Maîtres Artisans</span>.
                     </h1>
                     <p className="text-accent-bronze text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
@@ -160,6 +151,7 @@ const ProvidersPage = () => {
                     </Card>
                 )}
             </div>
+            <Footer />
         </div>
     );
 };

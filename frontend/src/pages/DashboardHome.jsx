@@ -12,7 +12,8 @@ import {
     Sparkles,
     ArrowUpRight,
     ShoppingBag,
-    Star
+    Star,
+    Scissors
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';

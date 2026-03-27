@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Boutique Shopping Cart | Elsa Coiffure</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Boutique Shopping Cart | Elsa Coiffure</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -32,260 +39,341 @@
             },
         }
     </script>
-<style>
+    <style>
         body {
             font-family: 'Inter', sans-serif;
         }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
     </style>
 </head>
+
 <body class="bg-background-light dark:bg-background-dark text-maroon dark:text-white antialiased">
-<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
-<div class="layout-container flex h-full grow flex-col">
-<!-- Header Component -->
-<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 px-10 py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
-<div class="flex items-center gap-8">
-<div class="flex items-center gap-4 text-maroon dark:text-primary">
-<div class="size-6">
-<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-<h2 class="text-maroon dark:text-white text-xl font-black leading-tight tracking-[-0.015em] uppercase">Elsa Coiffure</h2>
-</div>
-<div class="hidden md:flex items-center gap-9">
-<a class="text-maroon/70 dark:text-white/70 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Services</a>
-<a class="text-maroon dark:text-white text-sm font-bold leading-normal border-b-2 border-primary" href="#">Boutique</a>
-<a class="text-maroon/70 dark:text-white/70 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Gallery</a>
-<a class="text-maroon/70 dark:text-white/70 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">About</a>
-</div>
-</div>
-<div class="flex flex-1 justify-end gap-6 items-center">
-<label class="hidden lg:flex flex-col min-w-40 h-10 max-w-64">
-<div class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden border border-primary/20 bg-white/50 dark:bg-white/5">
-<div class="text-primary flex items-center justify-center pl-4 pr-2">
-<span class="material-symbols-outlined text-xl">search</span>
-</div>
-<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:ring-0 text-sm font-normal placeholder:text-maroon/40 dark:placeholder:text-white/40" placeholder="Search products..." value=""/>
-</div>
-</label>
-<div class="flex gap-3">
-<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-maroon dark:text-white hover:bg-primary/20 transition-all">
-<span class="material-symbols-outlined">shopping_bag</span>
-</button>
-<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-maroon dark:text-white hover:bg-primary/20 transition-all">
-<span class="material-symbols-outlined">person</span>
-</button>
-</div>
-</div>
-</header>
-<main class="flex-1 px-4 md:px-10 lg:px-40 py-10 max-w-[1440px] mx-auto w-full">
-<!-- Breadcrumbs Component -->
-<nav class="flex flex-wrap gap-2 py-4 mb-4">
-<a class="text-maroon/50 dark:text-white/50 text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
-<span class="text-maroon/30 dark:text-white/30 text-sm font-medium">/</span>
-<a class="text-maroon/50 dark:text-white/50 text-sm font-medium hover:text-primary transition-colors" href="#">Boutique</a>
-<span class="text-maroon/30 dark:text-white/30 text-sm font-medium">/</span>
-<span class="text-primary text-sm font-bold">Shopping Cart</span>
-</nav>
-<!-- Page Heading Component -->
-<div class="flex flex-col gap-2 mb-10">
-<h1 class="text-maroon dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">Your Selection</h1>
-<p class="text-maroon/60 dark:text-white/60 text-lg font-normal">Review your premium hair care products before checkout</p>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-<!-- Cart Items Section -->
-<div class="lg:col-span-2 flex flex-col gap-6">
-<!-- Item 1 -->
-<div class="flex flex-col md:flex-row gap-6 p-6 bg-white dark:bg-white/5 rounded-xl shadow-sm border border-primary/5 hover:shadow-md transition-shadow">
-<div class="w-32 h-32 bg-background-light dark:bg-background-dark rounded-lg overflow-hidden flex-shrink-0">
-<div class="w-full h-full bg-center bg-no-repeat bg-cover" data-alt="Premium shea butter hair mask gold packaging" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCsFveGAu9kegu1nxYx7P73h66g88gxntb1u_O8bOaUK2LxEDAxFtv75O1hQgPLMs_CNuSy--n6fOwRRjYS5X4YmUplNe68n2LFpbY4mB-cOJZJCORTvRwsMBC3anouEwCHufy2gp6thpFzvrgG_61elv43xmc6Ft-xAJYMZGZY7YBvVaAxm0PctwAKxM8l004X_5aGQiQ3mkbjNnQ6Aw98GarZGwqrEEE2f15krYE-8-TL2fvZDXyykhf0etgIBpzcGtunV9DU2lE");'></div>
-</div>
-<div class="flex flex-col flex-1 justify-between py-1">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="text-maroon dark:text-white text-xl font-bold">Revitalizing Shea Mask</h3>
-<p class="text-maroon/50 dark:text-white/50 text-sm mt-1">Deep moisturizing formula for natural hair - 250ml</p>
-</div>
-<button class="text-maroon/30 hover:text-red-500 transition-colors">
-<span class="material-symbols-outlined">delete</span>
-</button>
-</div>
-<div class="flex justify-between items-center mt-6">
-<div class="flex items-center border border-primary/20 rounded-lg bg-background-light dark:bg-white/5 overflow-hidden">
-<button class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">-</button>
-<span class="px-4 py-1 text-sm font-bold text-maroon dark:text-white border-x border-primary/10">1</span>
-<button class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">+</button>
-</div>
-<span class="text-maroon dark:text-white text-lg font-black">€45.00</span>
-</div>
-</div>
-</div>
-<!-- Item 2 -->
-<div class="flex flex-col md:flex-row gap-6 p-6 bg-white dark:bg-white/5 rounded-xl shadow-sm border border-primary/5 hover:shadow-md transition-shadow">
-<div class="w-32 h-32 bg-background-light dark:bg-background-dark rounded-lg overflow-hidden flex-shrink-0">
-<div class="w-full h-full bg-center bg-no-repeat bg-cover" data-alt="Gold silk hair bonnet premium texture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAd69uH6zFKvSAfHfeAvhN-SqESbrI6XH_cqDTe1EWSUX-R279SbyCPQWqkB1pVaQ5nK2CYaAK4D9Ne_kqGU0KLIecnGRUjwvCH32r2ryHCC0i-3jMobh8-eT7dWXWLSqp3jnOSxdX57AYmyUcsz-oprrKr2n9FpzknXoQWGzHer3jVPCAuHfhfQx67mcnb83kDp8FgbdQXGgaL8FCXtpvmQ2UrYMC1E4t5MvUVQdEqbHNszsgf3Mff7PovLNKRqsKSPo0uK6p1ILU");'></div>
-</div>
-<div class="flex flex-col flex-1 justify-between py-1">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="text-maroon dark:text-white text-xl font-bold">Luxury Gold Satin Bonnet</h3>
-<p class="text-maroon/50 dark:text-white/50 text-sm mt-1">Luxury gold satin protection for overnight care</p>
-</div>
-<button class="text-maroon/30 hover:text-red-500 transition-colors">
-<span class="material-symbols-outlined">delete</span>
-</button>
-</div>
-<div class="flex justify-between items-center mt-6">
-<div class="flex items-center border border-primary/20 rounded-lg bg-background-light dark:bg-white/5 overflow-hidden">
-<button class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">-</button>
-<span class="px-4 py-1 text-sm font-bold text-maroon dark:text-white border-x border-primary/10">1</span>
-<button class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">+</button>
-</div>
-<span class="text-maroon dark:text-white text-lg font-black">€25.00</span>
-</div>
-</div>
-</div>
-<!-- Item 3 -->
-<div class="flex flex-col md:flex-row gap-6 p-6 bg-white dark:bg-white/5 rounded-xl shadow-sm border border-primary/5 hover:shadow-md transition-shadow">
-<div class="w-32 h-32 bg-background-light dark:bg-background-dark rounded-lg overflow-hidden flex-shrink-0">
-<div class="w-full h-full bg-center bg-no-repeat bg-cover" data-alt="Organic hair growth oil with dropper" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUkc9kpiNOwHCLHClTbGAkm_mQTeQbrB25jjnIFLnFJAU33pMsVRREPDyayHH1Ved2LZlbWHwSg6QpJd7r-iBCqSnGBVknReuqR7B3yBfHDsuMfAEjTR8V1GqskumygugIhvKgqBO8WW6EOAvEI80CyDIqvSqJblmBeMgKRjBXQRVwiWxsAaqpZxGKKbad85FYKBtiMVZCrfuY9hQZ2hzowYLeEOiw7OL__UEcsF-IyaeDo2V3dbDnYEUDuajvc4dRprgJDhdj_Cw");'></div>
-</div>
-<div class="flex flex-col flex-1 justify-between py-1">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="text-maroon dark:text-white text-xl font-bold">Scalp Nutrition Elixir</h3>
-<p class="text-maroon/50 dark:text-white/50 text-sm mt-1">Essential oils for scalp health - 100ml</p>
-</div>
-<button class="text-maroon/30 hover:text-red-500 transition-colors">
-<span class="material-symbols-outlined">delete</span>
-</button>
-</div>
-<div class="flex justify-between items-center mt-6">
-<div class="flex items-center border border-primary/20 rounded-lg bg-background-light dark:bg-white/5 overflow-hidden">
-<button class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">-</button>
-<span class="px-4 py-1 text-sm font-bold text-maroon dark:text-white border-x border-primary/10">2</span>
-<button class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">+</button>
-</div>
-<span class="text-maroon dark:text-white text-lg font-black">€60.00</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Summary Sidebar -->
-<div class="lg:sticky lg:top-28">
-<div class="bg-white dark:bg-white/5 rounded-xl border border-primary/10 p-8 shadow-xl">
-<h2 class="text-2xl font-black text-maroon dark:text-white mb-6 tracking-tight">Order Summary</h2>
-<!-- DescriptionList Component Style -->
-<div class="space-y-4 mb-8">
-<div class="flex justify-between items-center py-2">
-<p class="text-maroon/60 dark:text-white/60 text-base font-medium">Subtotal</p>
-<p class="text-maroon dark:text-white text-base font-bold">€130.00</p>
-</div>
-<div class="flex justify-between items-center py-2">
-<p class="text-maroon/60 dark:text-white/60 text-base font-medium">Estimated Shipping</p>
-<p class="text-maroon dark:text-white text-base font-bold">€5.00</p>
-</div>
-<div class="flex justify-between items-center py-2 border-t border-primary/10 pt-4 mt-4">
-<p class="text-maroon dark:text-white text-xl font-black uppercase tracking-tight">Total</p>
-<p class="text-maroon dark:text-white text-2xl font-black">€135.00</p>
-</div>
-</div>
-<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-lg flex items-center justify-center gap-3 transition-all transform active:scale-[0.98] shadow-lg shadow-primary/20">
-<span class="material-symbols-outlined">lock</span>
+    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <!-- Header Component -->
+            <header
+                class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 px-10 py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+                <div class="flex items-center gap-8">
+                    <div class="flex items-center gap-4 text-maroon dark:text-primary">
+                        <div class="size-6">
+                            <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"
+                                    fill="currentColor" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <h2
+                            class="text-maroon dark:text-white text-xl font-black leading-tight tracking-[-0.015em] uppercase">
+                            Elsa Coiffure</h2>
+                    </div>
+                    <div class="hidden md:flex items-center gap-9">
+                        <a class="text-maroon/70 dark:text-white/70 text-sm font-medium leading-normal hover:text-primary transition-colors"
+                            href="#">Services</a>
+                        <a class="text-maroon dark:text-white text-sm font-bold leading-normal border-b-2 border-primary"
+                            href="#">Boutique</a>
+                        <a class="text-maroon/70 dark:text-white/70 text-sm font-medium leading-normal hover:text-primary transition-colors"
+                            href="#">Gallery</a>
+                        <a class="text-maroon/70 dark:text-white/70 text-sm font-medium leading-normal hover:text-primary transition-colors"
+                            href="#">About</a>
+                    </div>
+                </div>
+                <div class="flex flex-1 justify-end gap-6 items-center">
+                    <label class="hidden lg:flex flex-col min-w-40 h-10 max-w-64">
+                        <div
+                            class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden border border-primary/20 bg-white/50 dark:bg-white/5">
+                            <div class="text-primary flex items-center justify-center pl-4 pr-2">
+                                <span class="material-symbols-outlined text-xl">search</span>
+                            </div>
+                            <input
+                                class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:ring-0 text-sm font-normal placeholder:text-maroon/40 dark:placeholder:text-white/40"
+                                placeholder="Search products..." value="" />
+                        </div>
+                    </label>
+                    <div class="flex gap-3">
+                        <button
+                            class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-maroon dark:text-white hover:bg-primary/20 transition-all">
+                            <span class="material-symbols-outlined">shopping_bag</span>
+                        </button>
+                        <button
+                            class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-maroon dark:text-white hover:bg-primary/20 transition-all">
+                            <span class="material-symbols-outlined">person</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <main class="flex-1 px-4 md:px-10 lg:px-40 py-10 max-w-[1440px] mx-auto w-full">
+                <!-- Breadcrumbs Component -->
+                <nav class="flex flex-wrap gap-2 py-4 mb-4">
+                    <a class="text-maroon/50 dark:text-white/50 text-sm font-medium hover:text-primary transition-colors"
+                        href="#">Home</a>
+                    <span class="text-maroon/30 dark:text-white/30 text-sm font-medium">/</span>
+                    <a class="text-maroon/50 dark:text-white/50 text-sm font-medium hover:text-primary transition-colors"
+                        href="#">Boutique</a>
+                    <span class="text-maroon/30 dark:text-white/30 text-sm font-medium">/</span>
+                    <span class="text-primary text-sm font-bold">Shopping Cart</span>
+                </nav>
+                <!-- Page Heading Component -->
+                <div class="flex flex-col gap-2 mb-10">
+                    <h1 class="text-maroon dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">Your
+                        Selection</h1>
+                    <p class="text-maroon/60 dark:text-white/60 text-lg font-normal">Review your premium hair care
+                        products before checkout</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+                    <!-- Cart Items Section -->
+                    <div class="lg:col-span-2 flex flex-col gap-6">
+                        <!-- Item 1 -->
+                        <div
+                            class="flex flex-col md:flex-row gap-6 p-6 bg-white dark:bg-white/5 rounded-xl shadow-sm border border-primary/5 hover:shadow-md transition-shadow">
+                            <div
+                                class="w-32 h-32 bg-background-light dark:bg-background-dark rounded-lg overflow-hidden flex-shrink-0">
+                                <div class="w-full h-full bg-center bg-no-repeat bg-cover"
+                                    data-alt="Premium shea butter hair mask gold packaging"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCsFveGAu9kegu1nxYx7P73h66g88gxntb1u_O8bOaUK2LxEDAxFtv75O1hQgPLMs_CNuSy--n6fOwRRjYS5X4YmUplNe68n2LFpbY4mB-cOJZJCORTvRwsMBC3anouEwCHufy2gp6thpFzvrgG_61elv43xmc6Ft-xAJYMZGZY7YBvVaAxm0PctwAKxM8l004X_5aGQiQ3mkbjNnQ6Aw98GarZGwqrEEE2f15krYE-8-TL2fvZDXyykhf0etgIBpzcGtunV9DU2lE");'>
+                                </div>
+                            </div>
+                            <div class="flex flex-col flex-1 justify-between py-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="text-maroon dark:text-white text-xl font-bold">Revitalizing Shea Mask
+                                        </h3>
+                                        <p class="text-maroon/50 dark:text-white/50 text-sm mt-1">Deep moisturizing
+                                            formula for natural hair - 250ml</p>
+                                    </div>
+                                    <button class="text-maroon/30 hover:text-red-500 transition-colors">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </button>
+                                </div>
+                                <div class="flex justify-between items-center mt-6">
+                                    <div
+                                        class="flex items-center border border-primary/20 rounded-lg bg-background-light dark:bg-white/5 overflow-hidden">
+                                        <button
+                                            class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">-</button>
+                                        <span
+                                            class="px-4 py-1 text-sm font-bold text-maroon dark:text-white border-x border-primary/10">1</span>
+                                        <button
+                                            class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">+</button>
+                                    </div>
+                                    <span class="text-maroon dark:text-white text-lg font-black">FCFA45.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Item 2 -->
+                        <div
+                            class="flex flex-col md:flex-row gap-6 p-6 bg-white dark:bg-white/5 rounded-xl shadow-sm border border-primary/5 hover:shadow-md transition-shadow">
+                            <div
+                                class="w-32 h-32 bg-background-light dark:bg-background-dark rounded-lg overflow-hidden flex-shrink-0">
+                                <div class="w-full h-full bg-center bg-no-repeat bg-cover"
+                                    data-alt="Gold silk hair bonnet premium texture"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAd69uH6zFKvSAfHfeAvhN-SqESbrI6XH_cqDTe1EWSUX-R279SbyCPQWqkB1pVaQ5nK2CYaAK4D9Ne_kqGU0KLIecnGRUjwvCH32r2ryHCC0i-3jMobh8-eT7dWXWLSqp3jnOSxdX57AYmyUcsz-oprrKr2n9FpzknXoQWGzHer3jVPCAuHfhfQx67mcnb83kDp8FgbdQXGgaL8FCXtpvmQ2UrYMC1E4t5MvUVQdEqbHNszsgf3Mff7PovLNKRqsKSPo0uK6p1ILU");'>
+                                </div>
+                            </div>
+                            <div class="flex flex-col flex-1 justify-between py-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="text-maroon dark:text-white text-xl font-bold">Luxury Gold Satin
+                                            Bonnet</h3>
+                                        <p class="text-maroon/50 dark:text-white/50 text-sm mt-1">Luxury gold satin
+                                            protection for overnight care</p>
+                                    </div>
+                                    <button class="text-maroon/30 hover:text-red-500 transition-colors">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </button>
+                                </div>
+                                <div class="flex justify-between items-center mt-6">
+                                    <div
+                                        class="flex items-center border border-primary/20 rounded-lg bg-background-light dark:bg-white/5 overflow-hidden">
+                                        <button
+                                            class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">-</button>
+                                        <span
+                                            class="px-4 py-1 text-sm font-bold text-maroon dark:text-white border-x border-primary/10">1</span>
+                                        <button
+                                            class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">+</button>
+                                    </div>
+                                    <span class="text-maroon dark:text-white text-lg font-black">FCFA25.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Item 3 -->
+                        <div
+                            class="flex flex-col md:flex-row gap-6 p-6 bg-white dark:bg-white/5 rounded-xl shadow-sm border border-primary/5 hover:shadow-md transition-shadow">
+                            <div
+                                class="w-32 h-32 bg-background-light dark:bg-background-dark rounded-lg overflow-hidden flex-shrink-0">
+                                <div class="w-full h-full bg-center bg-no-repeat bg-cover"
+                                    data-alt="Organic hair growth oil with dropper"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUkc9kpiNOwHCLHClTbGAkm_mQTeQbrB25jjnIFLnFJAU33pMsVRREPDyayHH1Ved2LZlbWHwSg6QpJd7r-iBCqSnGBVknReuqR7B3yBfHDsuMfAEjTR8V1GqskumygugIhvKgqBO8WW6EOAvEI80CyDIqvSqJblmBeMgKRjBXQRVwiWxsAaqpZxGKKbad85FYKBtiMVZCrfuY9hQZ2hzowYLeEOiw7OL__UEcsF-IyaeDo2V3dbDnYEUDuajvc4dRprgJDhdj_Cw");'>
+                                </div>
+                            </div>
+                            <div class="flex flex-col flex-1 justify-between py-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="text-maroon dark:text-white text-xl font-bold">Scalp Nutrition Elixir
+                                        </h3>
+                                        <p class="text-maroon/50 dark:text-white/50 text-sm mt-1">Essential oils for
+                                            scalp health - 100ml</p>
+                                    </div>
+                                    <button class="text-maroon/30 hover:text-red-500 transition-colors">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </button>
+                                </div>
+                                <div class="flex justify-between items-center mt-6">
+                                    <div
+                                        class="flex items-center border border-primary/20 rounded-lg bg-background-light dark:bg-white/5 overflow-hidden">
+                                        <button
+                                            class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">-</button>
+                                        <span
+                                            class="px-4 py-1 text-sm font-bold text-maroon dark:text-white border-x border-primary/10">2</span>
+                                        <button
+                                            class="px-3 py-1 hover:bg-primary/10 transition-colors text-maroon dark:text-white">+</button>
+                                    </div>
+                                    <span class="text-maroon dark:text-white text-lg font-black">FCFA60.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Summary Sidebar -->
+                    <div class="lg:sticky lg:top-28">
+                        <div class="bg-white dark:bg-white/5 rounded-xl border border-primary/10 p-8 shadow-xl">
+                            <h2 class="text-2xl font-black text-maroon dark:text-white mb-6 tracking-tight">Order
+                                Summary</h2>
+                            <!-- DescriptionList Component Style -->
+                            <div class="space-y-4 mb-8">
+                                <div class="flex justify-between items-center py-2">
+                                    <p class="text-maroon/60 dark:text-white/60 text-base font-medium">Subtotal</p>
+                                    <p class="text-maroon dark:text-white text-base font-bold">FCFA130.00</p>
+                                </div>
+                                <div class="flex justify-between items-center py-2">
+                                    <p class="text-maroon/60 dark:text-white/60 text-base font-medium">Estimated
+                                        Shipping</p>
+                                    <p class="text-maroon dark:text-white text-base font-bold">FCFA5.00</p>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center py-2 border-t border-primary/10 pt-4 mt-4">
+                                    <p class="text-maroon dark:text-white text-xl font-black uppercase tracking-tight">
+                                        Total</p>
+                                    <p class="text-maroon dark:text-white text-2xl font-black">FCFA135.00</p>
+                                </div>
+                            </div>
+                            <button
+                                class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-lg flex items-center justify-center gap-3 transition-all transform active:scale-[0.98] shadow-lg shadow-primary/20">
+                                <span class="material-symbols-outlined">lock</span>
                                 Proceed to Checkout
                             </button>
-<div class="mt-8 pt-8 border-t border-primary/5 space-y-4">
-<div class="flex items-center gap-3 text-sm text-maroon/60 dark:text-white/60">
-<span class="material-symbols-outlined text-primary text-xl">verified</span>
+                            <div class="mt-8 pt-8 border-t border-primary/5 space-y-4">
+                                <div class="flex items-center gap-3 text-sm text-maroon/60 dark:text-white/60">
+                                    <span class="material-symbols-outlined text-primary text-xl">verified</span>
                                     Premium Quality Guaranteed
                                 </div>
-<div class="flex items-center gap-3 text-sm text-maroon/60 dark:text-white/60">
-<span class="material-symbols-outlined text-primary text-xl">local_shipping</span>
+                                <div class="flex items-center gap-3 text-sm text-maroon/60 dark:text-white/60">
+                                    <span class="material-symbols-outlined text-primary text-xl">local_shipping</span>
                                     Express 48h Delivery
                                 </div>
-<div class="flex items-center gap-3 text-sm text-maroon/60 dark:text-white/60">
-<span class="material-symbols-outlined text-primary text-xl">security</span>
+                                <div class="flex items-center gap-3 text-sm text-maroon/60 dark:text-white/60">
+                                    <span class="material-symbols-outlined text-primary text-xl">security</span>
                                     100% Secure Payment
                                 </div>
-</div>
-</div>
-<!-- Mini Upsell Section -->
-<div class="mt-6 p-6 rounded-xl border-2 border-dashed border-primary/20 bg-primary/5 flex items-center gap-4">
-<div class="w-16 h-16 bg-white rounded-lg flex-shrink-0 bg-center bg-cover border border-primary/10" data-alt="Handcrafted sandalwood wide tooth comb" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCJs0ouymtDW4uLEd4zxVdtmSkbq_3h7skRxH2-ZHToMcstH1vhojG5_webpAFnx7D2U7X_tSmm6GEzE0z7SflgGN8-4KSNxe0v-mF_W-MKs25846JS9vkks3aM_YfA7hw3HGSDBef5L3ZZtza0zckza1ebW_B-yA-8OvrL0RRzU557c8sf8Y9VMzHQaK_eu7vTmKJBryqHq6aqwtOkVnGyRZdE-yq7aLFjyvUsY_BsfKXFnHvrn-FQlMX3yWKinZ0oosonHqRuLzo");'></div>
-<div class="flex-1">
-<p class="text-xs font-bold text-primary uppercase tracking-widest">Pairs well with</p>
-<h4 class="text-sm font-bold text-maroon dark:text-white leading-tight">Sandalwood Detangling Comb</h4>
-<button class="text-primary text-xs font-bold mt-1 underline">Add for €12.00</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Featured Products / Continue Shopping -->
-<div class="mt-24 border-t border-primary/10 pt-16">
-<div class="flex justify-between items-end mb-8">
-<div>
-<h2 class="text-3xl font-black text-maroon dark:text-white tracking-tight">Keep Browsing</h2>
-<p class="text-maroon/60 dark:text-white/60 mt-1">Found something else you like?</p>
-</div>
-<a class="text-primary font-bold flex items-center gap-2 hover:gap-3 transition-all" href="#">
+                            </div>
+                        </div>
+                        <!-- Mini Upsell Section -->
+                        <div
+                            class="mt-6 p-6 rounded-xl border-2 border-dashed border-primary/20 bg-primary/5 flex items-center gap-4">
+                            <div class="w-16 h-16 bg-white rounded-lg flex-shrink-0 bg-center bg-cover border border-primary/10"
+                                data-alt="Handcrafted sandalwood wide tooth comb"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCJs0ouymtDW4uLEd4zxVdtmSkbq_3h7skRxH2-ZHToMcstH1vhojG5_webpAFnx7D2U7X_tSmm6GEzE0z7SflgGN8-4KSNxe0v-mF_W-MKs25846JS9vkks3aM_YfA7hw3HGSDBef5L3ZZtza0zckza1ebW_B-yA-8OvrL0RRzU557c8sf8Y9VMzHQaK_eu7vTmKJBryqHq6aqwtOkVnGyRZdE-yq7aLFjyvUsY_BsfKXFnHvrn-FQlMX3yWKinZ0oosonHqRuLzo");'>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-xs font-bold text-primary uppercase tracking-widest">Pairs well with</p>
+                                <h4 class="text-sm font-bold text-maroon dark:text-white leading-tight">Sandalwood
+                                    Detangling Comb</h4>
+                                <button class="text-primary text-xs font-bold mt-1 underline">Add for FCFA12.00</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Featured Products / Continue Shopping -->
+                <div class="mt-24 border-t border-primary/10 pt-16">
+                    <div class="flex justify-between items-end mb-8">
+                        <div>
+                            <h2 class="text-3xl font-black text-maroon dark:text-white tracking-tight">Keep Browsing
+                            </h2>
+                            <p class="text-maroon/60 dark:text-white/60 mt-1">Found something else you like?</p>
+                        </div>
+                        <a class="text-primary font-bold flex items-center gap-2 hover:gap-3 transition-all" href="#">
                             View all Boutique
                             <span class="material-symbols-outlined">arrow_forward</span>
-</a>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-<!-- Suggestion 1 -->
-<div class="group cursor-pointer">
-<div class="aspect-square bg-white dark:bg-white/5 rounded-xl overflow-hidden mb-4 border border-primary/5 group-hover:shadow-lg transition-all">
-<div class="w-full h-full bg-center bg-no-repeat bg-cover group-hover:scale-105 transition-transform duration-500" data-alt="Natural edges control gel" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDI6J7fUiEnVDlTCMKyw2pcDWUtUnbRjeOiCVkSdk-0yygCWLpdJI0i78KXecIrUdagdcei0zwR2PIQ7P9_b_YDu2ZmZ2sTP0jAt4YPbbvoOk86lDbH345eHu6TJ5xostVkEWAvvJ9Ku3wrLIG552TwuQoei3teA-GO_N7j9RcUlN8xvqFF1dgZDRlD8pYTxshBeL1ewtt4Dc37ompBmik4iCqCcuc3qoDqGFJcOXS4lAc90b7j44-B3qtz4ccjiUXD1qkoUpfshzE");'></div>
-</div>
-<h4 class="text-maroon dark:text-white font-bold text-sm">Edge Control Gel</h4>
-<p class="text-maroon/50 dark:text-white/50 text-xs mt-1">€18.00</p>
-</div>
-<!-- Suggestion 2 -->
-<div class="group cursor-pointer">
-<div class="aspect-square bg-white dark:bg-white/5 rounded-xl overflow-hidden mb-4 border border-primary/5 group-hover:shadow-lg transition-all">
-<div class="w-full h-full bg-center bg-no-repeat bg-cover group-hover:scale-105 transition-transform duration-500" data-alt="Soft microfiber hair towel" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgJ6PWaOSqbzrZcAvVqc9Om-7YYjD5zTBiTrJqN2HJxg56ptoD3wjlNakRajg0r_vkiYurkR_fRlSbGD8p3TNk2bidvyfuQZBFMRAdRSEa2DWgRszwVmPjpxF3zydQ25h3VMPF639RqZ7BuoXmIeVYATFj5m63gb7bEC77dbfjLF4XMoy9IkwN9K2dZAINgYDzRhB-MbLUJ1aD-Quf-NFz3ayYW_uV3eCqRL4pEzfPBIbnvUQBrgGufzxszzYzUcJjmOJmWQ4NUko");'></div>
-</div>
-<h4 class="text-maroon dark:text-white font-bold text-sm">Microfiber Hair Towel</h4>
-<p class="text-maroon/50 dark:text-white/50 text-xs mt-1">€22.00</p>
-</div>
-<!-- Suggestion 3 -->
-<div class="group cursor-pointer">
-<div class="aspect-square bg-white dark:bg-white/5 rounded-xl overflow-hidden mb-4 border border-primary/5 group-hover:shadow-lg transition-all">
-<div class="w-full h-full bg-center bg-no-repeat bg-cover group-hover:scale-105 transition-transform duration-500" data-alt="Scalp massager silicone brush" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDhqmUlGNed-HTlX_CNK_kLuPyoAHCESzaXDhPn7mCNn8GaI8fTYAlfftjPQVoYk1rpgyy0WrJE5t8S-fKx3-LrbgIA0NcGHT5zgYnnW9QzWNE3lkyCZ63i2evS6FY318aQ4JCMcpOb3141bghvmjzI6ic-4UBL8U_6XKeLxlSa-32MNdnYwGmObkN3lm3AFXb6o08-kMHXay0sWNoMRcJHNu7JE701Zbv0ObriPF7C-yq1y6RZesszqsRhirbR7l-QqoIy8c3xnpU");'></div>
-</div>
-<h4 class="text-maroon dark:text-white font-bold text-sm">Silicone Scalp Massager</h4>
-<p class="text-maroon/50 dark:text-white/50 text-xs mt-1">€15.00</p>
-</div>
-<!-- Suggestion 4 -->
-<div class="group cursor-pointer">
-<div class="aspect-square bg-white dark:bg-white/5 rounded-xl overflow-hidden mb-4 border border-primary/5 group-hover:shadow-lg transition-all">
-<div class="w-full h-full bg-center bg-no-repeat bg-cover group-hover:scale-105 transition-transform duration-500" data-alt="Premium hair moisturizing spray" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDU365r6FOle7lrQ5pGxty-KmfLBKAHVjxeYgYypT0Z-E45QG6a1E-Dc4O_hPmULCVMsUEBhCj_tjSHjkWI7w3r24hAfxeSvo1BblQF5zsM4E6CD8jULxjXdAoLbQLy08YNDEYiTmVO4l22OVx2lfmZwMgckiDOaBDz1znKwLkvTC5bXx5dRoIKUZLi4WxQzm6d1yQjog0_2olBfOKsbEJr6gOjL6BYGZMhiD_W1oRS_8TgmsJVbKXUK0RrQ6bl7dZSaQb_g78tXbg");'></div>
-</div>
-<h4 class="text-maroon dark:text-white font-bold text-sm">Daily Moisture Mist</h4>
-<p class="text-maroon/50 dark:text-white/50 text-xs mt-1">€28.00</p>
-</div>
-</div>
-</div>
-</main>
-<!-- Footer component placeholder -->
-<footer class="mt-20 border-t border-primary/10 py-10 px-4 md:px-10 lg:px-40 bg-white/30 dark:bg-black/20">
-<div class="flex flex-col md:flex-row justify-between items-center gap-6">
-<div class="flex items-center gap-4 text-maroon/50 dark:text-white/50">
-<h2 class="text-lg font-bold">Elsa Coiffure</h2>
-<span class="text-xs">© 2024 Luxury Hair Care. All rights reserved.</span>
-</div>
-<div class="flex gap-8 text-sm font-medium text-maroon/70 dark:text-white/70">
-<a class="hover:text-primary transition-colors" href="#">Shipping Policy</a>
-<a class="hover:text-primary transition-colors" href="#">Returns</a>
-<a class="hover:text-primary transition-colors" href="#">Privacy</a>
-<a class="hover:text-primary transition-colors" href="#">Contact</a>
-</div>
-</div>
-</footer>
-</div>
-</div>
-</body></html>
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        <!-- Suggestion 1 -->
+                        <div class="group cursor-pointer">
+                            <div
+                                class="aspect-square bg-white dark:bg-white/5 rounded-xl overflow-hidden mb-4 border border-primary/5 group-hover:shadow-lg transition-all">
+                                <div class="w-full h-full bg-center bg-no-repeat bg-cover group-hover:scale-105 transition-transform duration-500"
+                                    data-alt="Natural edges control gel"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDI6J7fUiEnVDlTCMKyw2pcDWUtUnbRjeOiCVkSdk-0yygCWLpdJI0i78KXecIrUdagdcei0zwR2PIQ7P9_b_YDu2ZmZ2sTP0jAt4YPbbvoOk86lDbH345eHu6TJ5xostVkEWAvvJ9Ku3wrLIG552TwuQoei3teA-GO_N7j9RcUlN8xvqFF1dgZDRlD8pYTxshBeL1ewtt4Dc37ompBmik4iCqCcuc3qoDqGFJcOXS4lAc90b7j44-B3qtz4ccjiUXD1qkoUpfshzE");'>
+                                </div>
+                            </div>
+                            <h4 class="text-maroon dark:text-white font-bold text-sm">Edge Control Gel</h4>
+                            <p class="text-maroon/50 dark:text-white/50 text-xs mt-1">FCFA18.00</p>
+                        </div>
+                        <!-- Suggestion 2 -->
+                        <div class="group cursor-pointer">
+                            <div
+                                class="aspect-square bg-white dark:bg-white/5 rounded-xl overflow-hidden mb-4 border border-primary/5 group-hover:shadow-lg transition-all">
+                                <div class="w-full h-full bg-center bg-no-repeat bg-cover group-hover:scale-105 transition-transform duration-500"
+                                    data-alt="Soft microfiber hair towel"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgJ6PWaOSqbzrZcAvVqc9Om-7YYjD5zTBiTrJqN2HJxg56ptoD3wjlNakRajg0r_vkiYurkR_fRlSbGD8p3TNk2bidvyfuQZBFMRAdRSEa2DWgRszwVmPjpxF3zydQ25h3VMPF639RqZ7BuoXmIeVYATFj5m63gb7bEC77dbfjLF4XMoy9IkwN9K2dZAINgYDzRhB-MbLUJ1aD-Quf-NFz3ayYW_uV3eCqRL4pEzfPBIbnvUQBrgGufzxszzYzUcJjmOJmWQ4NUko");'>
+                                </div>
+                            </div>
+                            <h4 class="text-maroon dark:text-white font-bold text-sm">Microfiber Hair Towel</h4>
+                            <p class="text-maroon/50 dark:text-white/50 text-xs mt-1">FCFA22.00</p>
+                        </div>
+                        <!-- Suggestion 3 -->
+                        <div class="group cursor-pointer">
+                            <div
+                                class="aspect-square bg-white dark:bg-white/5 rounded-xl overflow-hidden mb-4 border border-primary/5 group-hover:shadow-lg transition-all">
+                                <div class="w-full h-full bg-center bg-no-repeat bg-cover group-hover:scale-105 transition-transform duration-500"
+                                    data-alt="Scalp massager silicone brush"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDhqmUlGNed-HTlX_CNK_kLuPyoAHCESzaXDhPn7mCNn8GaI8fTYAlfftjPQVoYk1rpgyy0WrJE5t8S-fKx3-LrbgIA0NcGHT5zgYnnW9QzWNE3lkyCZ63i2evS6FY318aQ4JCMcpOb3141bghvmjzI6ic-4UBL8U_6XKeLxlSa-32MNdnYwGmObkN3lm3AFXb6o08-kMHXay0sWNoMRcJHNu7JE701Zbv0ObriPF7C-yq1y6RZesszqsRhirbR7l-QqoIy8c3xnpU");'>
+                                </div>
+                            </div>
+                            <h4 class="text-maroon dark:text-white font-bold text-sm">Silicone Scalp Massager</h4>
+                            <p class="text-maroon/50 dark:text-white/50 text-xs mt-1">FCFA15.00</p>
+                        </div>
+                        <!-- Suggestion 4 -->
+                        <div class="group cursor-pointer">
+                            <div
+                                class="aspect-square bg-white dark:bg-white/5 rounded-xl overflow-hidden mb-4 border border-primary/5 group-hover:shadow-lg transition-all">
+                                <div class="w-full h-full bg-center bg-no-repeat bg-cover group-hover:scale-105 transition-transform duration-500"
+                                    data-alt="Premium hair moisturizing spray"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDU365r6FOle7lrQ5pGxty-KmfLBKAHVjxeYgYypT0Z-E45QG6a1E-Dc4O_hPmULCVMsUEBhCj_tjSHjkWI7w3r24hAfxeSvo1BblQF5zsM4E6CD8jULxjXdAoLbQLy08YNDEYiTmVO4l22OVx2lfmZwMgckiDOaBDz1znKwLkvTC5bXx5dRoIKUZLi4WxQzm6d1yQjog0_2olBfOKsbEJr6gOjL6BYGZMhiD_W1oRS_8TgmsJVbKXUK0RrQ6bl7dZSaQb_g78tXbg");'>
+                                </div>
+                            </div>
+                            <h4 class="text-maroon dark:text-white font-bold text-sm">Daily Moisture Mist</h4>
+                            <p class="text-maroon/50 dark:text-white/50 text-xs mt-1">FCFA28.00</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- Footer component placeholder -->
+            <footer class="mt-20 border-t border-primary/10 py-10 px-4 md:px-10 lg:px-40 bg-white/30 dark:bg-black/20">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div class="flex items-center gap-4 text-maroon/50 dark:text-white/50">
+                        <h2 class="text-lg font-bold">Elsa Coiffure</h2>
+                        <span class="text-xs">© 2024 Luxury Hair Care. All rights reserved.</span>
+                    </div>
+                    <div class="flex gap-8 text-sm font-medium text-maroon/70 dark:text-white/70">
+                        <a class="hover:text-primary transition-colors" href="#">Shipping Policy</a>
+                        <a class="hover:text-primary transition-colors" href="#">Returns</a>
+                        <a class="hover:text-primary transition-colors" href="#">Privacy</a>
+                        <a class="hover:text-primary transition-colors" href="#">Contact</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -29,7 +29,7 @@ const MemberProfile = () => {
             setLoading(true);
             const [appRes, loyRes] = await Promise.all([
                 api.get('/client/appointments'),
-                api.get('/client/loyalty')
+                api.get('/loyalty/account')
             ]);
             setAppointments(appRes.data);
             setLoyalty(loyRes.data);
@@ -66,7 +66,6 @@ const MemberProfile = () => {
                             { name: 'Vue d\'ensemble', icon: Sparkles, active: true, path: '/client' },
                             { name: 'Mes Réservations', icon: Calendar, path: '/client/appointments' },
                             { name: 'Boutique Elsa', icon: History, path: '/client/shop' },
-                            { name: 'Diagnostic Capillaire', icon: Scissors, path: '/client/consultation' },
                             { name: 'Paramètres', icon: Settings }
                         ].map(item => (
                             <Link
@@ -86,43 +85,33 @@ const MemberProfile = () => {
 
                 {/* Main Dashboard Area */}
                 <main className="lg:col-span-9 space-y-16 animate-fade-in-up stagger-1">
-                    {/* Hero section: Loyalty & Elite Status */}
-                    <section className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <div className="relative overflow-hidden bg-maroon-dark rounded-[40px] p-12 text-white shadow-2xl">
+                    {/* Hero section: Quick Action */}
+                    <section>
+                        <div className="bg-gradient-to-br from-primary to-maroon-dark rounded-[40px] p-12 md:p-16 text-white shadow-2xl relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-10 opacity-10">
-                                <span className="material-symbols-outlined text-[140px]">workspace_premium</span>
+                                <span className="material-symbols-outlined text-[200px]">calendar_month</span>
                             </div>
-                            <div className="relative z-10 space-y-10">
-                                <div>
-                                    <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em] mb-4">Statut Membre</p>
-                                    <h3 className="text-6xl font-display italic font-black leading-none">{loyalty?.tier || 'Platinum'}</h3>
+                            <div className="relative z-10 max-w-2xl space-y-8">
+                                <div className="space-y-4">
+                                    <p className="text-[10px] font-black text-white/60 uppercase tracking-[0.4em]">Votre Prochain Rendez-vous</p>
+                                    <h3 className="text-5xl md:text-6xl font-display italic font-black leading-none">Un instant pour vous ?</h3>
                                 </div>
-                                <div className="space-y-6">
-                                    <div className="flex justify-between items-end">
-                                        <p className="text-xs font-bold uppercase tracking-widest text-primary">{loyalty?.points || 2450} Points</p>
-                                        <p className="text-[10px] uppercase opacity-50 font-black tracking-widest">Vers {loyalty?.next_tier || 'Diamond'}</p>
-                                    </div>
-                                    <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden border border-white/5">
-                                        <div className="h-full bg-primary" style={{ width: `${loyalty?.progress || 65}%` }}></div>
-                                    </div>
+                                <p className="text-white/80 text-lg font-medium italic max-w-md">
+                                    Réservez votre prochaine transformation signature et profitez de l'excellence Elsa Coiffure.
+                                </p>
+                                <div className="flex flex-wrap gap-4">
+                                    <Link to="/providers">
+                                        <Button variant="secondary" className="h-14 px-12 bg-white text-maroon-dark hover:bg-white/90 font-black uppercase tracking-[0.3em] text-[10px] shadow-xl">
+                                            PRENDRE RENDEZ-VOUS
+                                        </Button>
+                                    </Link>
+                                    <Link to="/client/appointments">
+                                        <Button variant="outline" className="h-14 px-12 border-white/30 text-white hover:bg-white/10 font-black uppercase tracking-[0.3em] text-[10px]">
+                                            MES RÉSERVATIONS
+                                        </Button>
+                                    </Link>
                                 </div>
-                                <p className="text-sm text-white/50 italic">Plus que <span className="text-primary font-bold">{loyalty?.discoveries_left || 4} rdv</span> avant votre privilège exclusif.</p>
                             </div>
-                        </div>
-
-                        <div className="bg-primary/5 border-2 border-dashed border-primary/20 rounded-[40px] p-12 flex flex-col items-center justify-center text-center space-y-8 group hover:bg-primary/10 transition-all duration-700 cursor-pointer">
-                            <div className="size-16 rounded-full bg-primary flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-transform duration-500">
-                                <Calendar className="size-8" />
-                            </div>
-                            <div className="space-y-3">
-                                <h4 className="text-3xl font-display font-black italic text-maroon-dark">Un instant pour vous ?</h4>
-                                <p className="text-accent-bronze font-medium text-sm italic max-w-xs mx-auto">Réservez votre prochaine transformation signature.</p>
-                            </div>
-                            <Link to="/providers">
-                                <Button variant="primary" className="h-14 px-12 font-black uppercase tracking-[0.3em] text-[10px] shadow-xl">
-                                    PRENDRE RENDEZ-VOUS
-                                </Button>
-                            </Link>
                         </div>
                     </section>
 
@@ -188,8 +177,8 @@ const MemberProfile = () => {
                         <h4 className="text-white font-black uppercase text-[10px] tracking-[0.4em] mb-10 opacity-40">Navigation</h4>
                         <ul className="space-y-6 text-[10px] font-black tracking-[0.2em] uppercase text-slate-200">
                             <li><Link className="hover:text-primary transition-colors" to="/about">Notre Histoire</Link></li>
-                            <li><Link className="hover:text-primary transition-colors" to="/client/shop">E-Boutique</Link></li>
-                            <li><Link className="hover:text-primary transition-colors" to="/client/consultation">Diagnostic</Link></li>
+                            <li><Link className="hover:text-primary transition-colors" to="/providers">Nos Services</Link></li>
+                            <li><Link className="hover:text-primary transition-colors" to="/client/appointments">Mes Rendez-vous</Link></li>
                             <li><Link className="hover:text-primary transition-colors" to="/contact">Conciergerie</Link></li>
                         </ul>
                     </div>

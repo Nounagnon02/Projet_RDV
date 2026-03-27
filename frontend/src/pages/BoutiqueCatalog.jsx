@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
+import ClientHeader from '../components/ClientHeader';
 import { Card, Button, Input } from '../components/ui';
 import {
     Search as SearchIcon,
@@ -11,15 +12,17 @@ import {
     Sparkles,
     ArrowRight,
     Plus,
-ShoppingCart as CartIcon,
+    ShoppingCart as CartIcon,
     CheckCircle,
-    Menu
+    Menu as MenuIcon
 } from 'lucide-react';
 
 const BoutiqueCatalog = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+
+    const STORAGE_URL = 'http://localhost:8000/storage/';
 
     useEffect(() => {
         fetchProducts();
@@ -45,42 +48,8 @@ const BoutiqueCatalog = () => {
     };
 
     return (
-        <div className="min-h-screen bg-background-light dark:bg-background-dark font-sans text-[#191410] dark:text-[#fbfaf9] flex flex-col">
-            {/* Top Navigation - Exact Mockup Style */}
-            <header className="sticky top-0 z-50 flex items-center justify-between border-b border-[#f1ede9] dark:border-[#332a22] bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-10 py-5">
-                <div className="flex items-center gap-8">
-                    <div className="flex items-center gap-4 text-primary">
-                        <div className="size-6">
-                            <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                                <path clipRule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4V4Z" fillRule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <h2 className="text-[#191410] dark:text-[#fbfaf9] text-xl font-extrabold tracking-tight">Elsa Coiffure</h2>
-                    </div>
-                    <nav className="hidden md:flex items-center gap-9">
-                        <a href="#" className="text-[#191410] dark:text-[#fbfaf9] text-sm font-semibold hover:text-primary transition-colors">Shop</a>
-                        <a href="#" className="text-[#8c705a] text-sm font-medium hover:text-primary transition-colors">Salon</a>
-                        <a href="#" className="text-[#8c705a] text-sm font-medium hover:text-primary transition-colors">Gallery</a>
-                        <a href="#" className="text-[#8c705a] text-sm font-medium hover:text-primary transition-colors">Booking</a>
-                    </nav>
-                </div>
-                <div className="flex flex-1 justify-end gap-6">
-                    <div className="hidden lg:block w-64">
-                        <div className="flex items-center rounded-lg bg-[#f1ede9] dark:bg-[#332a22] px-4 h-10 border border-transparent focus-within:border-primary/20 transition-all">
-                            <SearchIcon className="size-4 text-[#8c705a]" />
-                            <input className="bg-transparent border-none focus:ring-0 text-sm w-full pl-3" placeholder="Search products..." />
-                        </div>
-                    </div>
-                    <div className="flex gap-3">
-                        <button className="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f1ede9] dark:bg-[#332a22] hover:bg-primary/20 transition-all">
-                            <BagIcon className="size-5" />
-                        </button>
-                        <button className="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f1ede9] dark:bg-[#332a22] hover:bg-primary/20 transition-all">
-                            <UserIcon className="size-5" />
-                        </button>
-                    </div>
-                </div>
-            </header>
+        <div className="min-h-screen bg-background-light dark:bg-background-dark font-sans text-maroon-dark dark:text-text-light flex flex-col overflow-x-hidden">
+            <ClientHeader />
 
             <div className="flex flex-1">
                 {/* Sidebar: Deep Maroon Filter Bar - Exact Mockup Style */}
@@ -145,16 +114,16 @@ const BoutiqueCatalog = () => {
                 </aside>
 
                 {/* Main Content Area - Exact Mockup Style */}
-                <main className="flex-1 overflow-y-auto">
-                    <div className="max-w-[1100px] mx-auto px-10 py-12 space-y-12">
+                <main className="flex-1 overflow-y-auto pt-24 lg:pt-32">
+                    <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-12 space-y-12">
                         {/* Page Heading */}
-                        <div className="flex flex-col md:flex-row justify-between items-end gap-6">
-                            <div className="space-y-4">
-                                <h1 className="text-5xl font-black tracking-tight leading-none italic font-display">The Curated Boutique</h1>
-                                <p className="text-[#8c705a] text-lg font-light max-w-xl">Premium, professional-grade treatments selected for the specific needs of Afro-textured and coiled hair.</p>
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
+                            <div className="space-y-6">
+                                <h1 className="font-black tracking-tight leading-none italic font-display" style={{ fontSize: 'var(--text-h2)' }}>The Curated Boutique</h1>
+                                <p className="text-[#8c705a] text-lg font-light max-w-xl">Des soins professionnels premium sélectionnés pour les besoins spécifiques des cheveux Afro et crépus.</p>
                             </div>
-                            <Button variant="secondary" className="bg-[#f1ede9] dark:bg-[#332a22] border-none text-sm font-bold h-12 px-8">
-                                Sort By: Newest
+                            <Button variant="secondary" className="bg-[#f1ede9] dark:bg-[#332a22] border-none text-xs font-black uppercase tracking-widest h-14 px-10 rounded-full">
+                                TRIER : NOUVEAUTÉS
                             </Button>
                         </div>
 
@@ -185,10 +154,14 @@ const BoutiqueCatalog = () => {
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                                {products.map((p, idx) => (
+                                {Array.isArray(products) && products.map((p, idx) => (
                                     <div key={p.id} className="group space-y-5 animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s` }}>
                                         <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-xl shadow-maroon-dark/5 bg-white">
-                                            <img src={p.image} className="size-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={p.name} />
+                                            <img
+                                                src={p.images && p.images.length > 0 ? (p.images[0].startsWith('http') ? p.images[0] : STORAGE_URL + p.images[0]) : (p.image || 'https://via.placeholder.com/600?text=Produit')}
+                                                className="size-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                                                alt={p.name}
+                                            />
                                             <div className="absolute inset-0 bg-maroon-dark/20 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                                             <div className="absolute top-4 left-4 bg-white/90 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-primary shadow-lg border border-primary/10">
                                                 {idx === 0 ? 'Essential' : p.hairGoal}
@@ -201,7 +174,7 @@ const BoutiqueCatalog = () => {
                                         </div>
                                         <div className="px-2">
                                             <h3 className="text-lg font-bold group-hover:text-primary transition-colors mb-1">{p.name}</h3>
-                                            <p className="text-xl font-display font-medium italic text-primary">${p.price.toFixed(2)}</p>
+                                            <p className="text-xl font-display font-medium italic text-primary">{Math.round(p.price).toLocaleString('fr-FR')} FCFA</p>
                                         </div>
                                     </div>
                                 ))}
@@ -228,7 +201,7 @@ const BoutiqueCatalog = () => {
                                     <div className="px-1 text-center sm:text-left">
                                         <p className="text-[10px] font-black uppercase text-accent-bronze tracking-[0.2em] mb-1">PRO COLLECTION</p>
                                         <h3 className="font-bold text-lg leading-tight mb-2">Luxury Mist {n}</h3>
-                                        <p className="text-lg font-display italic text-primary">$32.00</p>
+                                        <p className="text-lg font-display italic text-primary">32 000 FCFA</p>
                                     </div>
                                 </div>
                             ))}
@@ -246,54 +219,6 @@ const BoutiqueCatalog = () => {
                     </div>
                 </main>
             </div>
-
-            {/* Standard Premium Footer */}
-            <footer className="bg-maroon-dark text-background-light py-24 xl:px-40 lg:px-20 px-4 border-t border-white/5">
-                <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
-                    <div className="col-span-1 md:col-span-2">
-                        <div className="flex items-center gap-4 mb-8 text-primary">
-                            <span className="material-symbols-outlined text-4xl">spa</span>
-                            <h2 className="text-3xl font-bold tracking-tight uppercase font-display italic text-white leading-none">Elsa</h2>
-                        </div>
-                        <p className="text-slate-400 text-lg leading-relaxed max-w-sm italic">
-                            Elevating the standard of Afro hair care through luxury experience and artistic excellence for over a decade.
-                        </p>
-                    </div>
-                    <div>
-                        <h4 className="text-white font-black uppercase text-[10px] tracking-[0.4em] mb-10 opacity-40">Navigation</h4>
-                        <ul className="space-y-6 text-[10px] font-black tracking-[0.2em] uppercase text-slate-200">
-                            <li><a className="hover:text-primary transition-colors" href="/about">Our Story</a></li>
-                            <li><a className="hover:text-primary transition-colors" href="/providers">Services</a></li>
-                            <li><a className="hover:text-primary transition-colors" href="/client/shop">Boutique</a></li>
-                            <li><a className="hover:text-primary transition-colors" href="/contact">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 className="text-white font-black uppercase text-[10px] tracking-[0.4em] mb-10 opacity-40">Concierge</h4>
-                        <ul className="space-y-6 text-[10px] font-black tracking-[0.2em] uppercase text-slate-300">
-                            <li className="flex items-center gap-4">
-                                <span className="material-symbols-outlined text-primary text-base">mail</span>
-                                concierge@elsacoiffure.com
-                            </li>
-                            <li className="flex items-center gap-4">
-                                <span className="material-symbols-outlined text-primary text-base">call</span>
-                                +33 1 23 45 67 89
-                            </li>
-                            <li className="flex items-center gap-4">
-                                <span className="material-symbols-outlined text-primary text-base">location_on</span>
-                                75 Av. des Champs-Élysées, Paris
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="max-w-[1200px] mx-auto border-t border-white/5 mt-20 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-[0.4em] text-white/40 font-sans">
-                    <p>© 2026 ELSA COIFFURE PARIS. ALL RIGHTS RESERVED.</p>
-                    <div className="flex gap-10">
-                        <a className="hover:text-white transition-colors" href="#">Privacy Policy</a>
-                        <a className="hover:text-white transition-colors" href="#">Booking Policy</a>
-                    </div>
-                </div>
-            </footer>
         </div>
     );
 };

@@ -1,5 +1,7 @@
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useSiteSettings } from '../context/SiteSettingsContext';
+import { useTranslation } from 'react-i18next';
 import {
     LayoutDashboard,
     Scissors,
@@ -12,24 +14,35 @@ import {
     ChevronRight,
     ShoppingBag,
     Star,
-    Bell
+    Bell,
+    Settings,
+    Mail,
+    Globe
 } from 'lucide-react';
 import { useState } from 'react';
 
 const DashboardLayout = ({ children }) => {
     const { user, logout } = useAuth();
+    const { settings } = useSiteSettings();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
 
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+    };
+
     const menuItems = [
-        { name: 'Vue d\'ensemble', path: '/dashboard', icon: LayoutDashboard },
-        { name: 'Services & Add-ons', path: '/dashboard/services', icon: Scissors },
-        { name: 'Emploi du temps', path: '/dashboard/availabilities', icon: Clock },
-        { name: 'Agenda des RDV', path: '/dashboard/agenda', icon: Calendar },
-        { name: 'Fichier Clients', path: '/dashboard/clients', icon: Users },
-        { name: 'Gestion Boutique', path: '/dashboard/products', icon: ShoppingBag },
-        { name: 'Fidélité & Offres', path: '/dashboard/loyalty', icon: Star },
+        { name: t('admin.dashboard'), path: '/dashboard', icon: LayoutDashboard },
+        { name: t('admin.services'), path: '/dashboard/services', icon: Scissors },
+        { name: t('admin.availabilities'), path: '/dashboard/availabilities', icon: Clock },
+        { name: t('admin.agenda'), path: '/dashboard/agenda', icon: Calendar },
+        { name: t('admin.clients'), path: '/dashboard/clients', icon: Users },
+        { name: t('admin.products'), path: '/dashboard/products', icon: ShoppingBag },
+        { name: t('admin.loyalty'), path: '/dashboard/loyalty', icon: Star },
+        { name: t('admin.messages'), path: '/dashboard/messages', icon: Mail },
+        { name: t('admin.settings'), path: '/dashboard/settings', icon: Settings },
     ];
 
     const handleLogout = async () => {
@@ -60,15 +73,15 @@ const DashboardLayout = ({ children }) => {
                                 <span className="material-symbols-outlined text-white text-2xl">content_cut</span>
                             </div>
                             <div>
-                                <h1 className="text-xl font-bold leading-none tracking-tight">Elsa Coiffure</h1>
-                                <p className="text-primary text-[10px] uppercase tracking-widest mt-1 font-bold">Admin Panel</p>
+                                <p className="text-xl font-bold text-primary italic">{settings.site_name || 'Elsa Coiffure'}</p>
+                                <p className="text-primary text-[10px] uppercase tracking-widest mt-1 font-bold">{t('admin.admin_panel')}</p>
                             </div>
                         </Link>
                     </div>
 
                     {/* Navigation */}
                     <nav className="flex-1 space-y-1 px-4 py-8 overflow-y-auto scrollbar-hide">
-                        <p className="px-5 mb-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Salon Operations</p>
+                        <p className="px-5 mb-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/40">{t('admin.salon_operations')}</p>
                         {menuItems.map((item) => {
                             const isActive = location.pathname === item.path;
                             return (
@@ -95,6 +108,33 @@ const DashboardLayout = ({ children }) => {
 
                     {/* User Section */}
                     <div className="border-t border-white/10 p-6 bg-black/10">
+                        {/* Language Selector */}
+                        <div className="mb-4 flex items-center gap-2">
+                            <Globe className="size-4 text-white/40" />
+                            <div className="flex gap-2 flex-1">
+                                <button
+                                    onClick={() => changeLanguage('fr')}
+                                    className={`flex-1 px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${
+                                        i18n.language === 'fr'
+                                            ? 'bg-primary text-white'
+                                            : 'bg-white/5 text-white/60 hover:bg-white/10'
+                                    }`}
+                                >
+                                    FR
+                                </button>
+                                <button
+                                    onClick={() => changeLanguage('en')}
+                                    className={`flex-1 px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${
+                                        i18n.language === 'en'
+                                            ? 'bg-primary text-white'
+                                            : 'bg-white/5 text-white/60 hover:bg-white/10'
+                                    }`}
+                                >
+                                    EN
+                                </button>
+                            </div>
+                        </div>
+
                         <div className="mb-6 flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/5">
                             <div className="size-12 rounded-xl bg-primary/20 border border-primary/20 flex items-center justify-center overflow-hidden shrink-0">
                                 {user?.avatar ? (
@@ -117,7 +157,7 @@ const DashboardLayout = ({ children }) => {
                             className="group flex w-full items-center gap-4 rounded-xl px-4 py-3 text-sm font-bold text-white/40 hover:bg-rose-500/10 hover:text-rose-400 transition-all border border-transparent hover:border-rose-500/20"
                         >
                             <LogOut className="size-5" />
-                            Se déconnecter
+                            {t('admin.logout')}
                         </button>
                     </div>
                 </div>

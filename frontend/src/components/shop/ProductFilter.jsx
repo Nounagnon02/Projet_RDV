@@ -66,7 +66,7 @@ const ProductFilter = ({ filters, setFilters }) => {
             <div className="space-y-4">
                 <div className="flex justify-between items-center">
                     <h5 className="text-sm font-bold text-maroon-dark dark:text-text-light uppercase tracking-widest">Price Range</h5>
-                    <span className="text-xs font-bold text-primary">${filters.price || 150}</span>
+                    <span className="text-xs font-bold text-primary">{(filters.price || 150000).toLocaleString('fr-FR')} FCFA</span>
                 </div>
                 <input
                     type="range"
@@ -77,8 +77,8 @@ const ProductFilter = ({ filters, setFilters }) => {
                     className="w-full accent-primary h-1.5 bg-accent-cream dark:bg-white/10 rounded-full appearance-none cursor-pointer"
                 />
                 <div className="flex justify-between text-[10px] text-accent-bronze font-bold">
-                    <span>$10</span>
-                    <span>$300</span>
+                    <span>5 000 FCFA</span>
+                    <span>300 000 FCFA</span>
                 </div>
             </div>
 

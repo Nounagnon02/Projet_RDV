@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Card, Button, Input } from '../components/ui';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import {
     ArrowRight,
     ArrowLeft,
@@ -15,37 +17,20 @@ const HairConsultation = () => {
     const progress = (step / totalSteps) * 100;
 
     return (
-        <div className="min-h-screen bg-[#f9f7f2] dark:bg-[#1f1813] text-maroon-dark dark:text-background-light font-display flex flex-col">
-            {/* Header - Simple Elite Nav */}
-            <header className="bg-maroon-dark text-white z-50 shadow-lg">
-                <div className="max-w-[1200px] mx-auto px-6 h-24 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <span className="material-symbols-outlined text-4xl text-primary">flare</span>
-                        <h1 className="text-2xl font-bold tracking-widest uppercase font-sans">Elsa Coiffure</h1>
-                    </div>
-                    <div className="flex items-center gap-8">
-                        <nav className="hidden md:flex items-center gap-8">
-                            <a href="/" className="text-[10px] font-black uppercase tracking-[0.3em] hover:text-primary transition-all">Menu</a>
-                            <a href="/about" className="text-[10px] font-black uppercase tracking-[0.3em] hover:text-primary transition-all">Our Story</a>
-                        </nav>
-                        <Button variant="primary" className="rounded-none px-8 py-3 h-auto font-black uppercase tracking-widest text-[10px]">
-                            Exit Consultation
-                        </Button>
-                    </div>
-                </div>
-            </header>
+        <div className="min-h-screen bg-[#f9f7f2] dark:bg-[#1f1813] text-maroon-dark dark:text-background-light font-display flex flex-col overflow-x-hidden">
+            <Navbar />
 
             {/* Main Content */}
             <main className="flex-grow max-w-[900px] mx-auto w-full px-6 py-16 animate-fade-in">
-                {/* Progress Bar - Exact Mockup Reproduction */}
-                <div className="mb-16 space-y-6">
-                    <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-[0.3em]">
-                        <span className="text-maroon-dark/60">Step {step} of {totalSteps}: Hair Analysis</span>
-                        <span className="text-primary">{progress}% Complete</span>
+                {/* Progress Bar */}
+                <div className="mb-20 space-y-6 px-4 md:px-0">
+                    <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-[0.4em]">
+                        <span className="text-maroon-dark/60">Étape {step} sur {totalSteps}</span>
+                        <span className="text-primary">{progress}% Complété</span>
                     </div>
-                    <div className="w-full h-1.5 bg-maroon-dark/5 dark:bg-white/5 rounded-full overflow-hidden">
+                    <div className="w-full h-1 bg-maroon-dark/5 dark:bg-white/5 rounded-full overflow-hidden">
                         <div
-                            className="h-full bg-primary transition-all duration-1000 ease-out"
+                            className="h-full bg-primary transition-all duration-1000"
                             style={{ width: `${progress}%` }}
                         ></div>
                     </div>
@@ -59,11 +44,11 @@ const HairConsultation = () => {
                     </div>
 
                     <header className="mb-12 relative z-10">
-                        <h2 className="text-4xl md:text-5xl font-display italic text-maroon-dark dark:text-text-light mb-4">
-                            Tell us about your crown
+                        <h2 className="font-display italic text-maroon-dark dark:text-text-light mb-6 leading-tight" style={{ fontSize: 'var(--text-h2)' }}>
+                            Parlez-nous de votre Couronne
                         </h2>
-                        <p className="text-accent-bronze text-lg font-medium leading-relaxed max-w-xl font-sans">
-                            Help our master stylists prepare for your visit by sharing your current hair journey.
+                        <p className="text-accent-bronze text-base md:text-lg font-medium leading-relaxed max-w-xl font-sans italic">
+                            Aidez nos maîtres stylistes à préparer votre visite en partageant votre historique capillaire.
                         </p>
                     </header>
 
@@ -124,19 +109,19 @@ const HairConsultation = () => {
                         {/* File Upload Section */}
                         <section className="space-y-8">
                             <label className="block text-2xl font-bold italic border-l-4 border-primary pl-6">
-                                Upload a photo of your current hair <span className="text-accent-bronze/50 font-normal">(Optional)</span>
+                                Photo de vos cheveux <span className="text-accent-bronze/50 font-normal">(Optionnel)</span>
                             </label>
-                            <div className="border-2 border-dashed border-maroon-dark/10 p-16 text-center bg-[#f9f7f2]/50 hover:bg-primary/5 hover:border-primary/30 transition-all group flex flex-col items-center gap-6 rounded-xl">
-                                <div className="size-20 rounded-full bg-white flex items-center justify-center shadow-xl shadow-maroon-dark/5 group-hover:scale-110 transition-transform">
+                            <div className="border-2 border-dashed border-maroon-dark/10 p-10 md:p-16 text-center bg-[#f9f7f2]/50 hover:bg-primary/5 hover:border-primary/30 transition-all group flex flex-col items-center gap-6 rounded-3xl">
+                                <div className="size-16 md:size-20 rounded-full bg-white flex items-center justify-center shadow-xl shadow-maroon-dark/5 group-hover:scale-110 transition-transform">
                                     <Camera className="size-8 text-primary" />
                                 </div>
-                                <div>
-                                    <p className="text-sm font-bold mb-2">Glissez votre photo ou cliquez ici</p>
-                                    <p className="text-xs text-accent-bronze mb-6">Formats acceptés : JPG, PNG (Max 5MB)</p>
-                                    <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white px-10 rounded-full">
-                                        CHOISIR LE FICHIER
-                                    </Button>
+                                <div className="space-y-2">
+                                    <p className="text-sm font-bold">Glissez votre photo ou cliquez ici</p>
+                                    <p className="text-[10px] text-accent-bronze">Formats : JPG, PNG (Max 5MB)</p>
                                 </div>
+                                <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white px-8 rounded-full text-[10px] font-black uppercase tracking-widest">
+                                    CHOISIR LE FICHIER
+                                </Button>
                             </div>
                         </section>
 
@@ -153,38 +138,7 @@ const HairConsultation = () => {
                 </div>
             </main>
 
-            {/* Simple Mockup Footer */}
-            <footer className="bg-maroon-dark text-white/50 py-20 mt-auto">
-                <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
-                    <div className="col-span-1 md:col-span-2">
-                        <div className="flex items-center gap-4 text-white mb-8">
-                            <span className="material-symbols-outlined text-3xl text-primary">flare</span>
-                            <h2 className="text-xl font-bold tracking-widest uppercase">Elsa Coiffure</h2>
-                        </div>
-                        <p className="max-w-sm leading-relaxed text-sm italic text-slate-300">
-                            The digital consultation ensures your experience at Elsa Coiffure is tailored perfectly to your unique hair profile and beauty goals.
-                        </p>
-                    </div>
-                    {[
-                        { title: 'Concierge', lines: ['concierge@elsacoiffure.fr', '+33 1 23 45 67 89'] },
-                        { title: 'Security', lines: ['Your hair profile data is encrypted and only visible to your assigned stylist.'] }
-                    ].map(col => (
-                        <div key={col.title}>
-                            <h4 className="text-white font-bold mb-6 uppercase text-[10px] tracking-widest">{col.title}</h4>
-                            {col.lines.map((line, i) => (
-                                <p key={i} className="text-sm mb-2 text-slate-200">{line}</p>
-                            ))}
-                        </div>
-                    ))}
-                </div>
-                <div className="max-w-[1200px] mx-auto px-6 mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between text-[9px] uppercase tracking-[0.3em]">
-                    <p>© 2026 ELSA COIFFURE PARIS. TOUS DROITS RÉSERVÉS.</p>
-                    <div className="flex gap-8 mt-4 md:mt-0">
-                        <a href="#" className="hover:text-primary transition-colors">Confidentialité</a>
-                        <a href="#" className="hover:text-primary transition-colors">Termes</a>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 };
