@@ -19,6 +19,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Create Admin Provider
+        $admin = User::create([
+            'name' => 'Administrateur',
+            'email' => 'admin@projet-rdv.com',
+            'password' => Hash::make('Admin@2026!'),
+            'phone' => '+229 00 00 00 00',
+            'role' => 'provider',
+            'email_verified_at' => now(),
+        ]);
+
+        // Create Admin Provider Profile
+        \DB::table('providers')->insert([
+            'user_id' => $admin->id,
+            'business_name' => 'Administration',
+            'description' => 'Compte administrateur principal',
+            'address' => 'Cotonou',
+            'city' => 'Cotonou',
+            'postal_code' => '00000',
+            'slug' => 'administration',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         // Create Provider (Elsa)
         $provider = User::create([
             'name' => 'Elsa Coiffure',
