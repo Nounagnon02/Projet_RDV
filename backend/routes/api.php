@@ -10,6 +10,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // Public Site Settings
 Route::get('/site-settings', [App\Http\Controllers\Api\SiteSettingController::class, 'index']);
+Route::get('/help-center/content', [App\Http\Controllers\Api\SiteSettingController::class, 'helpCenterContent']);
 
 // Public Opening Hours
 Route::get('/opening-hours', [App\Http\Controllers\AvailabilityController::class, 'getOpeningHours']);
@@ -30,9 +31,15 @@ Route::get('/booking/{slug}/services', [BookingController::class, 'getServicesPu
 Route::get('/booking/{slug}/slots', [BookingController::class, 'getAvailableSlots']);
 Route::post('/booking/{slug}/appointments', [BookingController::class, 'bookAppointment']);
 
+// Public Products & Guest Order
+Route::get('/products', [App\Http\Controllers\Api\ProductController::class, 'index']);
+Route::get('/products/{id}', [App\Http\Controllers\Api\ProductController::class, 'show']);
+Route::post('/orders', [App\Http\Controllers\Api\OrderController::class, 'store']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
+    Route::put('/me', [AuthController::class, 'updateMe']);
 
     // Provider Profile
     Route::get('/provider/profile', [App\Http\Controllers\ProviderController::class, 'profile']);
@@ -75,10 +82,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/consultations/{id}', [App\Http\Controllers\Api\ConsultationController::class, 'show']);
     Route::get('/consultations/{id}/recommendations', [App\Http\Controllers\Api\ConsultationController::class, 'recommendations']);
 
-    // Products (Public but potentially personalized)
-    Route::get('/products', [App\Http\Controllers\Api\ProductController::class, 'index']);
+    // Products (Personalized)
     Route::get('/products/recommended', [App\Http\Controllers\Api\ProductController::class, 'recommended']);
-    Route::get('/products/{id}', [App\Http\Controllers\Api\ProductController::class, 'show']);
 
     // Products Management (Provider)
     Route::post('/provider/products', [App\Http\Controllers\Api\ProductController::class, 'store']);
@@ -87,7 +92,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Orders
     Route::get('/orders', [App\Http\Controllers\Api\OrderController::class, 'index']);
-    Route::post('/orders', [App\Http\Controllers\Api\OrderController::class, 'store']);
 
     // Payments
     Route::post('/payments/create', [App\Http\Controllers\Api\PaymentController::class, 'createPayment']);

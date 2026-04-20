@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import 'normalize.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { useSiteSettings } from '../context/SiteSettingsContext';
 import { Mail, Lock, User, Phone, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
-import { Button, Card, Input } from '../components/ui';
+import { Button, Card, Input, ProtectedIcon } from '../components/ui';
 
 const Register = () => {
+    const { t } = useTranslation();
     const { settings } = useSiteSettings();
     const [formData, setFormData] = useState({
         name: '',
@@ -30,7 +32,7 @@ const Register = () => {
         setError('');
 
         if (formData.password !== formData.password_confirmation) {
-            setError('Les mots de passe ne correspondent pas');
+            setError(t('auth.password_mismatch', { defaultValue: 'Les mots de passe ne correspondent pas' }));
             return;
         }
 
@@ -39,7 +41,7 @@ const Register = () => {
             await register(formData);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.message || 'Une erreur est survenue');
+            setError(err.response?.data?.message || t('common.error', { defaultValue: 'Une erreur est survenue' }));
         } finally {
             setLoading(false);
         }
@@ -58,11 +60,13 @@ const Register = () => {
                 <div className="flex flex-col items-center mb-8 md:mb-10 animate-fade-in">
                     <div className="flex items-center gap-3">
                         <div className="h-12 w-12 md:h-14 md:w-14 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-primary-glow">
-                            <span className="material-symbols-outlined text-white text-3xl">flare</span>
+                            <ProtectedIcon translate="no" data-i18n="false">
+                                <span className="material-symbols-outlined text-white text-3xl">flare</span>
+                            </ProtectedIcon>
                         </div>
                         <div>
                             <h1 className="text-xl md:text-2xl font-display font-bold text-maroon-dark tracking-tight">{settings.site_name || 'Elsa Coiffure'}</h1>
-                            <p className="text-[8px] md:text-[10px] text-primary uppercase tracking-[0.4em] font-black">L'Atelier de Luxe</p>
+                            <p className="text-[8px] md:text-[10px] text-primary uppercase tracking-[0.4em] font-black">{t('auth.brand_subtitle', { defaultValue: "L'Atelier de Luxe" })}</p>
                         </div>
                     </div>
                 </div>
@@ -70,8 +74,8 @@ const Register = () => {
                 {/* Main Card */}
                 <Card className="p-6 sm:p-8 md:p-12 animate-fade-in-up stagger-1 border-none shadow-2xl shadow-maroon-dark/5 bg-white/80 backdrop-blur-xl">
                     <div className="text-center mb-8 md:mb-10">
-                        <h2 className="text-2xl md:text-3xl font-display font-bold text-maroon-dark mb-2 italic">Rejoindre l'Elite</h2>
-                        <p className="text-accent-bronze text-xs md:text-sm italic">Créez votre profil pour une expérience sur-mesure</p>
+                        <h2 className="text-2xl md:text-3xl font-display font-bold text-maroon-dark mb-2 italic">{t('auth.register_title', { defaultValue: "Rejoindre l'elite" })}</h2>
+                        <p className="text-accent-bronze text-xs md:text-sm italic">{t('auth.register_subtitle', { defaultValue: 'Creez votre profil pour une experience sur-mesure' })}</p>
                     </div>
 
                     {error && (
@@ -86,18 +90,18 @@ const Register = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <Input
                                 type="text"
-                                label="Nom complet"
+                                label={t('auth.full_name', { defaultValue: 'Nom complet' })}
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
-                                placeholder="Jean Dupont"
+                                placeholder={t('auth.full_name_placeholder', { defaultValue: 'Jean Dupont' })}
                                 leftIcon={<span className="material-symbols-outlined">person</span>}
                             />
 
                             <Input
                                 type="tel"
-                                label="Téléphone"
+                                label={t('common.phone', { defaultValue: 'Telephone' })}
                                 name="phone"
                                 value={formData.phone}
                                 onChange={handleChange}
@@ -108,19 +112,19 @@ const Register = () => {
                             <div className="md:col-span-2">
                                 <Input
                                     type="email"
-                                    label="Adresse Email"
+                                label={t('auth.email_address', { defaultValue: 'Adresse Email' })}
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    placeholder="vous@excellence.com"
+                                placeholder={t('auth.email_placeholder', { defaultValue: 'vous@excellence.com' })}
                                     leftIcon={<span className="material-symbols-outlined">mail</span>}
                                 />
                             </div>
 
                             <Input
                                 type="password"
-                                label="Mot de passe"
+                                label={t('auth.password', { defaultValue: 'Mot de passe' })}
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
@@ -132,7 +136,7 @@ const Register = () => {
 
                             <Input
                                 type="password"
-                                label="Confirmer"
+                                label={t('auth.confirm_password', { defaultValue: 'Confirmer' })}
                                 name="password_confirmation"
                                 value={formData.password_confirmation}
                                 onChange={handleChange}
@@ -152,7 +156,7 @@ const Register = () => {
                                 <Loader2 className="h-5 w-5 animate-spin mx-auto" />
                             ) : (
                                 <div className="flex items-center justify-center gap-3">
-                                    CRÉER MON COMPTE
+                                    {t('auth.register_cta', { defaultValue: 'Creer mon compte' })}
                                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
                                 </div>
                             )}
@@ -161,16 +165,16 @@ const Register = () => {
 
                     <div className="mt-10 pt-8 border-t border-accent-cream">
                         <p className="text-center text-accent-bronze text-sm">
-                            Déjà membre de l'Atelier ?{' '}
+                            {t('auth.already_member', { defaultValue: "Deja membre de l'Atelier ?" })}{' '}
                             <Link to="/login" className="text-primary hover:text-primary-dark font-bold underline underline-offset-4 transition-all">
-                                Se connecter
+                                {t('auth.login_cta', { defaultValue: 'Se connecter' })}
                             </Link>
                         </p>
                     </div>
                 </Card>
 
                 <p className="text-center text-accent-bronze/40 text-[10px] font-black uppercase tracking-widest mt-8 animate-fade-in-up stagger-2">
-                    En créant un compte, vous intégrez le cercle privé {settings.site_name || 'Elsa Coiffure'}.
+                    {t('auth.private_circle', { defaultValue: 'En creant un compte, vous integrez le cercle prive' })} {settings.site_name || 'Elsa Coiffure'}.
                 </p>
             </div>
         </div>

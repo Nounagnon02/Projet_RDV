@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from '../../api/axios';
-import { Save, Globe, Mail, Phone, MapPin, Instagram, Facebook, Youtube, Navigation, Loader2 } from 'lucide-react';
+import { Save, Globe, Mail, Phone, MapPin, Instagram, Facebook, Youtube, Navigation, Loader2, Plus, Trash2 } from 'lucide-react';
 import { useSiteSettings } from '../../context/SiteSettingsContext';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
@@ -11,6 +11,15 @@ const SiteSettings = () => {
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState('');
     const [gettingLocation, setGettingLocation] = useState(false);
+    const [faqLang, setFaqLang] = useState('fr');
+    const [faqFr, setFaqFr] = useState([]);
+    const [faqEn, setFaqEn] = useState([]);
+
+    const getCounterClass = (current, max) => {
+        if (current > max) return 'text-rose-600';
+        if (current >= Math.floor(max * 0.9)) return 'text-amber-600';
+        return 'text-accent-bronze';
+    };
 
     useEffect(() => {
         fetchSettings();
@@ -24,6 +33,12 @@ const SiteSettings = () => {
                 settingsObj[setting.key] = setting.value;
             });
             setSettings(settingsObj);
+            setFaqFr(parseFaqValue(settingsObj.help_faqs_fr, [
+                { id: 1, category: 'Reservation', question: '', answer: '' }
+            ]));
+            setFaqEn(parseFaqValue(settingsObj.help_faqs_en, [
+                { id: 1, category: 'Booking', question: '', answer: '' }
+            ]));
         } catch (error) {
             console.error('Erreur lors du chargement des paramètres:', error);
         } finally {
@@ -31,8 +46,56 @@ const SiteSettings = () => {
         }
     };
 
+    const parseFaqValue = (rawValue, fallback = []) => {
+        if (!rawValue) return fallback;
+        try {
+            const parsed = JSON.parse(rawValue);
+            return Array.isArray(parsed) ? parsed : fallback;
+        } catch (error) {
+            return fallback;
+        }
+    };
+
     const handleChange = (key, value) => {
         setSettings(prev => ({ ...prev, [key]: value }));
+    };
+
+    const normalizeAndValidateFaqList = (list, label) => {
+        const cleaned = list
+            .map((item) => ({
+                ...item,
+                category: (item.category || '').trim(),
+                question: (item.question || '').trim(),
+                answer: (item.answer || '').trim(),
+            }))
+            .filter((item) => item.category || item.question || item.answer);
+
+        if (cleaned.length === 0) {
+            throw new Error(`La liste FAQ ${label} ne peut pas etre vide.`);
+        }
+
+        cleaned.forEach((item, index) => {
+            if (!item.category || !item.question || !item.answer) {
+                throw new Error(`FAQ ${label} #${index + 1}: categorie, question et reponse sont obligatoires.`);
+            }
+
+            if (item.category.length > 60) {
+                throw new Error(`FAQ ${label} #${index + 1}: categorie trop longue (max 60 caracteres).`);
+            }
+
+            if (item.question.length > 220) {
+                throw new Error(`FAQ ${label} #${index + 1}: question trop longue (max 220 caracteres).`);
+            }
+
+            if (item.answer.length > 2000) {
+                throw new Error(`FAQ ${label} #${index + 1}: reponse trop longue (max 2000 caracteres).`);
+            }
+        });
+
+        return cleaned.map((item, index) => ({
+            ...item,
+            id: index + 1,
+        }));
     };
 
     const handleSubmit = async (e) => {
@@ -41,13 +104,26 @@ const SiteSettings = () => {
         setMessage('');
 
         try {
-            const settingsArray = Object.entries(settings).map(([key, value]) => ({
+            const normalizedFr = normalizeAndValidateFaqList(faqFr, 'FR');
+            const normalizedEn = normalizeAndValidateFaqList(faqEn, 'EN');
+
+            setFaqFr(normalizedFr);
+            setFaqEn(normalizedEn);
+
+            const settingsWithFaq = {
+                ...settings,
+                help_faqs_fr: JSON.stringify(normalizedFr),
+                help_faqs_en: JSON.stringify(normalizedEn),
+            };
+
+            const settingsArray = Object.entries(settingsWithFaq).map(([key, value]) => ({
                 key,
                 value,
                 type: key.includes('social') ? 'url' : 
                       key.includes('email') ? 'email' : 
                       key.includes('location') ? 'number' :
-                      key === 'footer_description' ? 'textarea' : 'text'
+                      key === 'footer_description' ? 'textarea' :
+                      key.includes('help_faqs') ? 'json' : 'text'
             }));
 
             await axios.put('/admin/site-settings', { settings: settingsArray });
@@ -55,11 +131,42 @@ const SiteSettings = () => {
             refreshSettings();
             setTimeout(() => setMessage(''), 3000);
         } catch (error) {
-            setMessage('Erreur lors de l\'enregistrement');
+            setMessage(error?.message || 'Erreur lors de l\'enregistrement');
             console.error(error);
         } finally {
             setSaving(false);
         }
+    };
+
+    const getCurrentFaqs = () => (faqLang === 'fr' ? faqFr : faqEn);
+
+    const updateCurrentFaqs = (newFaqs) => {
+        if (faqLang === 'fr') {
+            setFaqFr(newFaqs);
+            return;
+        }
+        setFaqEn(newFaqs);
+    };
+
+    const addFaqItem = () => {
+        const currentFaqs = getCurrentFaqs();
+        const nextId = currentFaqs.length > 0 ? Math.max(...currentFaqs.map((item) => Number(item.id) || 0)) + 1 : 1;
+        updateCurrentFaqs([
+            ...currentFaqs,
+            { id: nextId, category: faqLang === 'fr' ? 'Reservation' : 'Booking', question: '', answer: '' }
+        ]);
+    };
+
+    const removeFaqItem = (id) => {
+        const currentFaqs = getCurrentFaqs();
+        updateCurrentFaqs(currentFaqs.filter((item) => item.id !== id));
+    };
+
+    const updateFaqItem = (id, key, value) => {
+        const currentFaqs = getCurrentFaqs();
+        updateCurrentFaqs(
+            currentFaqs.map((item) => (item.id === id ? { ...item, [key]: value } : item))
+        );
     };
 
     const getCurrentLocation = () => {
@@ -188,6 +295,134 @@ const SiteSettings = () => {
                                 className="w-full px-4 py-3 rounded-lg border border-[#e3dbd3] focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                         </div>
+                    </div>
+                </div>
+
+                {/* Centre d'aide */}
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#f1ede9] space-y-6">
+                    <h2 className="text-xl font-bold text-maroon-dark">Centre d'aide</h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-bold text-maroon-dark mb-2">Titre (FR)</label>
+                            <input
+                                type="text"
+                                value={settings.help_title_fr || ''}
+                                onChange={(e) => handleChange('help_title_fr', e.target.value)}
+                                className="w-full px-4 py-3 rounded-lg border border-[#e3dbd3] focus:outline-none focus:ring-2 focus:ring-primary"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-bold text-maroon-dark mb-2">Titre (EN)</label>
+                            <input
+                                type="text"
+                                value={settings.help_title_en || ''}
+                                onChange={(e) => handleChange('help_title_en', e.target.value)}
+                                className="w-full px-4 py-3 rounded-lg border border-[#e3dbd3] focus:outline-none focus:ring-2 focus:ring-primary"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-bold text-maroon-dark mb-2">Sous-titre (FR)</label>
+                            <textarea
+                                rows={2}
+                                value={settings.help_subtitle_fr || ''}
+                                onChange={(e) => handleChange('help_subtitle_fr', e.target.value)}
+                                className="w-full px-4 py-3 rounded-lg border border-[#e3dbd3] focus:outline-none focus:ring-2 focus:ring-primary"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-bold text-maroon-dark mb-2">Sous-titre (EN)</label>
+                            <textarea
+                                rows={2}
+                                value={settings.help_subtitle_en || ''}
+                                onChange={(e) => handleChange('help_subtitle_en', e.target.value)}
+                                className="w-full px-4 py-3 rounded-lg border border-[#e3dbd3] focus:outline-none focus:ring-2 focus:ring-primary"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                        <div className="inline-flex rounded-lg border border-[#e3dbd3] overflow-hidden">
+                            <button
+                                type="button"
+                                onClick={() => setFaqLang('fr')}
+                                className={`px-4 py-2 text-sm font-bold ${faqLang === 'fr' ? 'bg-primary text-white' : 'bg-white text-maroon-dark'}`}
+                            >
+                                FAQ FR
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setFaqLang('en')}
+                                className={`px-4 py-2 text-sm font-bold ${faqLang === 'en' ? 'bg-primary text-white' : 'bg-white text-maroon-dark'}`}
+                            >
+                                FAQ EN
+                            </button>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={addFaqItem}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-colors"
+                        >
+                            <Plus className="size-4" />
+                            Ajouter une FAQ
+                        </button>
+                    </div>
+
+                    <div className="space-y-4">
+                        {getCurrentFaqs().map((faqItem) => (
+                            <div key={faqItem.id} className="rounded-xl border border-[#e3dbd3] p-4 space-y-3">
+                                <div className="flex justify-between items-center">
+                                    <p className="text-xs font-bold uppercase tracking-wider text-accent-bronze">FAQ #{faqItem.id}</p>
+                                    <button
+                                        type="button"
+                                        onClick={() => removeFaqItem(faqItem.id)}
+                                        className="inline-flex items-center gap-1 text-rose-600 hover:text-rose-700 text-sm font-bold"
+                                    >
+                                        <Trash2 className="size-4" />
+                                        Supprimer
+                                    </button>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-maroon-dark mb-1">Catégorie</label>
+                                    <input
+                                        type="text"
+                                        value={faqItem.category || ''}
+                                        onChange={(e) => updateFaqItem(faqItem.id, 'category', e.target.value)}
+                                        maxLength={60}
+                                        className="w-full px-4 py-2 rounded-lg border border-[#e3dbd3] focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    <p className={`mt-1 text-xs font-medium ${getCounterClass((faqItem.category || '').length, 60)}`}>
+                                        {(faqItem.category || '').length}/60
+                                    </p>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-maroon-dark mb-1">Question</label>
+                                    <input
+                                        type="text"
+                                        value={faqItem.question || ''}
+                                        onChange={(e) => updateFaqItem(faqItem.id, 'question', e.target.value)}
+                                        maxLength={220}
+                                        className="w-full px-4 py-2 rounded-lg border border-[#e3dbd3] focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    <p className={`mt-1 text-xs font-medium ${getCounterClass((faqItem.question || '').length, 220)}`}>
+                                        {(faqItem.question || '').length}/220
+                                    </p>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-maroon-dark mb-1">Réponse</label>
+                                    <textarea
+                                        rows={3}
+                                        value={faqItem.answer || ''}
+                                        onChange={(e) => updateFaqItem(faqItem.id, 'answer', e.target.value)}
+                                        maxLength={2000}
+                                        className="w-full px-4 py-2 rounded-lg border border-[#e3dbd3] focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    <p className={`mt-1 text-xs font-medium ${getCounterClass((faqItem.answer || '').length, 2000)}`}>
+                                        {(faqItem.answer || '').length}/2000
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

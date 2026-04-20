@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { useSiteSettings } from '../context/SiteSettingsContext';
-import { Button, Card, Input } from '../components/ui';
+import { Button, Card, Input, ProtectedIcon } from '../components/ui';
 
 const Login = () => {
+    const { t } = useTranslation();
     const { settings } = useSiteSettings();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,7 +24,7 @@ const Login = () => {
             await login(email, password);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.message || 'Identifiants incorrects');
+            setError(err.response?.data?.message || t('auth.login_error', { defaultValue: 'Identifiants incorrects' }));
         } finally {
             setLoading(false);
         }
@@ -42,14 +44,16 @@ const Login = () => {
                 <div className="flex flex-col items-center mb-8 md:mb-10 animate-fade-in">
                     <div className="flex items-center gap-3 md:gap-4 mb-2">
                         <div className="h-12 w-12 md:h-16 md:w-16 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-primary-glow">
-                            <span className="material-symbols-outlined text-white text-3xl md:text-4xl">flare</span>
+                            <ProtectedIcon translate="no" data-i18n="false">
+                                <span className="material-symbols-outlined text-white text-3xl md:text-4xl">flare</span>
+                            </ProtectedIcon>
                         </div>
                         <div>
                             <h1 className="text-2xl md:text-3xl font-display font-bold text-maroon-dark tracking-tight">
                                 {settings.site_name || 'Elsa Coiffure'}
                             </h1>
                             <p className="text-[8px] md:text-[10px] text-primary uppercase tracking-[0.4em] font-black">
-                                L'Atelier de Luxe
+                                {t('auth.brand_subtitle', { defaultValue: "L'Atelier de Luxe" })}
                             </p>
                         </div>
                     </div>
@@ -58,10 +62,10 @@ const Login = () => {
                 <Card className="p-6 sm:p-8 md:p-10 animate-fade-in-up stagger-1 border-none shadow-2xl shadow-maroon-dark/5 bg-white/80 backdrop-blur-xl">
                     <div className="text-center mb-8 md:mb-10">
                         <h2 className="text-2xl md:text-3xl font-display font-bold text-maroon-dark mb-2 italic">
-                            Accès Membre
+                            {t('auth.login_title', { defaultValue: 'Acces membre' })}
                         </h2>
                         <p className="text-accent-bronze text-xs md:text-sm font-medium italic">
-                            Bienvenue dans votre espace privilégié
+                            {t('auth.login_subtitle', { defaultValue: 'Bienvenue dans votre espace privilegie' })}
                         </p>
                     </div>
 
@@ -75,24 +79,24 @@ const Login = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <Input
                             type="email"
-                            label="Email"
+                            label={t('common.email', { defaultValue: 'Email' })}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            placeholder="vous@excellence.com"
+                            placeholder={t('auth.email_placeholder', { defaultValue: 'vous@excellence.com' })}
                             leftIcon={<span className="material-symbols-outlined">mail</span>}
                         />
 
                         <div>
                             <div className="flex items-center justify-between mb-2 pl-1">
                                 <label className="text-xs font-black uppercase tracking-widest text-maroon-dark dark:text-text-light opacity-60">
-                                    Mot de passe
+                                    {t('auth.password', { defaultValue: 'Mot de passe' })}
                                 </label>
                                 <Link
                                     to="/forgot-password"
                                     className="text-[10px] text-primary hover:text-primary-dark font-black tracking-widest uppercase transition-colors"
                                 >
-                                    Oublié ?
+                                    {t('auth.forgot', { defaultValue: 'Oublie ?' })}
                                 </Link>
                             </div>
                             <Input
@@ -114,7 +118,7 @@ const Login = () => {
                         >
                             {!loading && (
                                 <div className="flex items-center justify-center gap-3">
-                                    SE CONNECTER
+                                    {t('auth.login_cta', { defaultValue: 'Se connecter' })}
                                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
                                 </div>
                             )}
@@ -123,12 +127,12 @@ const Login = () => {
 
                     <div className="mt-10 pt-8 border-t border-accent-cream/50">
                         <p className="text-center text-accent-bronze text-sm">
-                            Pas encore membre ?{' '}
+                            {t('auth.no_account', { defaultValue: 'Pas encore membre ?' })}{' '}
                             <Link
                                 to="/register"
                                 className="text-primary hover:text-primary-dark font-bold underline underline-offset-4 transition-all"
                             >
-                                Créer un profil
+                                {t('auth.create_profile', { defaultValue: 'Creer un profil' })}
                             </Link>
                         </p>
                     </div>
@@ -136,7 +140,7 @@ const Login = () => {
 
                 {/* Footer */}
                 <p className="text-center text-accent-bronze/40 text-[10px] font-black uppercase tracking-widest mt-8 animate-fade-in-up stagger-2">
-                    © {new Date().getFullYear()} {settings.site_name || 'Elsa Coiffure'}. Excellence & Tradition.
+                    © {new Date().getFullYear()} {settings.site_name || 'Elsa Coiffure'}. {t('auth.footer_tagline', { defaultValue: 'Excellence & Tradition.' })}
                 </p>
             </div>
         </div>

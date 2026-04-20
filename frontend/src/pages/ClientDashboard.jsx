@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
@@ -147,7 +148,7 @@ const ClientDashboard = () => {
                                 <h2 className="text-2xl font-black tracking-tight leading-none uppercase">Privilèges</h2>
 
                                 <Link
-                                    to="/client/shop"
+                                    to="/shop"
                                     className="bg-maroon-dark text-white rounded-[32px] p-10 block relative overflow-hidden group shadow-2xl"
                                 >
                                     <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform duration-700">

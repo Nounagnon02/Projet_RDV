@@ -8,9 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('fedapay_transaction_id')->nullable()->after('payment_method');
-        });
+        if (Schema::hasTable('orders') && !Schema::hasColumn('orders', 'fedapay_transaction_id')) {
+            Schema::table('orders', function (Blueprint $table) {
+                $table->string('fedapay_transaction_id')->nullable();
+            });
+        }
     }
 
     public function down(): void

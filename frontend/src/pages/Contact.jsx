@@ -57,7 +57,7 @@ const Contact = () => {
             });
             setTimeout(() => setSuccess(false), 5000);
         } catch (err) {
-            setError(err.response?.data?.message || 'Une erreur est survenue. Veuillez réessayer.');
+            setError(err.response?.data?.message || t('contact.error_retry', { defaultValue: 'Une erreur est survenue. Veuillez reessayer.' }));
         } finally {
             setLoading(false);
         }
@@ -121,7 +121,7 @@ const Contact = () => {
                             {success && (
                                 <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 text-sm font-medium flex items-center gap-3">
                                     <span className="material-symbols-outlined">check_circle</span>
-                                    Votre message a été envoyé avec succès ! Nous vous répondrons rapidement.
+                                    {t('contact.success_message', { defaultValue: 'Votre message a ete envoye avec succes ! Nous vous repondrons rapidement.' })}
                                 </div>
                             )}
 
@@ -161,7 +161,7 @@ const Contact = () => {
                                 </div>
 
                                 <label className="flex flex-col gap-2">
-                                    <span className="text-[10px] uppercase font-black tracking-widest text-accent-bronze">Téléphone (optionnel)</span>
+                                    <span className="text-[10px] uppercase font-black tracking-widest text-accent-bronze">{t('contact.phone_optional', { defaultValue: 'Telephone (optionnel)' })}</span>
                                     <input
                                         name="phone"
                                         value={formData.phone}
@@ -180,7 +180,7 @@ const Contact = () => {
                                         onChange={handleChange}
                                         className="h-12 bg-transparent border-0 border-b-2 border-maroon-dark/10 dark:border-white/10 focus:ring-0 focus:border-primary px-0 text-lg transition-all appearance-none italic"
                                     >
-                                        <option value="">{t('contact.wedding_styling')}</option>
+                                        <option value="">{t('contact.select_subject', { defaultValue: 'Choisir un sujet' })}</option>
                                         <option value="wedding">{t('contact.wedding_styling')}</option>
                                         <option value="gala">{t('contact.gala_red_carpet')}</option>
                                         <option value="commercial">{t('contact.commercial_shoots')}</option>
@@ -208,7 +208,7 @@ const Contact = () => {
                                     disabled={loading}
                                     className="w-full h-14 uppercase tracking-widest text-xs font-black shadow-xl shadow-primary/20"
                                 >
-                                    {loading ? 'Envoi en cours...' : t('contact.send_message')}
+                                    {loading ? t('contact.sending', { defaultValue: 'Envoi en cours...' }) : t('contact.send_message')}
                                 </Button>
                             </form>
                         </div>

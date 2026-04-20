@@ -22,14 +22,31 @@ class OrderController extends Controller
             'items' => 'required|array|min:1',
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1',
-            'shipping_address' => 'required|array',
-            'total' => 'required|numeric',
+            'full_name' => 'required|string|max:255',
+            'delivery_location' => 'required|string|max:255',
+            'phone' => 'required|string|max:50',
+            'email' => 'nullable|email|max:255',
         ]);
 
-        $order = $request->user()->orders()->create([
-            'total' => $request->total,
-            'status' => 'paid', // Simulating successful payment
-            'shipping_address' => json_encode($request->shipping_address),
+        $calculatedTotal = 0;
+        foreach ($request->items as $item) {
+            $product = Product::findOrFail($item['product_id']);
+            $calculatedTotal += ((float) $product->price * (int) $item['quantity']);
+        }
+
+        $order = Order::create([
+            'user_id' => $request->user()?->id,
+            'total_amount' => $calculatedTotal,
+            'status' => 'pending',
+            'payment_status' => 'pending',
+            'full_name' => $request->full_name,
+            'delivery_location' => $request->delivery_location,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'shipping_address' => [
+                'delivery_location' => $request->delivery_location,
+                'phone' => $request->phone,
+            ],
         ]);
 
         foreach ($request->items as $item) {
@@ -45,10 +62,12 @@ class OrderController extends Controller
         }
 
         // Send premium order confirmation email
-        try {
-            Mail::to($request->user())->send(new OrderConfirmation($order));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Erreur envoi email order: ' . $e->getMessage());
+        if (!empty($request->email)) {
+            try {
+                Mail::to($request->email)->send(new OrderConfirmation($order));
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('Erreur envoi email order: ' . $e->getMessage());
+            }
         }
 
         return response()->json($order->load('items.product'), 201);

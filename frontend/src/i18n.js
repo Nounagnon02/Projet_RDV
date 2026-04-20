@@ -9,6 +9,7 @@ i18n
     .use(initReactI18next)
     .init({
         fallbackLng: 'fr',
+        defaultNS: 'translation',
         debug: false,
         interpolation: {
             escapeValue: false,
@@ -16,6 +17,15 @@ i18n
         backend: {
             loadPath: '/locales/{{lng}}/{{ns}}.json',
         },
+        // Réduire les namespaces à la traduction uniquement
+        // N'effectuer aucun parsing du DOM automatique
+        ns: ['translation'],
+        // Désactiver la traduction des attributs HTML
+        attr: [],
+        // Seulement traduire les clés explicites avec t() ou Trans
+        translation: {
+            baked: true,
+        }
     });
 
 export default i18n;

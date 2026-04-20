@@ -1,7 +1,45 @@
 @import "tailwindcss";
 
 /* =====================================================
-   THEME - Design System Premium
+   TRANSLATION PROTECTION - Critical Visual Elements
+   DO NOT TRANSLATE: Icons, Logos, Emojis, Symbols
+   ===================================================== */
+
+/**
+ * GLOBAL RULE: Protect all Material Symbols and icon containers
+ * from being translated by browsers (Google Translate, etc.) and i18n
+ */
+.material-symbols-outlined,
+[translate="no"],
+[data-i18n="false"] {
+  /* Prevent DOM translation */
+  translate: none;
+  /* Prevent i18next translation */
+  --i18n-content: attr(data-i18n-original);
+}
+
+/**
+ * Comprehensive icon protection classes
+ * Use these classes or components to ensure icons are NEVER translated
+ */
+.icon-protected,
+.logo-protected,
+.emoji-protected {
+  translate: none;
+  cursor: inherit;
+}
+
+/**
+ * Lucide React icons and SVG icons should also be protected
+ * when wrapped in these containers
+ */
+[role="img"][data-i18n="false"],
+svg[data-i18n="false"] {
+  translate: none;
+}
+
+/* =====================================================
+   ELSA COIFFURE - Premium Color & Theme Configuration
    ===================================================== */
 
 @theme {

@@ -1,9 +1,24 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { useTranslation } from 'react-i18next';
+import api from '../api/axios';
+import ClientLayout from '../layouts/ClientLayout';
 import { Button } from '../components/ui';
-import Footer from '../components/Footer';
+import {
+    ChevronLeft,
+    User,
+    Clock,
+    Trash2,
+    ArrowRight,
+    Calendar,
+    Sparkles,
+    Loader2
+} from 'lucide-react';
 
 const ClientAppointments = () => {
+    const { t } = useTranslation();
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -23,22 +38,20 @@ const ClientAppointments = () => {
     };
 
     const handleCancel = async (id) => {
-        if (!confirm('Voulez-vous vraiment annuler ce rendez-vous d\'exception ?')) return;
+        if (!confirm(t('appointments.cancel_confirm', { defaultValue: 'Voulez-vous vraiment annuler ce rendez-vous ?' }))) return;
         try {
             await api.delete(`/client/appointments/${id}`);
             fetchAppointments();
         } catch (error) {
-            alert("Erreur lors de l'annulation");
+            alert(t('appointments.cancel_error', { defaultValue: 'Erreur lors de l annulation' }));
         }
     };
 
     return (
-        <div className="min-h-screen bg-background-light dark:bg-background-dark font-display flex flex-col">
-            <ClientHeader />
-
-            <main className="flex-1">
+        <ClientLayout title="Mes Reservations" subtitle="Retrouvez et gerez tous vos rendez-vous.">
+            <div>
                 {/* Header Section */}
-                <div className="relative overflow-hidden py-16 lg:py-20 px-8">
+                <div className="relative overflow-hidden py-6 lg:py-10">
                     <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-10">
                         <div className="absolute top-0 right-0 w-96 h-96 bg-primary rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                     </div>
@@ -46,21 +59,21 @@ const ClientAppointments = () => {
                     <div className="max-w-4xl mx-auto relative animate-fade-in text-center px-4">
                         <div className="flex items-center justify-center gap-3 mb-4">
                             <Sparkles className="size-5 text-primary" />
-                            <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em]">Votre Historique d'Excellence</span>
+                            <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em]">{t('appointments.history', { defaultValue: 'Votre historique d excellence' })}</span>
                         </div>
                         <h1 className="font-display font-black text-maroon-dark dark:text-text-light italic leading-[1.1] mb-6" style={{ fontSize: 'var(--text-h1)' }}>
-                            Mes Rendez-vous
+                            {t('appointments.title', { defaultValue: 'Mes rendez-vous' })}
                         </h1>
                         <p className="text-lg text-accent-bronze font-medium italic max-w-2xl mx-auto leading-relaxed">
-                            Retrouvez le parcours de vos transformations et gérez vos prochaines séances de soin chez Elsa Coiffure.
+                            {t('appointments.subtitle', { defaultValue: 'Retrouvez le parcours de vos transformations et gerez vos prochaines seances.' })}
                         </p>
                     </div>
                 </div>
 
-                <div className="max-w-4xl mx-auto px-8 pb-32">
+                <div className="max-w-4xl mx-auto pb-16">
                     <div className="flex items-center gap-2 text-primary mb-10 group cursor-pointer" onClick={() => window.history.back()}>
                         <ChevronLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                        <span className="text-[10px] font-black uppercase tracking-widest">Retour au Dashboard</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest">{t('appointments.back', { defaultValue: 'Retour' })}</span>
                     </div>
 
                     {loading ? (
@@ -91,9 +104,13 @@ const ClientAppointments = () => {
                                                         app.status === 'pending' ? 'bg-amber-500/10 text-amber-600' :
                                                             'bg-rose-500/10 text-rose-600'
                                                         }`}>
-                                                        {app.status === 'confirmed' ? 'Confirmé' : app.status === 'pending' ? 'En Attente' : 'Annulé'}
+                                                        {app.status === 'confirmed'
+                                                            ? t('appointments.status_confirmed', { defaultValue: 'Confirme' })
+                                                            : app.status === 'pending'
+                                                                ? t('appointments.status_pending', { defaultValue: 'En attente' })
+                                                                : t('appointments.status_cancelled', { defaultValue: 'Annule' })}
                                                     </span>
-                                                    <span className="text-[9px] font-black uppercase tracking-widest px-3 py-1 bg-maroon-dark/5 text-accent-bronze rounded-full italic">Soin {app.service?.category || 'Signature'}</span>
+                                                    <span className="text-[9px] font-black uppercase tracking-widest px-3 py-1 bg-maroon-dark/5 text-accent-bronze rounded-full italic">{t('appointments.care', { defaultValue: 'Soin' })} {app.service?.category || t('appointments.signature', { defaultValue: 'Signature' })}</span>
                                                 </div>
                                                 <h3 className="text-2xl md:text-3xl font-display italic font-bold text-maroon-dark dark:text-text-light leading-snug">{app.service?.name}</h3>
                                                 <div className="flex flex-wrap justify-center md:justify-start items-center gap-y-4 gap-x-8 text-accent-bronze text-sm font-medium italic">
@@ -109,7 +126,7 @@ const ClientAppointments = () => {
                                                         <button
                                                             onClick={() => handleCancel(app.id)}
                                                             className="size-14 rounded-full bg-rose-500/5 flex items-center justify-center text-rose-500 hover:bg-rose-500 hover:text-white transition-all active:scale-95"
-                                                            title="Annuler le rendez-vous"
+                                                            title={t('appointments.cancel', { defaultValue: 'Annuler le rendez-vous' })}
                                                         >
                                                             <Trash2 className="size-5" />
                                                         </button>
@@ -127,21 +144,18 @@ const ClientAppointments = () => {
                                     <div className="size-20 bg-accent-cream rounded-full flex items-center justify-center mx-auto mb-8 text-accent-bronze">
                                         <Calendar className="size-10" />
                                     </div>
-                                    <h3 className="text-2xl font-display italic font-medium mb-4">Votre voyage commence ici</h3>
-                                    <p className="text-accent-bronze mb-10 max-w-sm mx-auto leading-relaxed italic">Vous n'avez pas encore de rendez-vous enregistré. Laissez-nous sublimer votre allure.</p>
+                                    <h3 className="text-2xl font-display italic font-medium mb-4">{t('appointments.empty_title', { defaultValue: 'Votre voyage commence ici' })}</h3>
+                                    <p className="text-accent-bronze mb-10 max-w-sm mx-auto leading-relaxed italic">{t('appointments.empty_desc', { defaultValue: 'Vous n avez pas encore de rendez-vous enregistre.' })}</p>
                                     <Link to="/providers">
-                                        <Button variant="primary" className="h-16 px-12 rounded-full font-black uppercase tracking-widest text-[10px]">DÉCOUVRIR LES SERVICES</Button>
+                                        <Button variant="primary" className="h-16 px-12 rounded-full font-black uppercase tracking-widest text-[10px]">{t('appointments.discover_services', { defaultValue: 'Decouvrir les services' })}</Button>
                                     </Link>
                                 </div>
                             )}
                         </div>
                     )}
                 </div>
-            </main>
-
-            {/* Premium Footer */}
-            <Footer />
-        </div>
+            </div>
+        </ClientLayout>
     );
 };
 

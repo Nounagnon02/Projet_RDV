@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import api from '../api/axios';
@@ -9,14 +10,13 @@ import {
     Loader2,
     MapPin,
     Scissors,
-    ChevronRight,
     ArrowRight,
-    Sparkles,
     Building2,
-    ArrowLeft
+    Clock
 } from 'lucide-react';
 
 const ProvidersPage = () => {
+    const { t } = useTranslation();
     const [providers, setProviders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -39,8 +39,29 @@ const ProvidersPage = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        fetchProviders(searchTerm);
     };
+
+    const serviceItems = providers.flatMap((provider) =>
+        (provider.services || []).map((service) => ({
+            id: `${provider.id}-${service.id}`,
+            providerSlug: provider.slug,
+            providerName: provider.business_name,
+            providerCity: provider.city,
+            serviceName: service.name,
+            serviceDescription: service.description,
+            duration: service.duration,
+            price: service.price,
+        }))
+    );
+
+    const visibleServices = serviceItems.filter((item) => {
+        const term = searchTerm.trim().toLowerCase();
+        if (!term) return true;
+        return (
+            item.serviceName?.toLowerCase().includes(term) ||
+            item.providerName?.toLowerCase().includes(term)
+        );
+    });
 
     return (
         <div className="min-h-screen bg-background-light dark:bg-background-dark font-display overflow-x-hidden">
@@ -51,12 +72,12 @@ const ProvidersPage = () => {
                 <div className="absolute top-0 right-0 w-1/2 h-full bg-maroon-dark/5 -skew-x-12 translate-x-1/2"></div>
 
                 <div className="max-w-4xl mx-auto text-center relative z-10 animate-fade-in">
-                    <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em] block mb-6">L'Expertise à Votre Service</span>
+                    <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em] block mb-6">{t('providers.badge', { defaultValue: "L'expertise a votre service" })}</span>
                     <h1 className="font-display italic text-maroon-dark dark:text-text-light leading-[1.1] mb-8" style={{ fontSize: 'var(--text-h1)' }}>
-                        Rencontrez Nos <span className="text-primary italic">Maîtres Artisans</span>.
+                        {t('providers.services_title_prefix', { defaultValue: 'Découvrez nos' })} <span className="text-primary italic">{t('providers.services_title_highlight', { defaultValue: 'services' })}</span>.
                     </h1>
                     <p className="text-accent-bronze text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
-                        Chaque prestataire Elsa Coiffure est sélectionné pour son excellence technique et sa passion pour le cheveu texturé.
+                        {t('providers.services_subtitle', { defaultValue: 'Choisissez directement la prestation qui vous convient, puis réservez en un clic.' })}
                     </p>
 
                     {/* Sophisticated Search Bar */}
@@ -67,12 +88,12 @@ const ProvidersPage = () => {
                                 <Input
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    placeholder="Rechercher un atelier ou un artiste..."
+                                    placeholder={t('providers.search_service_placeholder', { defaultValue: 'Rechercher un service ou un prestataire...' })}
                                     className="h-16 pl-14 bg-white dark:bg-white/5 border-maroon-dark/10 focus:border-primary shadow-2xl shadow-maroon-dark/5"
                                 />
                             </div>
                             <Button type="submit" variant="primary" className="h-16 px-10 font-black uppercase tracking-widest text-xs hidden sm:flex">
-                                TROUVER
+                                {t('providers.search_cta', { defaultValue: 'Trouver' })}
                             </Button>
                         </div>
                     </form>
@@ -85,12 +106,12 @@ const ProvidersPage = () => {
                     <div className="flex h-64 items-center justify-center">
                         <Loader2 className="size-12 animate-spin text-primary" />
                     </div>
-                ) : providers.length > 0 ? (
+                ) : visibleServices.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                        {providers.map((provider, index) => (
+                        {visibleServices.map((item, index) => (
                             <Link
-                                key={provider.id}
-                                to={`/b/${provider.slug}`}
+                                key={item.id}
+                                to={`/b/${item.providerSlug}`}
                                 className="group block"
                             >
                                 <Card variant="elevated" hover className="p-0 overflow-hidden border-none bg-white dark:bg-white/5 shadow-xl shadow-maroon-dark/5 group-hover:shadow-primary/10 transition-all duration-700">
@@ -99,41 +120,49 @@ const ProvidersPage = () => {
                                         <img
                                             src={`https://images.unsplash.com/photo-${1600000000000 + index}?auto=format&fit=crop&q=80&w=800`}
                                             className="size-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
-                                            alt={provider.business_name}
+                                            alt={item.serviceName}
                                         />
                                         <div className="absolute bottom-6 left-6 z-20">
                                             <div className="bg-primary text-white px-3 py-1 text-[9px] font-black uppercase tracking-[0.2em] shadow-lg">
-                                                PLATINUM MEMBER
+                                                {t('providers.premium_badge', { defaultValue: 'Membre premium' })}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="p-8">
                                         <div className="flex justify-between items-start mb-4">
                                             <h3 className="text-2xl font-display font-medium italic text-maroon-dark dark:text-text-light group-hover:text-primary transition-colors">
-                                                {provider.business_name}
+                                                {item.serviceName}
                                             </h3>
                                         </div>
 
                                         <div className="flex items-center gap-2 text-accent-bronze text-sm mb-6 font-medium">
                                             <MapPin className="size-4 text-primary" />
-                                            {provider.city || 'Paris, France'}
+                                            {item.providerCity || t('providers.default_city', { defaultValue: 'Paris, France' })}
                                         </div>
 
                                         <p className="text-accent-bronze/70 text-sm line-clamp-2 mb-8 italic">
-                                            {provider.description || "Spécialiste de la haute coiffure africaine et des soins capillaires d'exception."}
+                                            {item.serviceDescription || t('providers.default_description', { defaultValue: "Specialiste de la haute coiffure africaine et des soins capillaires d'exception." })}
                                         </p>
 
                                         <div className="flex items-center justify-between pt-6 border-t border-maroon-dark/5 dark:border-white/5">
                                             <div className="flex items-center gap-3">
                                                 <div className="size-8 rounded-full bg-maroon-dark/5 dark:bg-white/5 flex items-center justify-center text-primary">
-                                                    <Scissors className="size-4" />
+                                                    <Clock className="size-4" />
                                                 </div>
                                                 <span className="text-[10px] font-black uppercase tracking-widest text-maroon-dark dark:text-text-light">
-                                                    {provider.services?.length || 3} SERVICES
+                                                    {item.duration ? `${item.duration} min` : t('providers.service', { defaultValue: 'Service' })}
                                                 </span>
                                             </div>
+                                            <div className="text-primary font-black text-sm">
+                                                {item.price ? `${Math.round(item.price).toLocaleString('fr-FR')} FCFA` : ''}
+                                            </div>
+                                        </div>
+                                        <div className="mt-4 text-[10px] font-bold uppercase tracking-widest text-accent-bronze">
+                                            {item.providerName}
+                                        </div>
+                                        <div className="flex items-center justify-end pt-3">
                                             <div className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-[10px] group-hover:gap-4 transition-all">
-                                                RÉSERVER <ArrowRight className="size-4" />
+                                                {t('providers.book', { defaultValue: 'Reserver' })} <ArrowRight className="size-4" />
                                             </div>
                                         </div>
                                     </div>
@@ -144,9 +173,9 @@ const ProvidersPage = () => {
                 ) : (
                     <Card variant="light" className="p-24 text-center border-dashed border-2 bg-accent-cream/20">
                         <Building2 className="size-16 mx-auto text-accent-cream mb-6 opacity-20" />
-                        <h3 className="text-2xl font-display italic text-maroon-dark mb-4">L'atelier est momentanément fermé</h3>
+                        <h3 className="text-2xl font-display italic text-maroon-dark mb-4">{t('providers.empty_title', { defaultValue: "L'atelier est momentanement ferme" })}</h3>
                         <p className="text-accent-bronze max-w-sm mx-auto">
-                            Aucun prestataire n'est disponible pour le moment. Veuillez revenir très prochainement.
+                            {t('providers.empty_desc', { defaultValue: "Aucun prestataire n'est disponible pour le moment. Veuillez revenir tres prochainement." })}
                         </p>
                     </Card>
                 )}

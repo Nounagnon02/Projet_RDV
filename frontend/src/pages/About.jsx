@@ -1,4 +1,4 @@
-import { Card, Button } from '../components/ui';
+import { Card, Button, ProtectedIcon } from '../components/ui';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -95,7 +95,7 @@ const About = () => {
                             <p className="text-lg text-accent-bronze font-medium max-w-xl mx-auto">
                                 {t('about.unique_bride')}
                             </p>
-                            <Button variant="primary" size="lg" className="h-16 px-12 text-lg shadow-xl shadow-primary/20" rightIcon={<span className="material-symbols-outlined">calendar_month</span>}>
+                            <Button variant="primary" size="lg" className="h-16 px-12 text-lg shadow-xl shadow-primary/20" rightIcon={<ProtectedIcon translate="no" data-i18n="false"><span className="material-symbols-outlined">calendar_month</span></ProtectedIcon>}>
                                 {t('about.bridal_inquiry')}
                             </Button>
                         </div>

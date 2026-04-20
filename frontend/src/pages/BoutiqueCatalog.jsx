@@ -1,28 +1,42 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../api/axios';
-import ClientHeader from '../components/ClientHeader';
-import { Card, Button, Input } from '../components/ui';
+import { useTranslation } from 'react-i18next';
 import {
     Search as SearchIcon,
-    ShoppingBag as BagIcon,
-    ChevronLeft as LeftIcon,
-    ChevronRight as RightIcon,
-    Filter as FilterIcon,
-    User as UserIcon,
-    Sparkles,
-    ArrowRight,
+    ShoppingBag,
+    Loader2,
     Plus,
-    ShoppingCart as CartIcon,
-    CheckCircle,
-    Menu as MenuIcon
+    ArrowRight,
+    Droplets,
+    Sparkles,
+    Scissors,
+    BrushCleaning,
+    Package2,
 } from 'lucide-react';
+import { Button, Card } from '../components/ui';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { useCart } from '../context/CartContext';
 
 const BoutiqueCatalog = () => {
+    const { t } = useTranslation();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('all');
+    const { addToCart, itemCount } = useCart();
 
-    const STORAGE_URL = 'http://localhost:8000/storage/';
+    const STORAGE_URL = 'http://localhost:8000/storage';
+
+    // Categories
+    const categories = [
+        { id: 'all', name: t('shop.all_products', { defaultValue: 'Tous les produits' }) },
+        { id: 'Oils & Serums', name: t('shop.cat_oils_serums', { defaultValue: 'Huiles & Serums' }) },
+        { id: 'Masks', name: t('shop.cat_masks', { defaultValue: 'Masques' }) },
+        { id: 'Silk Accessories', name: t('shop.cat_silk_accessories', { defaultValue: 'Accessoires en soie' }) },
+        { id: 'Cleansing', name: t('shop.cat_cleansing', { defaultValue: 'Nettoyants' }) },
+    ];
 
     useEffect(() => {
         fetchProducts();
@@ -32,193 +46,219 @@ const BoutiqueCatalog = () => {
         try {
             setLoading(true);
             const response = await api.get('/products');
-            setProducts(response.data);
+            setProducts(response.data.data || response.data);
         } catch (error) {
             console.error('Error fetching products', error);
-            // Fallback mock data for precise alignment if API fails
-            const mock = [
-                { id: 1, name: 'Organic Marula Growth Oil', price: 52.00, category: 'Oils & Serums', hairGoal: 'Growth', image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=600' },
-                { id: 2, name: 'Whipped Shea Butter Mask', price: 45.00, category: 'Masks', hairGoal: 'Hydration', image: 'https://images.unsplash.com/photo-1599426417164-83141753bb45?auto=format&fit=crop&q=80&w=600' },
-                { id: 3, name: 'Gold-Trim Silk Bonnet', price: 75.00, category: 'Silk Accessories', hairGoal: 'Retention', image: 'https://images.unsplash.com/photo-1590540179852-2110a54f813c?auto=format&fit=crop&q=80&w=600' }
-            ];
-            setProducts(mock);
+            // Fallback mock data
+            setProducts([
+                { id: 1, name: 'Organic Marula Growth Oil', price: 52.00, category: 'Oils & Serums', hair_goal: 'Growth', stock: 25 },
+                { id: 2, name: 'Whipped Shea Butter Mask', price: 45.00, category: 'Masks', hair_goal: 'Hydration', stock: 18 },
+                { id: 3, name: 'Gold-Trim Silk Bonnet', price: 75.00, category: 'Silk Accessories', hair_goal: 'Retention', stock: 12 },
+                { id: 4, name: 'Protein Reconstructor Serum', price: 65.00, category: 'Oils & Serums', hair_goal: 'Repair', stock: 22 },
+                { id: 5, name: 'Scalp Clarifying Shampoo', price: 32.00, category: 'Cleansing', hair_goal: 'Scalp Health', stock: 30 },
+                { id: 6, name: 'Silk Pillowcase Premium', price: 58.00, category: 'Silk Accessories', hair_goal: 'Retention', stock: 15 },
+            ]);
         } finally {
             setLoading(false);
         }
     };
 
+    const filteredProducts = products.filter(product => {
+        const matchesSearch = product.name?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+        return matchesSearch && matchesCategory;
+    });
+
+    const handleAddToCart = (product) => {
+        addToCart(product, 1);
+    };
+
+    const formatPrice = (value) => `${Math.round(Number(value || 0)).toLocaleString('fr-FR')} FCFA`;
+
+    const getCategoryIcon = (category = '') => {
+        const normalized = category.toLowerCase();
+        if (normalized.includes('oil') || normalized.includes('serum')) return Droplets;
+        if (normalized.includes('mask')) return Sparkles;
+        if (normalized.includes('silk')) return Scissors;
+        if (normalized.includes('clean')) return BrushCleaning;
+        return Package2;
+    };
+
+    const getProductImage = (product) => {
+        const rawImage = product?.images?.[0] || product?.image || null;
+        if (!rawImage) return null;
+        if (rawImage.startsWith('http://') || rawImage.startsWith('https://')) return rawImage;
+        return `${STORAGE_URL}/${rawImage.replace(/^\/+/, '')}`;
+    };
+
     return (
-        <div className="min-h-screen bg-background-light dark:bg-background-dark font-sans text-maroon-dark dark:text-text-light flex flex-col overflow-x-hidden">
-            <ClientHeader />
-
-            <div className="flex flex-1">
-                {/* Sidebar: Deep Maroon Filter Bar - Exact Mockup Style */}
-                <aside className="w-72 bg-maroon-dark text-white p-8 flex flex-col gap-10 hidden xl:flex">
-                    <div className="space-y-2">
-                        <h1 className="text-[#ca8349] text-[10px] font-black uppercase tracking-[0.3em]">Shop Filters</h1>
-                        <p className="text-[#b49b87] text-sm font-light">Tailored for Afro-textured beauty</p>
+        <div className="min-h-screen bg-background-light dark:bg-background-dark text-maroon-dark dark:text-text-light overflow-x-hidden">
+            <Navbar />
+            <div className="py-28 px-2 md:px-4">
+                <div className="max-w-7xl mx-auto">
+                    {/* Hero Section */}
+                    <div className="mb-16">
+                        <div className="flex items-center gap-3 mb-6">
+                            <ShoppingBag className="size-6 text-primary" />
+                            <h1 className="text-4xl md:text-5xl font-display font-black italic text-maroon-dark">
+                                {t('shop.title', { defaultValue: 'Boutique Elsa' })}
+                            </h1>
+                        </div>
+                        <p className="text-lg text-accent-bronze font-medium max-w-2xl italic">
+                            {t('shop.subtitle', { defaultValue: 'Des soins professionnels premium pour les besoins spécifiques des cheveux Afro et crepus.' })}
+                        </p>
                     </div>
 
-                    <div className="space-y-8">
-                        {/* Categories */}
-                        <div className="space-y-6">
-                            <h3 className="text-sm font-bold flex items-center gap-3">
-                                <span className="material-symbols-outlined text-primary text-base">category</span> Categories
-                            </h3>
-                            <div className="space-y-2">
-                                <button className="flex items-center gap-3 w-full px-4 py-3 rounded-xl bg-primary text-white font-bold shadow-lg shadow-primary/20 text-sm">
-                                    <span className="material-symbols-outlined text-lg">grid_view</span> All Products
-                                </button>
-                                <button className="flex items-center gap-3 w-full px-4 py-3 text-[#b49b87] hover:bg-white/5 rounded-xl transition-all text-sm group">
-                                    <span className="material-symbols-outlined text-lg group-hover:text-white">opacity</span> Oils & Serums
-                                </button>
-                                <button className="flex items-center gap-3 w-full px-4 py-3 text-[#b49b87] hover:bg-white/5 rounded-xl transition-all text-sm group">
-                                    <span className="material-symbols-outlined text-lg group-hover:text-white">spa</span> Moisturizers
-                                </button>
-                                <button className="flex items-center gap-3 w-full px-4 py-3 text-[#b49b87] hover:bg-white/5 rounded-xl transition-all text-sm group">
-                                    <span className="material-symbols-outlined text-lg group-hover:text-white">checkroom</span> Silk Accessories
-                                </button>
-                            </div>
+                    {/* Search & Filter Section */}
+                    <div className="mb-12 space-y-6">
+                        {/* Search Bar */}
+                        <div className="relative">
+                            <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-accent-bronze size-5" />
+                            <input
+                                type="text"
+                                placeholder={t('shop.search_placeholder', { defaultValue: 'Rechercher un produit...' })}
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full pl-12 pr-6 py-4 bg-white dark:bg-white/5 border border-maroon-dark/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/50 text-maroon-dark dark:text-text-light placeholder:text-accent-bronze/50"
+                            />
                         </div>
 
-                        {/* Hair Goal */}
-                        <div className="space-y-6">
-                            <h3 className="text-sm font-bold flex items-center gap-3">
-                                <span className="material-symbols-outlined text-primary text-base">filter_alt</span> Hair Goal
-                            </h3>
-                            <div className="space-y-4">
-                                {['Retention', 'Maximum Hydration', 'Scalp Health'].map(goal => (
-                                    <label key={goal} className="flex items-center gap-4 cursor-pointer group">
-                                        <div className="size-5 rounded border border-white/20 group-hover:border-primary flex items-center justify-center transition-colors">
-                                            <div className="size-2 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                        </div>
-                                        <span className="text-sm text-[#b49b87] group-hover:text-white transition-colors">{goal}</span>
-                                    </label>
-                                ))}
-                            </div>
+                        {/* Category Filter */}
+                        <div className="flex flex-wrap gap-3">
+                            {categories.map(cat => (
+                                <button
+                                    key={cat.id}
+                                    onClick={() => setSelectedCategory(cat.id)}
+                                    className={`px-6 py-2.5 rounded-full font-bold text-sm uppercase tracking-wider transition-all ${
+                                        selectedCategory === cat.id
+                                            ? 'bg-primary text-white shadow-lg shadow-primary/30'
+                                            : 'bg-white dark:bg-white/5 border border-maroon-dark/10 text-maroon-dark dark:text-text-light hover:border-primary hover:text-primary'
+                                    }`}
+                                >
+                                    {(() => {
+                                        const Icon = getCategoryIcon(cat.id);
+                                        return <Icon className="size-4 mr-2 inline" />;
+                                    })()}
+                                    {cat.name}
+                                </button>
+                            ))}
                         </div>
                     </div>
 
-                    {/* Profile Summary at Bottom */}
-                    <div className="mt-auto pt-8 border-t border-white/10">
-                        <div className="bg-primary/10 rounded-2xl p-5 border border-primary/20">
-                            <div className="flex items-center gap-3 mb-2">
-                                <span className="material-symbols-outlined text-primary text-xl">account_circle</span>
-                                <p className="text-[10px] font-black text-white uppercase tracking-widest">Hair Profile</p>
-                            </div>
-                            <p className="text-[11px] text-[#b49b87] leading-relaxed">
-                                Currently showing for <span className="text-white font-bold italic">Type 4C • High Porosity</span>
-                            </p>
+                    {/* Products Grid */}
+                    {loading ? (
+                        <div className="flex items-center justify-center py-24">
+                            <Loader2 className="size-12 animate-spin text-primary opacity-40" />
                         </div>
-                    </div>
-                </aside>
-
-                {/* Main Content Area - Exact Mockup Style */}
-                <main className="flex-1 overflow-y-auto pt-24 lg:pt-32">
-                    <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-12 space-y-12">
-                        {/* Page Heading */}
-                        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
-                            <div className="space-y-6">
-                                <h1 className="font-black tracking-tight leading-none italic font-display" style={{ fontSize: 'var(--text-h2)' }}>The Curated Boutique</h1>
-                                <p className="text-[#8c705a] text-lg font-light max-w-xl">Des soins professionnels premium sélectionnés pour les besoins spécifiques des cheveux Afro et crépus.</p>
-                            </div>
-                            <Button variant="secondary" className="bg-[#f1ede9] dark:bg-[#332a22] border-none text-xs font-black uppercase tracking-widest h-14 px-10 rounded-full">
-                                TRIER : NOUVEAUTÉS
-                            </Button>
-                        </div>
-
-                        {/* Personalization Panel */}
-                        <div className="bg-[#fbfaf9] dark:bg-[#271e18] border border-[#e3dbd3] dark:border-[#332a22] rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm">
-                            <div className="flex items-center gap-6">
-                                <div className="size-16 rounded-full bg-primary/15 flex items-center justify-center text-primary">
-                                    <span className="material-symbols-outlined text-3xl">auto_awesome</span>
-                                </div>
-                                <div>
-                                    <p className="text-xl font-bold tracking-tight mb-1">Personalized Selection</p>
-                                    <p className="text-[#8c705a] text-sm">Based on your 4C Curl Pattern & Low Porosity profile from your last visit.</p>
-                                </div>
-                            </div>
-                            <button className="text-primary font-bold text-sm flex items-center gap-2 hover:underline group">
-                                Update Hair Profile <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
-                            </button>
-                        </div>
-
-                        {/* Recommended Carousel Section */}
-                        <div className="space-y-8">
-                            <div className="flex items-center justify-between">
-                                <h2 className="text-2xl font-bold tracking-tight">Recommended for You</h2>
-                                <div className="flex gap-2">
-                                    <button className="size-10 rounded-full border border-[#f1ede9] flex items-center justify-center text-[#8c705a] hover:bg-primary hover:text-white transition-all"><LeftIcon className="size-4" /></button>
-                                    <button className="size-10 rounded-full border border-[#f1ede9] flex items-center justify-center text-[#8c705a] hover:bg-primary hover:text-white transition-all"><RightIcon className="size-4" /></button>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                                {Array.isArray(products) && products.map((p, idx) => (
-                                    <div key={p.id} className="group space-y-5 animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s` }}>
-                                        <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-xl shadow-maroon-dark/5 bg-white">
+                    ) : filteredProducts.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                            {filteredProducts.map((product) => (
+                                <div
+                                    key={product.id}
+                                    className="group bg-white dark:bg-white/5 rounded-[2rem] overflow-hidden border border-maroon-dark/5 hover:border-primary/20 hover:shadow-2xl transition-all duration-300"
+                                >
+                                    {/* Product Image */}
+                                    <div className="h-64 bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center relative overflow-hidden">
+                                        <div className="absolute inset-0 group-hover:bg-primary/5 transition-colors"></div>
+                                        {getProductImage(product) ? (
                                             <img
-                                                src={p.images && p.images.length > 0 ? (p.images[0].startsWith('http') ? p.images[0] : STORAGE_URL + p.images[0]) : (p.image || 'https://via.placeholder.com/600?text=Produit')}
-                                                className="size-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                                                alt={p.name}
+                                                src={getProductImage(product)}
+                                                alt={product.name}
+                                                className="w-full h-full object-cover"
                                             />
-                                            <div className="absolute inset-0 bg-maroon-dark/20 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                                            <div className="absolute top-4 left-4 bg-white/90 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-primary shadow-lg border border-primary/10">
-                                                {idx === 0 ? 'Essential' : p.hairGoal}
-                                            </div>
-                                            <div className="absolute inset-x-4 bottom-4 translate-y-10 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                                                <Button variant="primary" className="w-full h-14 font-black uppercase tracking-widest text-xs shadow-2xl">
-                                                    <CartIcon className="size-4 mr-2" /> Add to Cart
-                                                </Button>
-                                            </div>
-                                        </div>
-                                        <div className="px-2">
-                                            <h3 className="text-lg font-bold group-hover:text-primary transition-colors mb-1">{p.name}</h3>
-                                            <p className="text-xl font-display font-medium italic text-primary">{Math.round(p.price).toLocaleString('fr-FR')} FCFA</p>
+                                        ) : (
+                                            <ShoppingBag className="size-16 text-primary opacity-20 group-hover:opacity-30 transition-opacity" />
+                                        )}
+                                        
+                                        {/* Price Badge */}
+                                        <div className="absolute top-4 right-4 bg-primary text-white font-bold px-4 py-2 rounded-full shadow-lg">
+                                            {formatPrice(product.price)}
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
 
-                        {/* Collections Divider */}
-                        <div className="flex items-center gap-6 py-6">
-                            <h2 className="text-3xl font-black tracking-tight leading-none">Full Collection</h2>
-                            <div className="flex-1 h-px bg-[#f1ede9] dark:bg-[#332a22]"></div>
-                        </div>
+                                    {/* Product Info */}
+                                    <div className="p-8 space-y-6">
+                                        {/* Category & Goal Tags */}
+                                        <div className="flex flex-wrap gap-2">
+                                            <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-primary/10 text-primary rounded-full">
+                                                {product.category || t('shop.product', { defaultValue: 'Produit' })}
+                                            </span>
+                                            {product.hair_goal && (
+                                                <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-maroon-dark/5 text-accent-bronze rounded-full">
+                                                    {product.hair_goal}
+                                                </span>
+                                            )}
+                                        </div>
 
-                        {/* Standard Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-                            {[1, 2, 3, 4].map(n => (
-                                <div key={n} className="group space-y-5">
-                                    <div className="relative aspect-square rounded-2xl bg-[#f5f3f0] dark:bg-[#2a241f] overflow-hidden flex items-center justify-center p-8 group-hover:shadow-2xl transition-all duration-700">
-                                        <img src={`https://images.unsplash.com/photo-${1600000000000 + n}?auto=format&fit=crop&q=80&w=400`} className="max-h-full object-contain group-hover:scale-110 transition-transform duration-700" alt="Product" />
-                                        <div className="absolute inset-0 bg-maroon-dark/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                        <button className="absolute bottom-4 right-4 size-12 bg-primary text-white rounded-full flex items-center justify-center translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 shadow-xl">
-                                            <Plus className="size-6" />
+                                        {/* Product Name */}
+                                        <div>
+                                            <h3 className="text-xl font-display font-bold text-maroon-dark dark:text-text-light mb-2">
+                                                {product.name}
+                                            </h3>
+                                            <p className="text-sm text-accent-bronze dark:text-accent-bronze/80">
+                                                {product.description || t('shop.default_product_desc', { defaultValue: 'Produit premium pour la beaute des cheveux Afro' })}
+                                            </p>
+                                        </div>
+
+                                        {/* Stock Status */}
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex-1 h-2 bg-maroon-dark/10 rounded-full overflow-hidden">
+                                                <div
+                                                    className="h-full bg-primary rounded-full transition-all"
+                                                    style={{ width: `${(product.stock / 30) * 100}%` }}
+                                                ></div>
+                                            </div>
+                                            <span className="text-[10px] font-black text-accent-bronze uppercase">
+                                                {t('shop.in_stock', { defaultValue: 'En stock' })}: {product.stock}
+                                            </span>
+                                        </div>
+
+                                        {/* Add to Cart Button */}
+                                        <button
+                                            onClick={() => handleAddToCart(product)}
+                                            className="w-full py-3 bg-primary hover:bg-primary-dark text-white font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 transition-all group/btn"
+                                        >
+                                            <Plus className="size-4" />
+                                            {t('shop.add_to_cart', { defaultValue: 'Ajouter au panier' })}
                                         </button>
-                                    </div>
-                                    <div className="px-1 text-center sm:text-left">
-                                        <p className="text-[10px] font-black uppercase text-accent-bronze tracking-[0.2em] mb-1">PRO COLLECTION</p>
-                                        <h3 className="font-bold text-lg leading-tight mb-2">Luxury Mist {n}</h3>
-                                        <p className="text-lg font-display italic text-primary">32 000 FCFA</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
+                    ) : (
+                        <Card variant="light" className="p-20 text-center border-dashed border-2">
+                            <ShoppingBag className="size-16 mx-auto text-accent-cream mb-6 opacity-40" />
+                            <p className="text-accent-bronze text-lg font-display italic">
+                                {t('shop.no_products_found', { defaultValue: 'Aucun produit ne correspond a votre recherche.' })}
+                            </p>
+                        </Card>
+                    )}
 
-                        {/* Footer Callout */}
-                        <div className="py-24 border-t border-[#f1ede9] dark:border-[#332a22] flex flex-col items-center text-center gap-8">
-                            <div className="size-16 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                                <CheckCircle className="size-8" />
+                    {/* Summary Card */}
+                    {filteredProducts.length > 0 && (
+                        <Card className="p-8 bg-gradient-to-r from-primary/5 to-maroon-dark/5 border-primary/20">
+                            <div className="flex items-center justify-between flex-wrap gap-6">
+                                <div>
+                                    <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em] mb-2">
+                                        {t('shop.collection_summary', { defaultValue: 'Resume de la collection' })}
+                                    </p>
+                                    <p className="text-3xl font-display font-black text-maroon-dark">
+                                        {filteredProducts.length} {filteredProducts.length === 1
+                                            ? t('shop.product', { defaultValue: 'Produit' })
+                                            : t('shop.products', { defaultValue: 'Produits' })}
+                                    </p>
+                                </div>
+                                <Link to="/checkout">
+                                    <Button variant="primary" size="lg" className="h-16 px-12">
+                                        {t('shop.view_cart', { defaultValue: 'Voir le panier' })} ({itemCount}) <ArrowRight className="ml-2 size-4" />
+                                    </Button>
+                                </Link>
                             </div>
-                            <h2 className="text-4xl font-display italic text-maroon-dark leading-tight max-w-xl">Expertly curated by the <span className="text-primary">Elsa Coiffure</span> team Daily.</h2>
-                            <p className="text-accent-bronze max-w-md italic">Every product in our shop is tested and used in our salon. We stand by the efficacy and premium quality of every ingredient.</p>
-                            <Button variant="primary" size="lg" className="h-16 px-12 rounded-full shadow-2xl">Shop All Collections</Button>
-                        </div>
-                    </div>
-                </main>
+                        </Card>
+                    )}
+                </div>
             </div>
+            <Footer />
         </div>
     );
 };

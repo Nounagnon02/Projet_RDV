@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Button, Card } from '../components/ui';
+import { Button, Card, ProtectedIcon } from '../components/ui';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useTranslation } from 'react-i18next';
@@ -109,7 +109,7 @@ const Home = () => {
                 <div className="text-center">
                     <Link to="/providers">
                         <Button variant="primary" size="lg" className="h-16 px-12 font-black uppercase tracking-widest shadow-2xl shadow-primary/20 hover:-translate-y-1 transition-all">
-                            Découvrir Nos Services <ArrowRight className="ml-2 size-5" />
+                                {t('home.discover_services', { defaultValue: 'Decouvrir nos services' })} <ArrowRight className="ml-2 size-5" />
                         </Button>
                     </Link>
                 </div>
@@ -120,13 +120,15 @@ const Home = () => {
                 <div className="max-w-[1200px] flex-1">
                     <div className="bg-primary/5 rounded-3xl p-16 flex flex-col lg:flex-row items-center gap-16 border border-primary/20 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-10 opacity-5">
-                            <span className="material-symbols-outlined text-9xl">shopping_bag</span>
+                            <ProtectedIcon translate="no" data-i18n="false">
+                                <span className="material-symbols-outlined text-9xl">shopping_bag</span>
+                            </ProtectedIcon>
                         </div>
                         <div className="flex-1 space-y-8 relative z-10">
                             <span className="text-primary font-bold tracking-[0.2em] uppercase text-xs">{t('home.elite_care')}</span>
                             <h2 className="text-4xl md:text-5xl font-display italic text-maroon-dark leading-tight">{t('home.curated_title')}</h2>
                             <p className="text-accent-bronze text-lg max-w-md italic">{t('home.curated_desc')}</p>
-                            <Link to="/client/shop">
+                            <Link to="/shop">
                                 <Button variant="primary" size="lg" className="h-16 px-12 shadow-2xl shadow-primary/20">
                                     {t('home.shop_collections')} <ArrowRight className="ml-2 size-4" />
                                 </Button>

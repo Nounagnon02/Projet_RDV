@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import axios from '../api/axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Loader2, CreditCard, Smartphone, ArrowLeft } from 'lucide-react';
+import { Loader2, CreditCard, Smartphone, ArrowLeft, ShieldCheck, ShoppingBag } from 'lucide-react';
 
 const Checkout = () => {
     const { cart, total, clearCart } = useCart();
@@ -16,16 +16,20 @@ const Checkout = () => {
     const [orderId, setOrderId] = useState(null);
     const [transactionToken, setTransactionToken] = useState(null);
     const [fedapayConfig, setFedapayConfig] = useState(null);
+    const [checkoutError, setCheckoutError] = useState('');
     const [shippingInfo, setShippingInfo] = useState({
-        address: '',
-        city: '',
-        phone: user?.phone || ''
+        full_name: user?.name || '',
+        delivery_location: '',
+        phone: user?.phone || '',
+        email: user?.email || '',
     });
 
     useEffect(() => {
         axios.get('/payments/public-key')
             .then(response => setFedapayConfig(response.data))
-            .catch(() => {});
+            .catch(() => {
+                setCheckoutError('Configuration de paiement indisponible. Veuillez reessayer.');
+            });
     }, []);
 
     const handleChange = (e) => {
@@ -34,14 +38,16 @@ const Checkout = () => {
 
     const handleCreateOrder = async (e) => {
         e.preventDefault();
+        setCheckoutError('');
         setLoading(true);
 
         try {
             const orderResponse = await axios.post('/orders', {
                 items: cart.map(item => ({ product_id: item.id, quantity: item.quantity, price: item.price })),
-                shipping_address: shippingInfo.address,
-                city: shippingInfo.city,
+                full_name: shippingInfo.full_name,
+                delivery_location: shippingInfo.delivery_location,
                 phone: shippingInfo.phone,
+                email: shippingInfo.email || null,
                 payment_method: 'fedapay'
             });
 
@@ -55,10 +61,14 @@ const Checkout = () => {
                 callback_url: callbackUrl
             });
 
+            if (!paymentResponse.data?.token) {
+                throw new Error('Token de transaction manquant');
+            }
+
             setTransactionToken(paymentResponse.data.token);
             setShowPayment(true);
         } catch (error) {
-            alert('Erreur lors de la création de la commande');
+            setCheckoutError(error.response?.data?.message || 'Erreur lors de la creation de la commande.');
             console.error(error);
         } finally {
             setLoading(false);
@@ -128,26 +138,35 @@ const Checkout = () => {
     return (
         <div className="min-h-screen bg-background-light" style={{ paddingTop: '73px' }}>
             <Navbar />
-            <div className="container mx-auto px-4 py-12 max-w-4xl">
-                <h1 className="text-3xl font-bold mb-8">Finaliser la commande</h1>
+            <div className="container mx-auto px-4 py-12 max-w-5xl">
+                <div className="mb-10">
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-3">Paiement securise</p>
+                    <h1 className="text-4xl md:text-5xl font-display italic font-black text-maroon-dark mb-3">Finaliser la commande</h1>
+                    <p className="text-accent-bronze italic">Renseignez vos informations de livraison pour continuer.</p>
+                </div>
 
-                <div className="grid md:grid-cols-2 gap-8">
-                    <div>
+                <div className="grid lg:grid-cols-5 gap-8">
+                    <div className="lg:col-span-3 bg-white rounded-2xl p-6 md:p-8 border border-maroon-dark/10 shadow-xl shadow-maroon-dark/5">
                         <h2 className="text-xl font-bold mb-4">Informations de livraison</h2>
+                        {checkoutError && (
+                            <div className="mb-4 rounded-xl border border-red-200 bg-red-50 text-red-700 px-4 py-3 text-sm">
+                                {checkoutError}
+                            </div>
+                        )}
                         <form onSubmit={handleCreateOrder} className="space-y-4">
                             <input
-                                name="address"
-                                value={shippingInfo.address}
+                                name="full_name"
+                                value={shippingInfo.full_name}
                                 onChange={handleChange}
-                                placeholder="Adresse de livraison"
+                                placeholder="Nom complet"
                                 required
                                 className="w-full px-4 py-3 rounded-lg border"
                             />
                             <input
-                                name="city"
-                                value={shippingInfo.city}
+                                name="delivery_location"
+                                value={shippingInfo.delivery_location}
                                 onChange={handleChange}
-                                placeholder="Ville"
+                                placeholder="Lieu de livraison"
                                 required
                                 className="w-full px-4 py-3 rounded-lg border"
                             />
@@ -159,10 +178,18 @@ const Checkout = () => {
                                 required
                                 className="w-full px-4 py-3 rounded-lg border"
                             />
+                            <input
+                                name="email"
+                                type="email"
+                                value={shippingInfo.email}
+                                onChange={handleChange}
+                                placeholder="Email (optionnel)"
+                                className="w-full px-4 py-3 rounded-lg border"
+                            />
                             <button
                                 type="submit"
-                                disabled={loading}
-                                className="w-full bg-primary text-white py-4 rounded-lg font-bold flex items-center justify-center gap-2"
+                                disabled={loading || !fedapayConfig}
+                                className="w-full bg-primary text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 disabled:opacity-50"
                             >
                                 {loading ? <Loader2 className="animate-spin" /> : <CreditCard />}
                                 {loading ? 'Traitement...' : 'Continuer vers le paiement'}
@@ -170,9 +197,9 @@ const Checkout = () => {
                         </form>
                     </div>
 
-                    <div>
+                    <div className="lg:col-span-2">
                         <h2 className="text-xl font-bold mb-4">Récapitulatif</h2>
-                        <div className="bg-white rounded-lg p-6 space-y-4">
+                        <div className="bg-white rounded-2xl p-6 space-y-4 border border-maroon-dark/10 shadow-xl shadow-maroon-dark/5">
                             {cart.map(item => (
                                 <div key={item.id} className="flex justify-between">
                                     <span>{item.name} x{item.quantity}</span>
@@ -182,6 +209,10 @@ const Checkout = () => {
                             <div className="border-t pt-4 font-bold text-lg flex justify-between">
                                 <span>Total</span>
                                 <span>{total.toLocaleString()} FCFA</span>
+                            </div>
+                            <div className="pt-2 text-xs text-accent-bronze flex items-center gap-2">
+                                <ShieldCheck className="size-4 text-primary" />
+                                Paiement traite via FedaPay
                             </div>
                         </div>
                     </div>
@@ -196,6 +227,7 @@ const PaymentWidget = ({ token, publicKey, mode, onSuccess }) => {
     const [paymentMethod, setPaymentMethod] = useState('mobile_money');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [processing, setProcessing] = useState(false);
+    const [sdkReady, setSdkReady] = useState(false);
 
     const handlePayment = async () => {
         if (!phoneNumber) {
@@ -207,6 +239,9 @@ const PaymentWidget = ({ token, publicKey, mode, onSuccess }) => {
 
         try {
             const FedaPay = window.FedaPay;
+            if (!FedaPay) {
+                throw new Error('SDK FedaPay non charge');
+            }
             FedaPay.init({
                 public_key: publicKey,
                 transaction: {
@@ -227,7 +262,7 @@ const PaymentWidget = ({ token, publicKey, mode, onSuccess }) => {
 
             FedaPay.open();
         } catch (error) {
-            alert('Erreur lors du paiement');
+            alert(error.message || 'Erreur lors du paiement');
             console.error(error);
             setProcessing(false);
         }
@@ -237,6 +272,8 @@ const PaymentWidget = ({ token, publicKey, mode, onSuccess }) => {
         const script = document.createElement('script');
         script.src = `https://${mode}.fedapay.com/js/fedapay.min.js`;
         script.async = true;
+        script.onload = () => setSdkReady(true);
+        script.onerror = () => setSdkReady(false);
         document.body.appendChild(script);
 
         return () => {
@@ -291,7 +328,7 @@ const PaymentWidget = ({ token, publicKey, mode, onSuccess }) => {
 
             <button
                 onClick={handlePayment}
-                disabled={processing}
+                disabled={processing || !sdkReady}
                 className="w-full bg-primary text-white py-4 rounded-lg font-bold flex items-center justify-center gap-2"
             >
                 {processing ? (
@@ -302,7 +339,7 @@ const PaymentWidget = ({ token, publicKey, mode, onSuccess }) => {
                 ) : (
                     <>
                         <CreditCard />
-                        Payer maintenant
+                        {sdkReady ? 'Payer maintenant' : 'Chargement du paiement...'}
                     </>
                 )}
             </button>

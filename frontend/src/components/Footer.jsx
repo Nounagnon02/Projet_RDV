@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { ProtectedIcon, ProtectedLogo } from './ui';
 import { useSiteSettings } from '../context/SiteSettingsContext';
 
 const Footer = () => {
@@ -22,8 +23,12 @@ const Footer = () => {
                     {/* Brand Section */}
                     <div className="lg:col-span-1 flex flex-col items-center sm:items-start">
                         <Link to="/" className="flex items-center gap-4 mb-8 text-primary group">
-                            <span className="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform duration-500">spa</span>
-                            <h2 className="text-3xl font-bold tracking-tight uppercase font-display italic text-white leading-none">{siteName}</h2>
+                            <ProtectedIcon className="text-4xl group-hover:scale-110 transition-transform duration-500">
+                                <span className="material-symbols-outlined text-4xl">spa</span>
+                            </ProtectedIcon>
+                            <ProtectedLogo>
+                                <h2 className="text-3xl font-bold tracking-tight uppercase font-display italic text-white leading-none">{siteName}</h2>
+                            </ProtectedLogo>
                         </Link>
                         <p className="text-slate-400 text-base md:text-lg leading-relaxed max-w-sm italic">
                             {footerDescription}
@@ -36,7 +41,7 @@ const Footer = () => {
                         <ul className="space-y-4 md:space-y-6 text-[10px] font-bold tracking-[0.2em] uppercase text-slate-200">
                             <li><Link className="hover:text-primary transition-colors block py-1" to="/about">Notre Histoire</Link></li>
                             <li><Link className="hover:text-primary transition-colors block py-1" to="/providers">Services</Link></li>
-                            <li><Link className="hover:text-primary transition-colors block py-1" to="/client/shop">Boutique</Link></li>
+                            <li><Link className="hover:text-primary transition-colors block py-1" to="/shop">Boutique</Link></li>
                             <li><Link className="hover:text-primary transition-colors block py-1" to="/contact">Contact</Link></li>
                         </ul>
                     </div>
@@ -47,15 +52,21 @@ const Footer = () => {
                             <h4 className="text-white font-black uppercase text-[10px] tracking-[0.4em] mb-8 lg:mb-10 opacity-40">Conciergerie</h4>
                             <ul className="space-y-4 md:space-y-6 text-[10px] font-bold tracking-[0.2em] uppercase text-slate-300">
                                 <li className="flex items-center gap-4 justify-center sm:justify-start group">
-                                    <span className="material-symbols-outlined text-primary text-base group-hover:scale-110 transition-transform">mail</span>
+                                    <ProtectedIcon translate="no" data-i18n="false" className="text-primary text-base group-hover:scale-110 transition-transform">
+                                        <span className="material-symbols-outlined text-primary text-base">mail</span>
+                                    </ProtectedIcon>
                                     <span className="break-all">{contactEmail}</span>
                                 </li>
                                 <li className="flex items-center gap-4 justify-center sm:justify-start group">
-                                    <span className="material-symbols-outlined text-primary text-base group-hover:scale-110 transition-transform">call</span>
+                                    <ProtectedIcon translate="no" data-i18n="false" className="text-primary text-base group-hover:scale-110 transition-transform">
+                                        <span className="material-symbols-outlined text-primary text-base">call</span>
+                                    </ProtectedIcon>
                                     <span>{contactPhone}</span>
                                 </li>
                                 <li className="flex items-center gap-4 justify-center sm:justify-start group">
-                                    <span className="material-symbols-outlined text-primary text-base group-hover:scale-110 transition-transform">location_on</span>
+                                    <ProtectedIcon translate="no" data-i18n="false" className="text-primary text-base group-hover:scale-110 transition-transform">
+                                        <span className="material-symbols-outlined text-primary text-base">location_on</span>
+                                    </ProtectedIcon>
                                     <span className="text-center sm:text-left">{contactAddress}</span>
                                 </li>
                             </ul>
@@ -76,7 +87,9 @@ const Footer = () => {
                                         rel="noopener noreferrer"
                                         className="size-8 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-primary hover:border-primary transition-all"
                                     >
-                                        <span className="material-symbols-outlined text-lg">{social.icon}</span>
+                                        <ProtectedIcon translate="no" data-i18n="false">
+                                            <span className="material-symbols-outlined text-lg">{social.icon}</span>
+                                        </ProtectedIcon>
                                     </a>
                                 ))}
                             </div>

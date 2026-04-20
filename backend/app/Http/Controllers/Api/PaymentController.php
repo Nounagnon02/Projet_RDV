@@ -44,19 +44,27 @@ class PaymentController extends Controller
                     'currency' => ['iso' => 'XOF'],
                     'callback_url' => $request->callback_url,
                     'customer' => [
-                        'firstname' => $order->user->name,
-                        'email' => $order->user->email,
-                        'phone_number' => ['number' => $order->phone ?? $order->user->phone, 'country' => 'bj']
+                        'firstname' => $order->full_name ?? $order->user?->name ?? 'Client',
+                        'email' => $order->email ?? $order->user?->email,
+                        'phone_number' => ['number' => $order->phone ?? $order->user?->phone, 'country' => 'bj']
                     ]
                 ]);
 
             if ($response->successful()) {
                 $transaction = $response->json();
-                $order->update(['fedapay_transaction_id' => $transaction['v1/transaction']['id']]);
+                $payload = $transaction['v1/transaction'] ?? $transaction['transaction'] ?? null;
+                $transactionId = $payload['id'] ?? null;
+                $token = $payload['token'] ?? null;
+
+                if (!$transactionId || !$token) {
+                    return response()->json(['message' => 'Reponse paiement invalide'], 500);
+                }
+
+                $order->update(['fedapay_transaction_id' => $transactionId]);
 
                 return response()->json([
-                    'transaction_id' => $transaction['v1/transaction']['id'],
-                    'token' => $transaction['v1/transaction']['token']
+                    'transaction_id' => $transactionId,
+                    'token' => $token
                 ]);
             }
 

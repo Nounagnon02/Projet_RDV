@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Button, Card } from '../components/ui';
@@ -19,12 +20,13 @@ import {
     ShoppingCart
 } from 'lucide-react';
 import { format, addDays, isSameDay } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { enUS, fr } from 'date-fns/locale';
 
 const BookingPage = () => {
+    const { t, i18n } = useTranslation();
     const { slug } = useParams();
     const { user } = useAuth();
-    const navigate = useNavigate();
+    const dateLocale = i18n.language === 'en' ? enUS : fr;
 
     const [provider, setProvider] = useState(null);
     const [services, setServices] = useState([]);
@@ -80,7 +82,7 @@ const BookingPage = () => {
 
     const handleBooking = async () => {
         if (!user && (!guestName || !guestWhatsapp)) {
-            alert('Veuillez renseigner votre nom et numéro WhatsApp pour continuer.');
+            alert(t('booking.alert_guest_required', { defaultValue: 'Veuillez renseigner votre nom et numero WhatsApp pour continuer.' }));
             return;
         }
 
@@ -100,7 +102,7 @@ const BookingPage = () => {
             await api.post(`/booking/${slug}/appointments`, bookingData);
             setBooked(true);
         } catch (error) {
-            alert(error.response?.data?.message || 'Erreur lors de la réservation');
+            alert(error.response?.data?.message || t('booking.alert_error', { defaultValue: 'Erreur lors de la reservation' }));
         } finally {
             setBookingLoading(false);
         }
@@ -111,7 +113,7 @@ const BookingPage = () => {
             <div className="flex h-screen items-center justify-center bg-[#fbfaf9]">
                 <div className="text-center">
                     <Loader2 className="size-12 animate-spin text-primary mx-auto mb-4" />
-                    <p className="font-display italic text-maroon-dark">L'excellence patiente...</p>
+                    <p className="font-display italic text-maroon-dark">{t('booking.loading', { defaultValue: 'L excellence patiente...' })}</p>
                 </div>
             </div>
         );
@@ -123,16 +125,16 @@ const BookingPage = () => {
                 <div className="size-24 rounded-full bg-primary/10 flex items-center justify-center mb-8 animate-fade-in shadow-2xl shadow-primary/10">
                     <CheckCircle2 className="size-12 text-primary" />
                 </div>
-                <h1 className="text-5xl font-display font-medium italic text-maroon-dark mb-4">Votre transformation est réservée</h1>
+                <h1 className="text-5xl font-display font-medium italic text-maroon-dark mb-4">{t('booking.success_title', { defaultValue: 'Votre transformation est reservee' })}</h1>
                 <p className="text-maroon-dark/60 mb-10 text-lg max-w-md italic">
-                    Un email de confirmation premium vous a été envoyé. Elsa et son équipe ont hâte de vous sublimer.
+                    {t('booking.success_desc', { defaultValue: 'Un email de confirmation vous a ete envoye.' })}
                 </p>
                 <div className="flex gap-4">
                     <Link to="/client/appointments">
-                        <Button variant="primary" size="lg" className="h-16 px-10 rounded-xl font-bold uppercase tracking-widest text-[10px]">MES RENDEZ-VOUS</Button>
+                        <Button variant="primary" size="lg" className="h-16 px-10 rounded-xl font-bold uppercase tracking-widest text-[10px]">{t('booking.my_appointments', { defaultValue: 'Mes rendez-vous' })}</Button>
                     </Link>
                     <Link to="/">
-                        <Button variant="outline" size="lg" className="h-16 px-10 rounded-xl border-maroon-dark/10 font-bold uppercase tracking-widest text-[10px]">RETOUR ACCUEIL</Button>
+                        <Button variant="outline" size="lg" className="h-16 px-10 rounded-xl border-maroon-dark/10 font-bold uppercase tracking-widest text-[10px]">{t('booking.back_home', { defaultValue: 'Retour accueil' })}</Button>
                     </Link>
                 </div>
             </div>
@@ -150,16 +152,16 @@ const BookingPage = () => {
                         <img
                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvTunoiR7eLLiAim1GPXRv6kgUzHF2T_nlaqkRRCJDxwMgqQoXqt01KS4VOALgf35vgMDT7c2JOF_3p3O6IWOpahArNkySge8exD1TD8pDZcEmDVXb832o0vA_CiuliQTn-8hlJ_-xnhqtg0s-RV8bcWQqPVGTsU8i34C4dzvBCT6MifXXVBTo4SA83HGfqQbeFH5nYfR9FtOJ9MIIfG7Vh80_iFnLGuEauGurBxqGcf39X41LqFHnm8wV7n1kAXZLpZwmoIsXzbM"
                             className="size-full object-cover"
-                            alt="The Experience"
+                            alt={t('booking.experience_alt', { defaultValue: 'Experience' })}
                         />
                         <div className="absolute inset-0 bg-maroon-dark/10"></div>
                     </div>
                     <div className="absolute bottom-16 left-16 right-16 text-white z-10 animate-fade-in">
-                        <p className="text-primary uppercase tracking-[0.4em] font-black text-[10px] mb-4">L'IMMERSION</p>
-                        <h2 className="text-5xl font-display font-medium leading-tight mb-8">Un Art sculpté pour votre Couronne</h2>
+                        <p className="text-primary uppercase tracking-[0.4em] font-black text-[10px] mb-4">{t('booking.immersion', { defaultValue: 'Immersion' })}</p>
+                        <h2 className="text-5xl font-display font-medium leading-tight mb-8">{t('booking.hero_title', { defaultValue: 'Un art sculpte pour votre couronne' })}</h2>
                         <div className="flex items-center gap-6">
                             <div className="h-px w-16 bg-primary"></div>
-                            <p className="text-xl italic opacity-90">Soin Signature Elsa Coiffure</p>
+                            <p className="text-xl italic opacity-90">{t('booking.signature_care', { defaultValue: 'Soin signature Elsa Coiffure' })}</p>
                         </div>
                     </div>
                 </div>
@@ -170,8 +172,8 @@ const BookingPage = () => {
                         {!selectedService ? (
                             /* Step 1: Services Panel */
                             <div className="animate-fade-in space-y-8">
-                                <h2 className="font-display font-bold italic" style={{ fontSize: 'var(--text-h2)' }}>Nos Prestations Signature</h2>
-                                <p className="text-accent-bronze/80 text-lg italic">Une expérience personnalisée, gravée dans l'excellence.</p>
+                                <h2 className="font-display font-bold italic" style={{ fontSize: 'var(--text-h2)' }}>{t('booking.services_title', { defaultValue: 'Nos prestations signature' })}</h2>
+                                <p className="text-accent-bronze/80 text-lg italic">{t('booking.services_subtitle', { defaultValue: 'Une experience personnalisee, gravee dans l excellence.' })}</p>
 
                                 <div className="space-y-4">
                                     {services.map((service, idx) => (
@@ -182,7 +184,7 @@ const BookingPage = () => {
                                         >
                                             <div className="bg-white border border-maroon-dark/5 p-8 rounded-xl shadow-sm hover:shadow-xl hover:border-primary/30 transition-all flex items-center justify-between group-hover:bg-primary group-hover:text-white group-hover:scale-[1.02] duration-500">
                                                 <div>
-                                                    <p className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60 group-hover:text-white/60 mb-1">{service.category || 'Expérience'}</p>
+                                                    <p className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60 group-hover:text-white/60 mb-1">{service.category || t('booking.experience', { defaultValue: 'Experience' })}</p>
                                                     <h3 className="text-2xl font-display italic font-medium">{service.name}</h3>
                                                     <p className="text-xs font-bold mt-2 opacity-40 group-hover:text-white/40 uppercase tracking-widest">{service.duration} MIN</p>
                                                 </div>
@@ -203,17 +205,17 @@ const BookingPage = () => {
                                     className="flex items-center gap-2 text-primary mb-6 group"
                                 >
                                     <span className="material-symbols-outlined text-sm group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
-                                    <span className="text-[10px] font-black uppercase tracking-[0.3em]">Back to services</span>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.3em]">{t('booking.back_to_services', { defaultValue: 'Retour aux services' })}</span>
                                 </button>
 
-                                <h2 className="text-4xl md:text-5xl font-display font-bold italic mb-4">Select Date & Time</h2>
-                                <p className="text-maroon-dark/60 text-lg mb-12 italic leading-relaxed">Your transformation begins with choosing the perfect moment.</p>
+                                <h2 className="text-4xl md:text-5xl font-display font-bold italic mb-4">{t('booking.select_datetime', { defaultValue: 'Selectionner date et heure' })}</h2>
+                                <p className="text-maroon-dark/60 text-lg mb-12 italic leading-relaxed">{t('booking.select_datetime_desc', { defaultValue: 'Votre transformation commence par le bon moment.' })}</p>
 
                                 {/* Calendar Block - Exact Mockup Style */}
                                 <div className="bg-white rounded-2xl shadow-xl shadow-maroon-dark/5 border border-maroon-dark/5 p-8 mb-12">
                                     <div className="flex items-center justify-between mb-8">
                                         <h3 className="text-xl font-bold font-display italic capitalize">
-                                            {format(selectedDate, 'MMMM yyyy', { locale: fr })}
+                                            {format(selectedDate, 'MMMM yyyy', { locale: dateLocale })}
                                         </h3>
                                         <div className="flex gap-4 text-maroon-dark/40">
                                             <button className="p-2 hover:bg-[#f7f3f0] hover:text-primary rounded-full transition-all group">
@@ -225,7 +227,7 @@ const BookingPage = () => {
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-7 text-center gap-y-2">
-                                        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
+                                        {[t('booking.day.mon', { defaultValue: 'Mon' }), t('booking.day.tue', { defaultValue: 'Tue' }), t('booking.day.wed', { defaultValue: 'Wed' }), t('booking.day.thu', { defaultValue: 'Thu' }), t('booking.day.fri', { defaultValue: 'Fri' }), t('booking.day.sat', { defaultValue: 'Sat' }), t('booking.day.sun', { defaultValue: 'Sun' })].map(day => (
                                             <div key={day} className="text-[9px] font-black uppercase tracking-[0.2em] text-maroon-dark/40 py-2">{day}</div>
                                         ))}
                                         {/* Simplified 14-day preview grid for demo alignment */}
@@ -247,7 +249,7 @@ const BookingPage = () => {
 
                                 {/* Time Slots - Mockup Grid Style */}
                                 <div className="mb-12">
-                                    <h3 className="text-xs font-black uppercase tracking-[0.4em] text-maroon-dark/40 mb-8">AVAILABLE TIME SLOTS</h3>
+                                    <h3 className="text-xs font-black uppercase tracking-[0.4em] text-maroon-dark/40 mb-8">{t('booking.available_slots', { defaultValue: 'Creneaux disponibles' })}</h3>
                                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                         {availableSlots.length > 0 ? availableSlots.map(slot => (
                                             <button
@@ -259,7 +261,7 @@ const BookingPage = () => {
                                             </button>
                                         )) : (
                                             <div className="col-span-full py-12 text-center bg-maroon-dark/5 rounded-2xl border border-dashed border-maroon-dark/10">
-                                                <p className="text-accent-bronze italic text-sm">Recherche des créneaux disponibles...</p>
+                                                <p className="text-accent-bronze italic text-sm">{t('booking.searching_slots', { defaultValue: 'Recherche des creneaux disponibles...' })}</p>
                                             </div>
                                         )}
                                     </div>
@@ -272,18 +274,18 @@ const BookingPage = () => {
                                     </div>
                                     <div className="flex items-center justify-between mb-8 pb-8 border-b border-white/10">
                                         <div>
-                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-primary mb-2">Service</p>
+                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-primary mb-2">{t('booking.service', { defaultValue: 'Service' })}</p>
                                             <h4 className="text-xl font-display italic leading-none">{selectedService.name}</h4>
                                         </div>
                                         <div className="text-right">
-                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-primary mb-2">Price</p>
+                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-primary mb-2">{t('booking.price', { defaultValue: 'Prix' })}</p>
                                             <h4 className="text-xl font-display font-bold italic">{Math.round(selectedService.price).toLocaleString('fr-FR')} FCFA</h4>
                                         </div>
                                     </div>
                                     <div className="flex flex-wrap gap-8 text-[10px] font-black uppercase tracking-[0.2em] opacity-80">
                                         <div className="flex items-center gap-3">
                                             <span className="material-symbols-outlined text-base text-primary">calendar_month</span>
-                                            {format(selectedDate, 'd MMMM yyyy', { locale: fr })}
+                                            {format(selectedDate, 'd MMMM yyyy', { locale: dateLocale })}
                                         </div>
                                         <div className="flex items-center gap-3">
                                             <span className="material-symbols-outlined text-base text-primary">schedule</span>
@@ -299,14 +301,14 @@ const BookingPage = () => {
                                         <div className="bg-white border border-primary/20 rounded-3xl p-8 animate-fade-in-up shadow-xl shadow-primary/5">
                                             <div className="flex items-center gap-3 mb-6">
                                                 <span className="material-symbols-outlined text-primary">account_circle</span>
-                                                <h4 className="text-sm font-black uppercase tracking-widest text-maroon-dark">Finalisation Immédiate</h4>
+                                                <h4 className="text-sm font-black uppercase tracking-widest text-maroon-dark">{t('booking.quick_finalize', { defaultValue: 'Finalisation immediate' })}</h4>
                                             </div>
                                             <div className="space-y-4">
                                                 <div className="relative">
                                                     <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary opacity-50 text-sm">person</span>
                                                     <input
                                                         type="text"
-                                                        placeholder="Votre Nom Complet"
+                                                        placeholder={t('booking.full_name', { defaultValue: 'Votre nom complet' })}
                                                         value={guestName}
                                                         onChange={(e) => setGuestName(e.target.value)}
                                                         className="w-full h-14 pl-12 pr-6 bg-accent-cream/30 border-none rounded-xl text-sm font-bold placeholder:text-maroon-dark/30 focus:ring-2 focus:ring-primary/20 transition-all"
@@ -316,7 +318,7 @@ const BookingPage = () => {
                                                     <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary opacity-50 text-sm">call</span>
                                                     <input
                                                         type="tel"
-                                                        placeholder="Numéro WhatsApp (ex: +33...)"
+                                                        placeholder={t('booking.whatsapp_number', { defaultValue: 'Numero WhatsApp (ex: +33...)' })}
                                                         value={guestWhatsapp}
                                                         onChange={(e) => setGuestWhatsapp(e.target.value)}
                                                         className="w-full h-14 pl-12 pr-6 bg-accent-cream/30 border-none rounded-xl text-sm font-bold placeholder:text-maroon-dark/30 focus:ring-2 focus:ring-primary/20 transition-all"
@@ -324,7 +326,7 @@ const BookingPage = () => {
                                                 </div>
                                             </div>
                                             <p className="mt-6 text-[10px] text-accent-bronze italic text-center font-medium leading-relaxed">
-                                                Pas besoin de compte. Nous vous contacterons sur WhatsApp pour confirmer les détails.
+                                                {t('booking.no_account_needed', { defaultValue: 'Pas besoin de compte. Nous vous contacterons sur WhatsApp pour confirmer les details.' })}
                                             </p>
                                         </div>
                                     )}
@@ -337,13 +339,15 @@ const BookingPage = () => {
                                     >
                                         {bookingLoading ? <Loader2 className="animate-spin" /> : (
                                             <>
-                                                CONFIRMER LA SÉANCE
+                                                {t('booking.confirm_session', { defaultValue: 'Confirmer la seance' })}
                                                 <span className="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform">arrow_forward</span>
                                             </>
                                         )}
                                     </Button>
                                     <p className="text-center text-[10px] text-maroon-dark/40 font-black uppercase tracking-widest italic font-medium">
-                                        {user ? 'Votre réservation sera prioritaire.' : 'Une expérience sans friction, centrée sur vous.'}
+                                        {user
+                                            ? t('booking.priority_booking', { defaultValue: 'Votre reservation sera prioritaire.' })
+                                            : t('booking.frictionless', { defaultValue: 'Une experience sans friction, centree sur vous.' })}
                                     </p>
                                 </div>
                             </div>

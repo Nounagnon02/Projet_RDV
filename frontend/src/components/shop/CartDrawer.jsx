@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Card, Button } from '../ui';
+import { Card, Button, ProtectedIcon } from '../ui';
 
 const CartDrawer = ({ isOpen, onClose, items, onRemove, onUpdateQuantity }) => {
     const total = items.reduce((sum, item) => {
@@ -73,7 +73,9 @@ const CartDrawer = ({ isOpen, onClose, items, onRemove, onUpdateQuantity }) => {
                         ))
                     ) : (
                         <div className="h-full flex flex-col items-center justify-center text-center space-y-4 opacity-60">
-                            <span className="material-symbols-outlined text-6xl text-accent-cream">shopping_bag</span>
+                            <ProtectedIcon translate="no" data-i18n="false">
+                                <span className="material-symbols-outlined text-6xl text-accent-cream">shopping_bag</span>
+                            </ProtectedIcon>
                             <p className="text-accent-bronze font-bold">Your cart is empty</p>
                             <Button variant="outline" size="sm" onClick={onClose}>
                                 Continue Shopping

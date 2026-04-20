@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SiteSettingsProvider } from './context/SiteSettingsContext';
 import { CartProvider } from './context/CartContext';
+import TranslationProtectionValidator from './components/TranslationProtectionValidator';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import './index.css';
@@ -18,6 +19,10 @@ import HairConsultation from './pages/HairConsultation';
 import ClientDashboard from './pages/ClientDashboard';
 import ClientAppointments from './pages/ClientAppointments';
 import MemberProfile from './pages/MemberProfile';
+import ClientSettings from './pages/ClientSettings';
+import Gallery from './pages/Gallery';
+import LoyaltyProgram from './pages/LoyaltyProgram';
+import HelpCenter from './pages/HelpCenter';
 import DashboardHome from './pages/DashboardHome';
 
 // Admin imports
@@ -172,19 +177,45 @@ function AppContent() {
             </ClientRoute>
           }
         />
-        <Route
-          path="/client/shop"
-          element={
-            <ClientRoute>
-              <BoutiqueCatalog />
-            </ClientRoute>
-          }
-        />
+        <Route path="/shop" element={<BoutiqueCatalog />} />
+        <Route path="/boutique" element={<BoutiqueCatalog />} />
+        <Route path="/client/shop" element={<BoutiqueCatalog />} />
         <Route
           path="/client/appointments"
           element={
             <ClientRoute>
               <ClientAppointments />
+            </ClientRoute>
+          }
+        />
+
+        {/* Client Protected Routes - Profile, Gallery, Rewards */}
+        <Route
+          path="/profile"
+          element={
+            <ClientRoute>
+              <ClientSettings />
+            </ClientRoute>
+          }
+        />
+
+        <Route path="/gallery" element={<Gallery />} />
+
+        <Route
+          path="/rewards"
+          element={
+            <ClientRoute>
+              <LoyaltyProgram />
+            </ClientRoute>
+          }
+        />
+
+        {/* Help Center - Client */}
+        <Route
+          path="/help"
+          element={
+            <ClientRoute>
+              <HelpCenter />
             </ClientRoute>
           }
         />
@@ -213,22 +244,8 @@ function AppContent() {
           path="/contact"
           element={<Contact />}
         />
-        <Route
-          path="/checkout"
-          element={
-            <PrivateRoute>
-              <Checkout />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/payment/success"
-          element={
-            <PrivateRoute>
-              <PaymentSuccess />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/payment/success" element={<PaymentSuccess />} />
 
         {/* Page d'accueil publique */}
         <Route path="/" element={<Home />} />
@@ -243,6 +260,10 @@ function App() {
       <AuthProvider>
         <SiteSettingsProvider>
           <CartProvider>
+            {/* 🛡️ Translation Protection Validator - Active in Development */}
+            {process.env.NODE_ENV === 'development' && (
+              <TranslationProtectionValidator enabled={true} verbose={false} />
+            )}
             <AppContent />
           </CartProvider>
         </SiteSettingsProvider>

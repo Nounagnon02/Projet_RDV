@@ -1,20 +1,18 @@
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
-import ClientHeader from '../components/ClientHeader';
-import { Card, Button } from '../components/ui';
+import ClientLayout from '../layouts/ClientLayout';
+import { useTranslation } from 'react-i18next';
+import { Card, Button, ProtectedIcon } from '../components/ui';
 import {
     Calendar,
-    ChevronRight,
-    Scissors,
     Sparkles,
-    ArrowRight,
-    History,
-    Settings
+    ArrowRight
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 
 const MemberProfile = () => {
+    const { t } = useTranslation();
     const { user } = useAuth();
     const [appointments, setAppointments] = useState([]);
     const [loyalty, setLoyalty] = useState(null);
@@ -49,76 +47,47 @@ const MemberProfile = () => {
     };
 
     return (
-        <div className="min-h-screen bg-background-light dark:bg-background-dark font-display flex flex-col">
-            <ClientHeader />
-
-            <div className="flex-1 max-w-7xl mx-auto w-full px-8 py-16 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-16">
-                {/* Left Sidebar: Navigation & Identity */}
-                <aside className="lg:col-span-3 space-y-12 animate-fade-in-up">
-                    <div className="space-y-4">
-                        <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em]">Votre Profil</p>
-                        <h2 className="text-5xl font-display italic font-black text-maroon-dark dark:text-text-light leading-none">Bonjour, {user?.name?.split(' ')[0]}</h2>
-                        <p className="text-accent-bronze font-medium text-sm italic">Membre Privilégié de l'Atelier.</p>
-                    </div>
-
-                    <nav className="space-y-3">
-                        {[
-                            { name: 'Vue d\'ensemble', icon: Sparkles, active: true, path: '/client' },
-                            { name: 'Mes Réservations', icon: Calendar, path: '/client/appointments' },
-                            { name: 'Boutique Elsa', icon: History, path: '/client/shop' },
-                            { name: 'Paramètres', icon: Settings }
-                        ].map(item => (
-                            <Link
-                                key={item.name}
-                                to={item.path || '#'}
-                                className={`flex items-center justify-between p-5 rounded-2xl transition-all duration-500 group ${item.active ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'hover:bg-primary/5 text-accent-bronze hover:text-primary'}`}
-                            >
-                                <div className="flex items-center gap-4">
-                                    <item.icon className="size-4" />
-                                    <span className="text-[10px] font-black uppercase tracking-widest">{item.name}</span>
-                                </div>
-                                <ChevronRight className={`size-3 transition-transform group-hover:translate-x-1 ${item.active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
-                            </Link>
-                        ))}
-                    </nav>
-                </aside>
-
-                {/* Main Dashboard Area */}
-                <main className="lg:col-span-9 space-y-16 animate-fade-in-up stagger-1">
-                    {/* Hero section: Quick Action */}
-                    <section>
+        <ClientLayout
+            title={t('profile.title', { defaultValue: 'Votre profil' })}
+            subtitle={t('profile.subtitle', { defaultValue: 'Bonjour {{name}}, bienvenue dans votre espace client.', name: user?.name?.split(' ')[0] || '' })}
+        >
+            <div className="space-y-16 animate-fade-in-up stagger-1">
+                {/* Hero section: Quick Action */}
+                <section>
                         <div className="bg-gradient-to-br from-primary to-maroon-dark rounded-[40px] p-12 md:p-16 text-white shadow-2xl relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-10 opacity-10">
-                                <span className="material-symbols-outlined text-[200px]">calendar_month</span>
+                                <ProtectedIcon translate="no" data-i18n="false" className="text-[200px]">
+                                    <span className="material-symbols-outlined text-[200px]">calendar_month</span>
+                                </ProtectedIcon>
                             </div>
                             <div className="relative z-10 max-w-2xl space-y-8">
                                 <div className="space-y-4">
-                                    <p className="text-[10px] font-black text-white/60 uppercase tracking-[0.4em]">Votre Prochain Rendez-vous</p>
-                                    <h3 className="text-5xl md:text-6xl font-display italic font-black leading-none">Un instant pour vous ?</h3>
+                                    <p className="text-[10px] font-black text-white/60 uppercase tracking-[0.4em]">{t('profile.next_appointment', { defaultValue: 'Votre prochain rendez-vous' })}</p>
+                                    <h3 className="text-5xl md:text-6xl font-display italic font-black leading-none">{t('profile.hero_title', { defaultValue: 'Un instant pour vous ?' })}</h3>
                                 </div>
                                 <p className="text-white/80 text-lg font-medium italic max-w-md">
-                                    Réservez votre prochaine transformation signature et profitez de l'excellence Elsa Coiffure.
+                                    {t('profile.hero_desc', { defaultValue: 'Reservez votre prochaine transformation signature et profitez de l excellence Elsa Coiffure.' })}
                                 </p>
                                 <div className="flex flex-wrap gap-4">
                                     <Link to="/providers">
                                         <Button variant="secondary" className="h-14 px-12 bg-white text-maroon-dark hover:bg-white/90 font-black uppercase tracking-[0.3em] text-[10px] shadow-xl">
-                                            PRENDRE RENDEZ-VOUS
+                                            {t('profile.book_now', { defaultValue: 'Prendre rendez-vous' })}
                                         </Button>
                                     </Link>
                                     <Link to="/client/appointments">
                                         <Button variant="outline" className="h-14 px-12 border-white/30 text-white hover:bg-white/10 font-black uppercase tracking-[0.3em] text-[10px]">
-                                            MES RÉSERVATIONS
+                                            {t('profile.my_bookings', { defaultValue: 'Mes reservations' })}
                                         </Button>
                                     </Link>
                                 </div>
                             </div>
                         </div>
-                    </section>
+                </section>
 
-                    {/* Prochain RDV highlight */}
-                    <section className="space-y-10">
+                {/* Prochain RDV highlight */}
+                <section className="space-y-10">
                         <div className="flex items-center gap-6">
-                            <h3 className="text-2xl font-black tracking-tight leading-none uppercase">Prochain RDV Signature</h3>
+                            <h3 className="text-2xl font-black tracking-tight leading-none uppercase">{t('profile.next_signature', { defaultValue: 'Prochain RDV signature' })}</h3>
                             <div className="flex-1 h-px bg-maroon-dark/5"></div>
                         </div>
 
@@ -135,13 +104,13 @@ const MemberProfile = () => {
 
                                 <div className="flex-1 space-y-6">
                                     <div className="flex items-center gap-4">
-                                        <span className="text-[9px] font-black uppercase tracking-widest px-4 py-1.5 bg-primary/10 text-primary rounded-full">Soin d'Exception</span>
+                                        <span className="text-[9px] font-black uppercase tracking-widest px-4 py-1.5 bg-primary/10 text-primary rounded-full">{t('profile.exceptional_care', { defaultValue: 'Soin d exception' })}</span>
                                         <span className="text-[9px] font-black uppercase tracking-widest px-4 py-1.5 bg-maroon-dark/5 text-accent-bronze rounded-full italic">14:00 (2h)</span>
                                     </div>
                                     <h4 className="text-4xl font-display italic font-bold text-maroon-dark dark:text-text-light">Soin Rituel Hydratation</h4>
                                     <div className="flex items-center gap-8 text-accent-bronze text-sm font-medium italic">
                                         <span className="flex items-center gap-2"><Sparkles className="size-4 text-primary" /> L'Atelier Paris</span>
-                                        <span className="text-maroon-dark dark:text-text-light underline decoration-primary underline-offset-8 cursor-pointer hover:text-primary transition-colors">Modifier</span>
+                                        <span className="text-maroon-dark dark:text-text-light underline decoration-primary underline-offset-8 cursor-pointer hover:text-primary transition-colors">{t('common.edit', { defaultValue: 'Modifier' })}</span>
                                     </div>
                                 </div>
 
@@ -154,52 +123,12 @@ const MemberProfile = () => {
                         ) : (
                             <Card variant="light" className="p-24 text-center border-dashed border-2 bg-white/50 border-maroon-dark/10 rounded-[40px]">
                                 <Calendar className="size-16 mx-auto text-accent-cream mb-8 opacity-40" />
-                                <p className="text-accent-bronze font-display italic text-2xl">Aucune transformation prévue.</p>
+                                <p className="text-accent-bronze font-display italic text-2xl">{t('profile.no_transformations', { defaultValue: 'Aucune transformation prevue.' })}</p>
                             </Card>
                         )}
-                    </section>
-                </main>
+                </section>
             </div>
-
-            {/* Premium Footer */}
-            <footer className="bg-maroon-dark text-white py-24 xl:px-40 lg:px-20 px-8 border-t border-white/5">
-                <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
-                    <div className="col-span-1 md:col-span-2 space-y-8">
-                        <div className="flex items-center gap-4 text-primary">
-                            <span className="material-symbols-outlined text-4xl">flare</span>
-                            <h2 className="text-3xl font-display font-medium italic tracking-tight">Elsa Coiffure</h2>
-                        </div>
-                        <p className="text-slate-400 text-lg leading-relaxed max-w-sm italic">
-                            Élever les standards du soin capillaire afro à travers une expérience de luxe et une excellence artistique inégalée.
-                        </p>
-                    </div>
-                    <div>
-                        <h4 className="text-white font-black uppercase text-[10px] tracking-[0.4em] mb-10 opacity-40">Navigation</h4>
-                        <ul className="space-y-6 text-[10px] font-black tracking-[0.2em] uppercase text-slate-200">
-                            <li><Link className="hover:text-primary transition-colors" to="/about">Notre Histoire</Link></li>
-                            <li><Link className="hover:text-primary transition-colors" to="/providers">Nos Services</Link></li>
-                            <li><Link className="hover:text-primary transition-colors" to="/client/appointments">Mes Rendez-vous</Link></li>
-                            <li><Link className="hover:text-primary transition-colors" to="/contact">Conciergerie</Link></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 className="text-white font-black uppercase text-[10px] tracking-[0.4em] mb-10 opacity-40">Conciergerie</h4>
-                        <ul className="space-y-6 text-[10px] font-black tracking-[0.2em] uppercase text-slate-300">
-                            <li className="flex items-center gap-4"><span className="material-symbols-outlined text-primary text-base">mail</span> concierge@elsacoiffure.fr</li>
-                            <li className="flex items-center gap-4"><span className="material-symbols-outlined text-primary text-base">call</span> +33 1 23 45 67 89</li>
-                            <li className="flex items-center gap-4"><span className="material-symbols-outlined text-primary text-base">location_on</span> 75 Av. des Champs-Élysées, Paris</li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="max-w-[1200px] mx-auto border-t border-white/5 mt-20 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-[0.4em] text-white/40 font-sans">
-                    <p>© 2026 ELSA COIFFURE PARIS. TOUS DROITS RÉSERVÉS.</p>
-                    <div className="flex gap-10">
-                        <a className="hover:text-white transition-colors" href="#">Vie Privée</a>
-                        <a className="hover:text-white transition-colors" href="#">Conditions de Réservation</a>
-                    </div>
-                </div>
-            </footer>
-        </div>
+        </ClientLayout>
     );
 };
 
