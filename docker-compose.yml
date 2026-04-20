@@ -43,17 +43,6 @@ services:
     networks:
       - app-network
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "5173:80"
-    environment:
-      - VITE_API_URL=http://localhost:8000/api
-    networks:
-      - app-network
-
 volumes:
   postgres_data:
 
