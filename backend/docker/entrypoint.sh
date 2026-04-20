@@ -4,20 +4,10 @@
 echo "Waiting for database..."
 sleep 10
 
-# Run migrations
-echo "Running migrations..."
-php artisan migrate --force
-
-# Check if database is empty (no users)
-USER_COUNT=$(php artisan tinker --execute="echo \App\Models\User::count();")
-
-if [ "$USER_COUNT" -eq "0" ]; then
-    echo "Database is empty. Running seeders..."
-    php artisan db:seed --force
-    echo "✅ Seeders executed successfully"
-else
-    echo "Database already contains data. Skipping seeders."
-fi
+# Fresh migration with seeders (drops all tables and recreates)
+echo "🔄 Resetting database..."
+php artisan migrate:fresh --seed --force
+echo "✅ Database reset and seeded successfully"
 
 # Cache configuration
 echo "Caching configuration..."
