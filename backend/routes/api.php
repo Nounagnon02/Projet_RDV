@@ -4,9 +4,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\SetupController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+// Setup & Diagnostic Routes (Public with secret)
+Route::get('/setup/diagnostic', [SetupController::class, 'diagnostic']);
+Route::post('/setup/seed', [SetupController::class, 'runSeeders']);
+Route::post('/setup/fresh', [SetupController::class, 'freshMigrate']);
+Route::post('/setup/create-admin', [SetupController::class, 'createAdmin']);
 
 // Public Site Settings
 Route::get('/site-settings', [App\Http\Controllers\Api\SiteSettingController::class, 'index']);
