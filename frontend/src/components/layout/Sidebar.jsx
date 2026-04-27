@@ -27,10 +27,7 @@ const Sidebar = () => {
                         className="h-10 md:h-12 w-auto max-w-[110px] md:max-w-[130px] object-contain"
                         alt="Logo Elsa Coiffure"
                     />
-                    <div className="flex flex-col justify-center space-y-1">
-                        <h1 className="text-xl font-display font-bold leading-none tracking-[0.16em] uppercase text-primary">Elsa Coiffure</h1>
-                        <p className="text-primary text-[10px] uppercase tracking-[0.28em] font-black">Luxury Afro Hair</p>
-                    </div>
+
                 </div>
 
                 {/* Nav Links */}

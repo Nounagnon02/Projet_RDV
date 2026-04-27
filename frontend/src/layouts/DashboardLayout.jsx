@@ -76,10 +76,7 @@ const DashboardLayout = ({ children }) => {
                                 className="h-10 lg:h-12 w-auto max-w-[110px] lg:max-w-[130px] object-contain group-hover:scale-105 transition-transform duration-500"
                                 alt="Logo Elsa Coiffure"
                             />
-                            <div className="flex flex-col justify-center space-y-1">
-                                <p className="text-lg lg:text-xl font-display font-bold text-primary tracking-[0.16em] uppercase leading-none">{settings.site_name || 'Elsa Coiffure'}</p>
-                                <p className="text-primary text-[10px] uppercase tracking-[0.28em] font-black">{t('admin.admin_panel')}</p>
-                            </div>
+
                         </Link>
                     </div>
 

@@ -47,14 +47,6 @@ const Login = () => {
                             className="h-14 sm:h-16 md:h-20 w-auto max-w-[170px] sm:max-w-[200px] md:max-w-[220px] object-contain"
                             alt="Logo Elsa Coiffure"
                         />
-                        <div className="flex flex-col justify-center space-y-1">
-                            <h1 className="text-2xl md:text-3xl font-display font-bold text-primary tracking-[0.16em] uppercase leading-none">
-                                {settings.site_name || 'Elsa Coiffure'}
-                            </h1>
-                            <p className="text-[8px] md:text-[10px] text-primary uppercase tracking-[0.28em] font-black">
-                                {t('auth.brand_subtitle', { defaultValue: "L'Atelier de Luxe" })}
-                            </p>
-                        </div>
                     </div>
                 </div>
 

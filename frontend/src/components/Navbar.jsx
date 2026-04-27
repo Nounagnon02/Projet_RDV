@@ -46,12 +46,7 @@ const Navbar = () => {
                         className="h-10 sm:h-12 lg:h-14 w-auto max-w-[110px] sm:max-w-[130px] lg:max-w-[150px] object-contain group-hover:scale-105 transition-transform duration-500"
                         alt="Logo Elsa Coiffure"
                     />
-                    <ProtectedLogo className="hidden md:flex flex-col justify-center space-y-1">
-                        <h2 className="text-lg lg:text-xl font-display font-bold leading-none tracking-[0.16em] text-primary uppercase">
-                            {settings.site_name || 'Elsa Coiffure'}
-                        </h2>
-                        <span className="text-[8px] font-black text-primary uppercase tracking-[0.28em]">{t('navbar.concierge')}</span>
-                    </ProtectedLogo>
+
                 </Link>
 
                 {/* Desktop Navigation */}
