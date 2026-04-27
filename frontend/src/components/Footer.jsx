@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin } from 'lucide-react';
-import { ProtectedIcon, ProtectedLogo } from './ui';
+import { BrandLogo, ProtectedIcon, ProtectedLogo } from './ui';
 import { useSiteSettings } from '../context/SiteSettingsContext';
 
 const Footer = () => {
@@ -22,12 +22,13 @@ const Footer = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 lg:gap-24 text-center sm:text-left">
                     {/* Brand Section */}
                     <div className="lg:col-span-1 flex flex-col items-center sm:items-start">
-                        <Link to="/" className="flex items-center gap-4 mb-8 text-primary group">
-                            <ProtectedIcon className="text-4xl group-hover:scale-110 transition-transform duration-500">
-                                <span className="material-symbols-outlined text-4xl">spa</span>
-                            </ProtectedIcon>
-                            <ProtectedLogo>
-                                <h2 className="text-3xl font-bold tracking-tight uppercase font-display italic text-white leading-none">{siteName}</h2>
+                        <Link to="/" className="flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-4 mb-8 text-primary group">
+                            <BrandLogo
+                                className="h-14 md:h-16 w-auto max-w-[150px] md:max-w-[180px] object-contain group-hover:scale-105 transition-transform duration-500"
+                                alt="Logo Elsa Coiffure"
+                            />
+                            <ProtectedLogo className="flex flex-col justify-center space-y-1">
+                                <h2 className="text-2xl md:text-3xl font-display font-bold uppercase tracking-[0.16em] text-primary leading-none">{siteName}</h2>
                             </ProtectedLogo>
                         </Link>
                         <p className="text-slate-400 text-base md:text-lg leading-relaxed max-w-sm italic">

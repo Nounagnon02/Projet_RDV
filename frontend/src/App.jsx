@@ -35,6 +35,7 @@ import Agenda from './pages/admin/Agenda';
 import LoyaltyManagement from './pages/admin/LoyaltyManagement';
 import SiteSettings from './pages/admin/SiteSettings';
 import ContactMessages from './pages/admin/ContactMessages';
+import AdminSettings from './pages/admin/AdminSettings';
 import Checkout from './pages/Checkout';
 import PaymentSuccess from './pages/PaymentSuccess';
 
@@ -156,6 +157,14 @@ function AppContent() {
           element={
             <ProviderRoute>
               <ContactMessages />
+            </ProviderRoute>
+          }
+        />
+        <Route
+          path="/dashboard/account"
+          element={
+            <ProviderRoute>
+              <AdminSettings />
             </ProviderRoute>
           }
         />

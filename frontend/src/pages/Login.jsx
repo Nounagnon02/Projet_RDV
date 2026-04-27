@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { useSiteSettings } from '../context/SiteSettingsContext';
-import { Button, Card, Input, ProtectedIcon } from '../components/ui';
+import { BrandLogo, Button, Card, Input } from '../components/ui';
 
 const Login = () => {
     const { t } = useTranslation();
@@ -42,17 +42,16 @@ const Login = () => {
             <div className="w-full max-w-md relative z-10">
                 {/* Logo & Brand */}
                 <div className="flex flex-col items-center mb-8 md:mb-10 animate-fade-in">
-                    <div className="flex items-center gap-3 md:gap-4 mb-2">
-                        <div className="h-12 w-12 md:h-16 md:w-16 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-primary-glow">
-                            <ProtectedIcon translate="no" data-i18n="false">
-                                <span className="material-symbols-outlined text-white text-3xl md:text-4xl">flare</span>
-                            </ProtectedIcon>
-                        </div>
-                        <div>
-                            <h1 className="text-2xl md:text-3xl font-display font-bold text-maroon-dark tracking-tight">
+                    <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-2 text-center sm:text-left">
+                        <BrandLogo
+                            className="h-14 sm:h-16 md:h-20 w-auto max-w-[170px] sm:max-w-[200px] md:max-w-[220px] object-contain"
+                            alt="Logo Elsa Coiffure"
+                        />
+                        <div className="flex flex-col justify-center space-y-1">
+                            <h1 className="text-2xl md:text-3xl font-display font-bold text-primary tracking-[0.16em] uppercase leading-none">
                                 {settings.site_name || 'Elsa Coiffure'}
                             </h1>
-                            <p className="text-[8px] md:text-[10px] text-primary uppercase tracking-[0.4em] font-black">
+                            <p className="text-[8px] md:text-[10px] text-primary uppercase tracking-[0.28em] font-black">
                                 {t('auth.brand_subtitle', { defaultValue: "L'Atelier de Luxe" })}
                             </p>
                         </div>

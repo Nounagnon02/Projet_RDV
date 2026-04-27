@@ -5,4 +5,5 @@ export { default as Input } from './Input';
 export { default as DarkModeToggle } from './DarkModeToggle';
 export { default as ProtectedIcon } from './ProtectedIcon';
 export { default as ProtectedLogo } from './ProtectedLogo';
+export { default as BrandLogo } from './BrandLogo';
 

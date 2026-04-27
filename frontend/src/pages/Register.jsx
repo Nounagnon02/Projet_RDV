@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { useSiteSettings } from '../context/SiteSettingsContext';
 import { Mail, Lock, User, Phone, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
-import { Button, Card, Input, ProtectedIcon } from '../components/ui';
+import { BrandLogo, Button, Card, Input } from '../components/ui';
 
 const Register = () => {
     const { t } = useTranslation();
@@ -58,15 +58,14 @@ const Register = () => {
             <div className="w-full max-w-2xl relative z-10">
                 {/* Logo & Brand */}
                 <div className="flex flex-col items-center mb-8 md:mb-10 animate-fade-in">
-                    <div className="flex items-center gap-3">
-                        <div className="h-12 w-12 md:h-14 md:w-14 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-primary-glow">
-                            <ProtectedIcon translate="no" data-i18n="false">
-                                <span className="material-symbols-outlined text-white text-3xl">flare</span>
-                            </ProtectedIcon>
-                        </div>
-                        <div>
-                            <h1 className="text-xl md:text-2xl font-display font-bold text-maroon-dark tracking-tight">{settings.site_name || 'Elsa Coiffure'}</h1>
-                            <p className="text-[8px] md:text-[10px] text-primary uppercase tracking-[0.4em] font-black">{t('auth.brand_subtitle', { defaultValue: "L'Atelier de Luxe" })}</p>
+                    <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-center sm:text-left">
+                        <BrandLogo
+                            className="h-14 sm:h-16 md:h-20 w-auto max-w-[170px] sm:max-w-[200px] md:max-w-[220px] object-contain"
+                            alt="Logo Elsa Coiffure"
+                        />
+                        <div className="flex flex-col justify-center space-y-1">
+                            <h1 className="text-xl md:text-2xl font-display font-bold text-primary tracking-[0.16em] uppercase leading-none">{settings.site_name || 'Elsa Coiffure'}</h1>
+                            <p className="text-[8px] md:text-[10px] text-primary uppercase tracking-[0.28em] font-black">{t('auth.brand_subtitle', { defaultValue: "L'Atelier de Luxe" })}</p>
                         </div>
                     </div>
                 </div>

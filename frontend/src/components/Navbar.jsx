@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button, ProtectedIcon, ProtectedLogo } from './ui';
+import { Button, BrandLogo, ProtectedIcon, ProtectedLogo } from './ui';
 import { Menu, X, ShoppingBag } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './ui/LanguageSwitcher';
@@ -41,15 +41,16 @@ const Navbar = () => {
         >
             <div className="max-w-[1440px] mx-auto flex items-center justify-between">
                 {/* Logo */}
-                <Link to="/" className="flex items-center gap-3 group relative z-50">
-                    <ProtectedIcon translate="no" data-i18n="false" className="h-10 w-10 text-primary group-hover:rotate-[30deg] transition-transform duration-500">
-                        <span className="material-symbols-outlined text-4xl">flare</span>
-                    </ProtectedIcon>
-                    <ProtectedLogo className="flex flex-col">
-                        <h2 className="text-xl font-display font-bold leading-none tracking-tight text-maroon-dark dark:text-text-light uppercase">
+                <Link to="/" className="flex items-center gap-3 sm:gap-4 group relative z-50">
+                    <BrandLogo
+                        className="h-10 sm:h-12 lg:h-14 w-auto max-w-[110px] sm:max-w-[130px] lg:max-w-[150px] object-contain group-hover:scale-105 transition-transform duration-500"
+                        alt="Logo Elsa Coiffure"
+                    />
+                    <ProtectedLogo className="hidden md:flex flex-col justify-center space-y-1">
+                        <h2 className="text-lg lg:text-xl font-display font-bold leading-none tracking-[0.16em] text-primary uppercase">
                             {settings.site_name || 'Elsa Coiffure'}
                         </h2>
-                        <span className="text-[8px] font-black text-primary uppercase tracking-[0.4em] mt-1">{t('navbar.concierge')}</span>
+                        <span className="text-[8px] font-black text-primary uppercase tracking-[0.28em]">{t('navbar.concierge')}</span>
                     </ProtectedLogo>
                 </Link>
 

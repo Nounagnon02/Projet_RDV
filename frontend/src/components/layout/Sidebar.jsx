@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { ProtectedIcon } from '../ui';
+import { BrandLogo, ProtectedIcon } from '../ui';
 
 const Sidebar = () => {
     const location = useLocation();
@@ -23,14 +23,13 @@ const Sidebar = () => {
             <div className="p-8 flex flex-col h-full">
                 {/* Brand */}
                 <div className="mb-12 flex items-center gap-3">
-                    <div className="size-12 rounded-full bg-primary flex items-center justify-center">
-                        <ProtectedIcon translate="no" data-i18n="false">
-                            <span className="material-symbols-outlined text-white text-3xl">content_cut</span>
-                        </ProtectedIcon>
-                    </div>
-                    <div>
-                        <h1 className="text-xl font-display font-bold leading-none tracking-tight text-maroon-dark">Elsa Coiffure</h1>
-                        <p className="text-primary text-[10px] uppercase tracking-widest mt-1 font-bold">Luxury Afro Hair</p>
+                    <BrandLogo
+                        className="h-10 md:h-12 w-auto max-w-[110px] md:max-w-[130px] object-contain"
+                        alt="Logo Elsa Coiffure"
+                    />
+                    <div className="flex flex-col justify-center space-y-1">
+                        <h1 className="text-xl font-display font-bold leading-none tracking-[0.16em] uppercase text-primary">Elsa Coiffure</h1>
+                        <p className="text-primary text-[10px] uppercase tracking-[0.28em] font-black">Luxury Afro Hair</p>
                     </div>
                 </div>
 

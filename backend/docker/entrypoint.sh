@@ -5,9 +5,9 @@ echo "Waiting for database..."
 sleep 10
 
 # Fresh migration with seeders (drops all tables and recreates)
-echo "🔄 Resetting database..."
-php artisan migrate:fresh --seed --force
-echo "✅ Database reset and seeded successfully"
+#echo "🔄 Resetting database..."
+#php artisan migrate:fresh --seed --force
+#echo "✅ Database reset and seeded successfully"
 
 # Cache configuration
 echo "Caching configuration..."

@@ -17,9 +17,11 @@ import {
     Bell,
     Settings,
     Mail,
-    Globe
+    Globe,
+    UserCog
 } from 'lucide-react';
 import { useState } from 'react';
+import { BrandLogo } from '../components/ui';
 
 const DashboardLayout = ({ children }) => {
     const { user, logout } = useAuth();
@@ -43,6 +45,7 @@ const DashboardLayout = ({ children }) => {
         { name: t('admin.loyalty'), path: '/dashboard/loyalty', icon: Star },
         { name: t('admin.messages'), path: '/dashboard/messages', icon: Mail },
         { name: t('admin.settings'), path: '/dashboard/settings', icon: Settings },
+        { name: t('admin.account'), path: '/dashboard/account', icon: UserCog },
     ];
 
     const handleLogout = async () => {
@@ -69,12 +72,13 @@ const DashboardLayout = ({ children }) => {
                     {/* Logo Area */}
                     <div className="flex h-24 items-center px-8 border-b border-white/10">
                         <Link to="/" className="flex items-center gap-3 group">
-                            <div className="size-11 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform">
-                                <span className="material-symbols-outlined text-white text-2xl">content_cut</span>
-                            </div>
-                            <div>
-                                <p className="text-xl font-bold text-primary italic">{settings.site_name || 'Elsa Coiffure'}</p>
-                                <p className="text-primary text-[10px] uppercase tracking-widest mt-1 font-bold">{t('admin.admin_panel')}</p>
+                            <BrandLogo
+                                className="h-10 lg:h-12 w-auto max-w-[110px] lg:max-w-[130px] object-contain group-hover:scale-105 transition-transform duration-500"
+                                alt="Logo Elsa Coiffure"
+                            />
+                            <div className="flex flex-col justify-center space-y-1">
+                                <p className="text-lg lg:text-xl font-display font-bold text-primary tracking-[0.16em] uppercase leading-none">{settings.site_name || 'Elsa Coiffure'}</p>
+                                <p className="text-primary text-[10px] uppercase tracking-[0.28em] font-black">{t('admin.admin_panel')}</p>
                             </div>
                         </Link>
                     </div>

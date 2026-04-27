@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Bell, LogOut } from 'lucide-react';
-import { ProtectedIcon, ProtectedLogo } from './ui';
+import { BrandLogo, ProtectedIcon, ProtectedLogo } from './ui';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,12 +16,13 @@ const ClientHeader = () => {
     return (
         <header className="h-20 md:h-24 px-4 md:px-8 border-b border-maroon-dark/5 flex items-center justify-between bg-white/50 backdrop-blur-md sticky top-0 z-40">
             <Link to="/" className="flex items-center gap-3 md:gap-4 group">
-                <ProtectedIcon translate="no" data-i18n="false" className="size-10 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/20">
-                    <span className="material-symbols-outlined text-white text-xl">flare</span>
-                </ProtectedIcon>
-                <ProtectedLogo className="flex flex-col hidden sm:flex">
-                    <h1 className="text-lg md:text-xl font-bold tracking-[0.2em] uppercase leading-none text-maroon-dark">Elsa Coiffure</h1>
-                    <span className="text-[8px] md:text-[10px] font-black text-accent-bronze uppercase tracking-[0.4em] mt-1">L'Atelier de Luxe</span>
+                <BrandLogo
+                    className="h-10 sm:h-12 md:h-14 w-auto max-w-[110px] sm:max-w-[130px] md:max-w-[150px] object-contain group-hover:scale-105 transition-transform duration-500"
+                    alt="Logo Elsa Coiffure"
+                />
+                <ProtectedLogo className="hidden sm:flex flex-col justify-center space-y-1">
+                    <h1 className="text-lg md:text-xl font-display font-bold tracking-[0.16em] uppercase leading-none text-primary">Elsa Coiffure</h1>
+                    <span className="text-[8px] md:text-[10px] font-black text-accent-bronze uppercase tracking-[0.28em]">L'Atelier de Luxe</span>
                 </ProtectedLogo>
             </Link>
 
