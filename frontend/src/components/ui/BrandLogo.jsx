@@ -5,7 +5,7 @@ const BrandLogo = ({ className = '', alt = 'Elsa Coiffure logo' }) => {
     <img
       src="/assets/logo-elsa-coiffure.png"
       alt={alt}
-      className={className}
+      className={`mix-blend-multiply ${className}`}
       loading="lazy"
       decoding="async"
       translate="no"
