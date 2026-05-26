@@ -1,19 +1,11 @@
-// INSTRUCTIONS: Remplacer le contenu de BookingPage.jsx par ce fichier
-// Modifications principales:
-// 1. Pré-sélection du service depuis l'URL (?service=X)
-// 2. Intégration du composant DepositPayment
-// 3. Gestion du flux de paiement avant confirmation
-// 4. Envoi du transaction_id avec la réservation
-
 import { useState, useEffect } from 'react';
-import { useParams, Link, useSearchParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Button, Card } from '../components/ui';
-import DepositPayment from '../components/DepositPayment';
 import {
     ArrowLeft,
     ArrowRight,
@@ -34,7 +26,6 @@ const BookingPage = () => {
     const { t, i18n } = useTranslation();
     const { slug } = useParams();
     const { user } = useAuth();
-    const [searchParams] = useSearchParams();
     const dateLocale = i18n.language === 'en' ? enUS : fr;
 
     const [provider, setProvider] = useState(null);
@@ -49,10 +40,6 @@ const BookingPage = () => {
     const [booked, setBooked] = useState(false);
     const [guestName, setGuestName] = useState('');
     const [guestWhatsapp, setGuestWhatsapp] = useState('');
-    
-    // États pour le paiement d'acompte
-    const [showPayment, setShowPayment] = useState(false);
-    const [depositRequired, setDepositRequired] = useState(false);
 
     useEffect(() => {
         fetchProviderData();
@@ -63,32 +50,6 @@ const BookingPage = () => {
             fetchSlots();
         }
     }, [selectedService, selectedDate]);
-
-    // Pré-sélectionner le service depuis l'URL
-    useEffect(() => {
-        const serviceId = searchParams.get('service');
-        if (serviceId && services.length > 0) {
-            const service = services.find(s => s.id === parseInt(serviceId));
-            if (service) {
-                setSelectedService(service);
-            }
-        }
-    }, [searchParams, services]);
-
-    // Vérifier si l'acompte est requis
-    useEffect(() => {
-        const checkDeposit = async () => {
-            try {
-                const response = await api.get('/site-settings');
-                const settings = response.data;
-                const enabled = settings.find(s => s.key === 'deposit_enabled')?.value === 'true';
-                setDepositRequired(enabled);
-            } catch (error) {
-                console.error('Error checking deposit:', error);
-            }
-        };
-        checkDeposit();
-    }, []);
 
     const fetchProviderData = async () => {
         try {
@@ -119,20 +80,12 @@ const BookingPage = () => {
         }
     };
 
-    const handleContinueToPayment = () => {
+    const handleBooking = async () => {
         if (!user && (!guestName || !guestWhatsapp)) {
-            alert(t('booking.alert_guest_required', { defaultValue: 'Veuillez renseigner votre nom et numéro WhatsApp pour continuer.' }));
+            alert(t('booking.alert_guest_required', { defaultValue: 'Veuillez renseigner votre nom et numero WhatsApp pour continuer.' }));
             return;
         }
 
-        if (depositRequired) {
-            setShowPayment(true);
-        } else {
-            handleBooking(null);
-        }
-    };
-
-    const handleBooking = async (transactionId = null) => {
         setBookingLoading(true);
         try {
             const bookingData = {
@@ -146,14 +99,10 @@ const BookingPage = () => {
                 bookingData.guest_whatsapp = guestWhatsapp;
             }
 
-            if (transactionId) {
-                bookingData.payment_transaction_id = transactionId;
-            }
-
             await api.post(`/booking/${slug}/appointments`, bookingData);
             setBooked(true);
         } catch (error) {
-            alert(error.response?.data?.message || t('booking.alert_error', { defaultValue: 'Erreur lors de la réservation' }));
+            alert(error.response?.data?.message || t('booking.alert_error', { defaultValue: 'Erreur lors de la reservation' }));
         } finally {
             setBookingLoading(false);
         }
@@ -164,7 +113,7 @@ const BookingPage = () => {
             <div className="flex h-screen items-center justify-center bg-[#fbfaf9]">
                 <div className="text-center">
                     <Loader2 className="size-12 animate-spin text-primary mx-auto mb-4" />
-                    <p className="font-display italic text-maroon-dark">{t('booking.loading', { defaultValue: 'L\'excellence patiente...' })}</p>
+                    <p className="font-display italic text-maroon-dark">{t('booking.loading', { defaultValue: 'L excellence patiente...' })}</p>
                 </div>
             </div>
         );
@@ -176,9 +125,9 @@ const BookingPage = () => {
                 <div className="size-24 rounded-full bg-primary/10 flex items-center justify-center mb-8 animate-fade-in shadow-2xl shadow-primary/10">
                     <CheckCircle2 className="size-12 text-primary" />
                 </div>
-                <h1 className="text-5xl font-display font-medium italic text-maroon-dark mb-4">{t('booking.success_title', { defaultValue: 'Votre transformation est réservée' })}</h1>
+                <h1 className="text-5xl font-display font-medium italic text-maroon-dark mb-4">{t('booking.success_title', { defaultValue: 'Votre transformation est reservee' })}</h1>
                 <p className="text-maroon-dark/60 mb-10 text-lg max-w-md italic">
-                    {t('booking.success_desc', { defaultValue: 'Un email de confirmation vous a été envoyé.' })}
+                    {t('booking.success_desc', { defaultValue: 'Un email de confirmation vous a ete envoye.' })}
                 </p>
                 <div className="flex gap-4">
                     <Link to="/client/appointments">
@@ -209,7 +158,7 @@ const BookingPage = () => {
                     </div>
                     <div className="absolute bottom-16 left-16 right-16 text-white z-10 animate-fade-in">
                         <p className="text-primary uppercase tracking-[0.4em] font-black text-[10px] mb-4">{t('booking.immersion', { defaultValue: 'Immersion' })}</p>
-                        <h2 className="text-5xl font-display font-medium leading-tight mb-8">{t('booking.hero_title', { defaultValue: 'Un art sculpté pour votre couronne' })}</h2>
+                        <h2 className="text-5xl font-display font-medium leading-tight mb-8">{t('booking.hero_title', { defaultValue: 'Un art sculpte pour votre couronne' })}</h2>
                         <div className="flex items-center gap-6">
                             <div className="h-px w-16 bg-primary"></div>
                             <p className="text-xl italic opacity-90">{t('booking.signature_care', { defaultValue: 'Soin signature Elsa Coiffure' })}</p>
@@ -224,7 +173,7 @@ const BookingPage = () => {
                             /* Step 1: Services Panel */
                             <div className="animate-fade-in space-y-8">
                                 <h2 className="font-display font-bold italic" style={{ fontSize: 'var(--text-h2)' }}>{t('booking.services_title', { defaultValue: 'Nos prestations signature' })}</h2>
-                                <p className="text-accent-bronze/80 text-lg italic">{t('booking.services_subtitle', { defaultValue: 'Une expérience personnalisée, gravée dans l\'excellence.' })}</p>
+                                <p className="text-accent-bronze/80 text-lg italic">{t('booking.services_subtitle', { defaultValue: 'Une experience personnalisee, gravee dans l excellence.' })}</p>
 
                                 <div className="space-y-4">
                                     {services.map((service, idx) => (
@@ -248,8 +197,8 @@ const BookingPage = () => {
                                     ))}
                                 </div>
                             </div>
-                        ) : !showPayment ? (
-                            /* Step 2: Calendar & Time Selection */
+                        ) : (
+                            /* Step 2: Exact Calendar Reproduction */
                             <div className="animate-fade-in">
                                 <button
                                     onClick={() => setSelectedService(null)}
@@ -259,10 +208,10 @@ const BookingPage = () => {
                                     <span className="text-[10px] font-black uppercase tracking-[0.3em]">{t('booking.back_to_services', { defaultValue: 'Retour aux services' })}</span>
                                 </button>
 
-                                <h2 className="text-4xl md:text-5xl font-display font-bold italic mb-4">{t('booking.select_datetime', { defaultValue: 'Sélectionner date et heure' })}</h2>
+                                <h2 className="text-4xl md:text-5xl font-display font-bold italic mb-4">{t('booking.select_datetime', { defaultValue: 'Selectionner date et heure' })}</h2>
                                 <p className="text-maroon-dark/60 text-lg mb-12 italic leading-relaxed">{t('booking.select_datetime_desc', { defaultValue: 'Votre transformation commence par le bon moment.' })}</p>
 
-                                {/* Calendar Block */}
+                                {/* Calendar Block - Exact Mockup Style */}
                                 <div className="bg-white rounded-2xl shadow-xl shadow-maroon-dark/5 border border-maroon-dark/5 p-8 mb-12">
                                     <div className="flex items-center justify-between mb-8">
                                         <h3 className="text-xl font-bold font-display italic capitalize">
@@ -281,6 +230,7 @@ const BookingPage = () => {
                                         {[t('booking.day.mon', { defaultValue: 'Mon' }), t('booking.day.tue', { defaultValue: 'Tue' }), t('booking.day.wed', { defaultValue: 'Wed' }), t('booking.day.thu', { defaultValue: 'Thu' }), t('booking.day.fri', { defaultValue: 'Fri' }), t('booking.day.sat', { defaultValue: 'Sat' }), t('booking.day.sun', { defaultValue: 'Sun' })].map(day => (
                                             <div key={day} className="text-[9px] font-black uppercase tracking-[0.2em] text-maroon-dark/40 py-2">{day}</div>
                                         ))}
+                                        {/* Simplified 14-day preview grid for demo alignment */}
                                         {[...Array(14)].map((_, i) => {
                                             const day = addDays(new Date(), i);
                                             const isSelected = isSameDay(day, selectedDate);
@@ -297,9 +247,9 @@ const BookingPage = () => {
                                     </div>
                                 </div>
 
-                                {/* Time Slots */}
+                                {/* Time Slots - Mockup Grid Style */}
                                 <div className="mb-12">
-                                    <h3 className="text-xs font-black uppercase tracking-[0.4em] text-maroon-dark/40 mb-8">{t('booking.available_slots', { defaultValue: 'Créneaux disponibles' })}</h3>
+                                    <h3 className="text-xs font-black uppercase tracking-[0.4em] text-maroon-dark/40 mb-8">{t('booking.available_slots', { defaultValue: 'Creneaux disponibles' })}</h3>
                                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                         {availableSlots.length > 0 ? availableSlots.map(slot => (
                                             <button
@@ -311,13 +261,13 @@ const BookingPage = () => {
                                             </button>
                                         )) : (
                                             <div className="col-span-full py-12 text-center bg-maroon-dark/5 rounded-2xl border border-dashed border-maroon-dark/10">
-                                                <p className="text-accent-bronze italic text-sm">{t('booking.searching_slots', { defaultValue: 'Recherche des créneaux disponibles...' })}</p>
+                                                <p className="text-accent-bronze italic text-sm">{t('booking.searching_slots', { defaultValue: 'Recherche des creneaux disponibles...' })}</p>
                                             </div>
                                         )}
                                     </div>
                                 </div>
 
-                                {/* Summary */}
+                                {/* Summary Glass Card - Exact Mockup Selection Layout */}
                                 <div className="bg-maroon-dark text-white rounded-3xl p-8 mb-12 relative overflow-hidden">
                                     <div className="absolute top-0 right-0 p-6 opacity-10">
                                         <span className="material-symbols-outlined text-6xl">verified</span>
@@ -344,79 +294,62 @@ const BookingPage = () => {
                                     </div>
                                 </div>
 
-                                {/* Guest Info */}
-                                {!user && (
-                                    <div className="bg-white border border-primary/20 rounded-3xl p-8 animate-fade-in-up shadow-xl shadow-primary/5 mb-8">
-                                        <div className="flex items-center gap-3 mb-6">
-                                            <span className="material-symbols-outlined text-primary">account_circle</span>
-                                            <h4 className="text-sm font-black uppercase tracking-widest text-maroon-dark">{t('booking.quick_finalize', { defaultValue: 'Finalisation immédiate' })}</h4>
-                                        </div>
-                                        <div className="space-y-4">
-                                            <div className="relative">
-                                                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary opacity-50 text-sm">person</span>
-                                                <input
-                                                    type="text"
-                                                    placeholder={t('booking.full_name', { defaultValue: 'Votre nom complet' })}
-                                                    value={guestName}
-                                                    onChange={(e) => setGuestName(e.target.value)}
-                                                    className="w-full h-14 pl-12 pr-6 bg-accent-cream/30 border-none rounded-xl text-sm font-bold placeholder:text-maroon-dark/30 focus:ring-2 focus:ring-primary/20 transition-all"
-                                                />
+                                {/* CTA Action */}
+                                <div className="space-y-8">
+                                    {/* Guest Identification - Only for non-logged in users */}
+                                    {!user && (
+                                        <div className="bg-white border border-primary/20 rounded-3xl p-8 animate-fade-in-up shadow-xl shadow-primary/5">
+                                            <div className="flex items-center gap-3 mb-6">
+                                                <span className="material-symbols-outlined text-primary">account_circle</span>
+                                                <h4 className="text-sm font-black uppercase tracking-widest text-maroon-dark">{t('booking.quick_finalize', { defaultValue: 'Finalisation immediate' })}</h4>
                                             </div>
-                                            <div className="relative">
-                                                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary opacity-50 text-sm">call</span>
-                                                <input
-                                                    type="tel"
-                                                    placeholder={t('booking.whatsapp_number', { defaultValue: 'Numéro WhatsApp (ex: +33...)' })}
-                                                    value={guestWhatsapp}
-                                                    onChange={(e) => setGuestWhatsapp(e.target.value)}
-                                                    className="w-full h-14 pl-12 pr-6 bg-accent-cream/30 border-none rounded-xl text-sm font-bold placeholder:text-maroon-dark/30 focus:ring-2 focus:ring-primary/20 transition-all"
-                                                />
+                                            <div className="space-y-4">
+                                                <div className="relative">
+                                                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary opacity-50 text-sm">person</span>
+                                                    <input
+                                                        type="text"
+                                                        placeholder={t('booking.full_name', { defaultValue: 'Votre nom complet' })}
+                                                        value={guestName}
+                                                        onChange={(e) => setGuestName(e.target.value)}
+                                                        className="w-full h-14 pl-12 pr-6 bg-accent-cream/30 border-none rounded-xl text-sm font-bold placeholder:text-maroon-dark/30 focus:ring-2 focus:ring-primary/20 transition-all"
+                                                    />
+                                                </div>
+                                                <div className="relative">
+                                                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary opacity-50 text-sm">call</span>
+                                                    <input
+                                                        type="tel"
+                                                        placeholder={t('booking.whatsapp_number', { defaultValue: 'Numero WhatsApp (ex: +33...)' })}
+                                                        value={guestWhatsapp}
+                                                        onChange={(e) => setGuestWhatsapp(e.target.value)}
+                                                        className="w-full h-14 pl-12 pr-6 bg-accent-cream/30 border-none rounded-xl text-sm font-bold placeholder:text-maroon-dark/30 focus:ring-2 focus:ring-primary/20 transition-all"
+                                                    />
+                                                </div>
                                             </div>
+                                            <p className="mt-6 text-[10px] text-accent-bronze italic text-center font-medium leading-relaxed">
+                                                {t('booking.no_account_needed', { defaultValue: 'Pas besoin de compte. Nous vous contacterons sur WhatsApp pour confirmer les details.' })}
+                                            </p>
                                         </div>
-                                    </div>
-                                )}
-
-                                {/* CTA Button */}
-                                <Button
-                                    disabled={!selectedSlot || bookingLoading || (!user && (!guestName || !guestWhatsapp))}
-                                    onClick={handleContinueToPayment}
-                                    variant="primary"
-                                    className="w-full h-20 text-balance font-black uppercase tracking-[0.3em] shadow-2xl flex items-center justify-center gap-4 group"
-                                >
-                                    {bookingLoading ? <Loader2 className="animate-spin" /> : (
-                                        <>
-                                            {depositRequired 
-                                                ? t('booking.continue_to_payment', { defaultValue: 'Continuer vers le paiement' })
-                                                : t('booking.confirm_session', { defaultValue: 'Confirmer la séance' })
-                                            }
-                                            <span className="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform">arrow_forward</span>
-                                        </>
                                     )}
-                                </Button>
-                            </div>
-                        ) : (
-                            /* Step 3: Payment */
-                            <div className="animate-fade-in">
-                                <button
-                                    onClick={() => setShowPayment(false)}
-                                    className="flex items-center gap-2 text-primary mb-6 group"
-                                >
-                                    <span className="material-symbols-outlined text-sm group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
-                                    <span className="text-[10px] font-black uppercase tracking-[0.3em]">{t('booking.back', { defaultValue: 'Retour' })}</span>
-                                </button>
 
-                                <h2 className="text-4xl md:text-5xl font-display font-bold italic mb-4">{t('booking.payment_title', { defaultValue: 'Paiement de l\'acompte' })}</h2>
-                                <p className="text-maroon-dark/60 text-lg mb-12 italic leading-relaxed">{t('booking.payment_subtitle', { defaultValue: 'Dernière étape pour confirmer votre réservation' })}</p>
-
-                                <DepositPayment
-                                    service={selectedService}
-                                    onPaymentSuccess={(txId) => {
-                                        handleBooking(txId);
-                                    }}
-                                    onSkip={() => {
-                                        handleBooking(null);
-                                    }}
-                                />
+                                    <Button
+                                        disabled={!selectedSlot || bookingLoading || (!user && (!guestName || !guestWhatsapp))}
+                                        onClick={handleBooking}
+                                        variant="primary"
+                                        className="w-full h-20 text-balance font-black uppercase tracking-[0.3em] shadow-2xl flex items-center justify-center gap-4 group"
+                                    >
+                                        {bookingLoading ? <Loader2 className="animate-spin" /> : (
+                                            <>
+                                                {t('booking.confirm_session', { defaultValue: 'Confirmer la seance' })}
+                                                <span className="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                                            </>
+                                        )}
+                                    </Button>
+                                    <p className="text-center text-[10px] text-maroon-dark/40 font-black uppercase tracking-widest italic font-medium">
+                                        {user
+                                            ? t('booking.priority_booking', { defaultValue: 'Votre reservation sera prioritaire.' })
+                                            : t('booking.frictionless', { defaultValue: 'Une experience sans friction, centree sur vous.' })}
+                                    </p>
+                                </div>
                             </div>
                         )}
                     </div>
