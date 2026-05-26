@@ -24,6 +24,7 @@ import Gallery from './pages/Gallery';
 import LoyaltyProgram from './pages/LoyaltyProgram';
 import HelpCenter from './pages/HelpCenter';
 import DashboardHome from './pages/DashboardHome';
+import ServicesSelection from './pages/ServicesSelection';
 
 // Admin imports
 import ProductManagement from './pages/admin/ProductManagement';
@@ -239,6 +240,12 @@ function AppContent() {
         <Route
           path="/providers"
           element={<ProvidersPage />}
+        />
+
+        {/* Sélection des services */}
+        <Route
+          path="/services"
+          element={<ServicesSelection />}
         />
 
         <Route

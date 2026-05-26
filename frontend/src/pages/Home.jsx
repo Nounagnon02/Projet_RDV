@@ -51,9 +51,10 @@ const Home = () => {
                                 </p>
                             </div>
                             <div className="flex flex-col sm:flex-row gap-6">
-                                <Link to="/providers" className="w-full sm:w-auto">
+                                <Link to="/services" className="w-full sm:w-auto">
                                     <Button variant="primary" size="lg" className="h-16 px-10 w-full shadow-2xl shadow-primary/20 hover:-translate-y-1 transition-all">
-                                        {t('home.discover_atelier')}
+                                        <Calendar className="mr-2 size-5" />
+                                        {t('home.book_now', { defaultValue: 'Réserver maintenant' })}
                                     </Button>
                                 </Link>
                                 <Link to="/about" className="w-full sm:w-auto">
