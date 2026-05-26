@@ -26,6 +26,16 @@ class BookingController extends Controller
         return response()->json($providers);
     }
 
+    // Liste tous les services disponibles
+    public function getAllServices(Request $request)
+    {
+        $services = Service::with('provider')
+            ->where('is_active', true)
+            ->get();
+        
+        return response()->json($services);
+    }
+
     public function getProviderPublic($slug)
     {
         $provider = Provider::where('slug', $slug)->with('services')->firstOrFail();
@@ -110,6 +120,7 @@ class BookingController extends Controller
             'date' => 'required|date|after_or_equal:today',
             'start_time' => 'required|date_format:H:i',
             'client_notes' => 'nullable|string',
+            'payment_transaction_id' => 'nullable|string',
         ];
 
         // Add guest rules if not authenticated
@@ -138,6 +149,18 @@ class BookingController extends Controller
             return response()->json(['message' => 'Ce créneau est déjà pris.'], 422);
         }
 
+        // Calculate deposit
+        $depositSettings = \DB::table('site_settings')
+            ->whereIn('key', ['deposit_enabled', 'deposit_percentage'])
+            ->pluck('value', 'key');
+        
+        $depositEnabled = ($depositSettings['deposit_enabled'] ?? 'false') === 'true';
+        $depositPercentage = (int)($depositSettings['deposit_percentage'] ?? 30);
+        
+        $totalAmount = $service->price;
+        $depositAmount = $depositEnabled ? ($totalAmount * $depositPercentage / 100) : 0;
+        $remainingAmount = $totalAmount - $depositAmount;
+
         $appointmentData = [
             'provider_id' => $provider->id,
             'service_id' => $request->service_id,
@@ -146,6 +169,11 @@ class BookingController extends Controller
             'end_time' => $endTime->format('H:i'),
             'status' => 'pending',
             'client_notes' => $request->client_notes,
+            'total_amount' => $totalAmount,
+            'deposit_amount' => $depositAmount,
+            'remaining_amount' => $remainingAmount,
+            'deposit_paid' => $request->has('payment_transaction_id'),
+            'payment_transaction_id' => $request->payment_transaction_id,
         ];
 
         if ($request->user()) {

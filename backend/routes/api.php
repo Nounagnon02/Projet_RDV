@@ -33,6 +33,7 @@ Route::post('/payments/webhook', [App\Http\Controllers\Api\PaymentController::cl
 
 // Public Booking Routes
 Route::get('/providers', [BookingController::class, 'getAllProviders']);
+Route::get('/services', [BookingController::class, 'getAllServices']);
 Route::get('/booking/{slug}', [BookingController::class, 'getProviderPublic']);
 Route::get('/booking/{slug}/services', [BookingController::class, 'getServicesPublic']);
 Route::get('/booking/{slug}/slots', [BookingController::class, 'getAvailableSlots']);
