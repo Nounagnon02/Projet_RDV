@@ -27,10 +27,10 @@ const Navbar = () => {
     }, [location]);
 
     const navLinks = [
-        { name: t('navbar.home', { defaultValue: 'Home' }), path: '/' },
+        { name: t('navbar.home'), path: '/' },
         { name: t('navbar.services'), path: '/providers' },
         { name: t('navbar.about'), path: '/about' },
-        { name: t('navbar.gallery', { defaultValue: 'Galerie' }), path: '/gallery' },
+        { name: t('navbar.gallery'), path: '/gallery' },
         { name: t('navbar.shop'), path: '/shop' },
         { name: t('navbar.contact'), path: '/contact' },
     ];

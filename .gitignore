@@ -9,7 +9,7 @@ __pycache__/
 # Base de données
 *.db
 *.sqlite3
-
+/docs
 # Fichiers de configuration locaux
 .env
 .vscode/

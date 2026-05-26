@@ -29,8 +29,10 @@
         "quantity": "Quantity"
     },
     "navbar": {
+        "home": "Home",
         "services": "Services",
         "about": "About",
+        "gallery": "Gallery",
         "shop": "Shop",
         "contact": "Contact",
         "booking": "Book Now",
@@ -44,6 +46,7 @@
         "hero_description": "For over ten years, Elsa Coiffure has been redefining Afro hair art. Each crown we sculpt is a unique piece, blending ancestral techniques with avant-garde silhouettes. More than a hairstyle, it is a legacy of elegance that we celebrate.",
         "discover_atelier": "DISCOVER THE ATELIER",
         "philosophy": "OUR PHILOSOPHY",
+        "book_now": "Book now",
         "bridal_title": "Bridal Excellence",
         "bridal_subtitle": "Exquisite bridal styling for the modern woman. Discover our curated wedding packages designed to make your natural crown shine.",
         "bridal_traditional": "Traditional Bridal",
