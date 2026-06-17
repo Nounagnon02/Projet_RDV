@@ -30,44 +30,43 @@ const Navbar = () => {
         { name: t('navbar.home'), path: '/' },
         { name: t('navbar.services'), path: '/providers' },
         { name: t('navbar.about'), path: '/about' },
-        { name: t('navbar.gallery'), path: '/gallery' },
         { name: t('navbar.shop'), path: '/shop' },
         { name: t('navbar.contact'), path: '/contact' },
     ];
 
     return (
         <header
-            className="fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-6 py-4 xl:px-40 lg:px-20 bg-white/95 backdrop-blur-xl border-b border-maroon-dark/10 shadow-lg"
+            className="fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-6 py-4 xl:px-8 bg-white/95 backdrop-blur-xl border-b border-maroon-dark/10 shadow-lg"
         >
-            <div className="max-w-[1440px] mx-auto flex items-center justify-between">
+            <div className="w-full flex items-center">
                 {/* Logo */}
-                <Link to="/" className="flex items-center gap-3 sm:gap-4 group relative z-50">
+                <Link to="/" className="flex items-center gap-3 sm:gap-4 group relative z-50 shrink-0">
                     <BrandLogo
                         className="h-10 sm:h-12 lg:h-14 w-auto max-w-[110px] sm:max-w-[130px] lg:max-w-[150px] object-contain group-hover:scale-105 transition-transform duration-500"
                         alt="Logo Elsa Coiffure"
                     />
-
                 </Link>
 
-                {/* Desktop Navigation */}
-                <nav className="hidden lg:flex items-center gap-10">
+                {/* Desktop Navigation - centré */}
+                <nav className="hidden lg:flex items-center gap-10 mx-auto">
                     {navLinks.map((link) => (
                         <Link
                             key={link.path}
                             to={link.path}
-                            className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all relative group py-2 
+                            className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all relative group py-2
                                 ${location.pathname === link.path ? 'text-primary' : 'text-maroon-dark/60 dark:text-text-light/60 hover:text-primary'}
                             `}
                         >
                             {link.name}
-                            <span className={`absolute bottom-0 left-0 w-full h-[1.5px] bg-primary transition-transform duration-500 origin-left 
+                            <span className={`absolute bottom-0 left-0 w-full h-[1.5px] bg-primary transition-transform duration-500 origin-left
                                 ${location.pathname === link.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}
                             `}></span>
                         </Link>
                     ))}
+                </nav>
 
-                    <div className="h-6 w-px bg-maroon-dark/10 dark:bg-white/10 mx-2"></div>
-
+                {/* Right: Cart + Lang + Book - bord droit */}
+                <div className="hidden lg:flex items-center gap-3 xl:gap-4 shrink-0">
                     <Link to="/checkout" className="relative text-maroon-dark dark:text-text-light hover:text-primary transition-colors">
                         <ProtectedIcon translate="no" data-i18n="false">
                             <ShoppingBag size={20} />
@@ -82,7 +81,7 @@ const Navbar = () => {
                             {t('navbar.booking')}
                         </Button>
                     </Link>
-                </nav>
+                </div>
 
                 {/* Mobile Menu Toggle */}
                 <div className="flex items-center gap-4 lg:hidden relative z-50">
@@ -127,7 +126,7 @@ const Navbar = () => {
                         <div className="h-px w-full bg-maroon-dark/5 dark:bg-white/5"></div>
                         <div className="flex flex-col gap-4">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">{t('navbar.concierge')}</span>
-                            <a href={`tel:${settings.contact_phone?.replace(/\s/g, '')}`} className="text-xl font-display italic text-maroon-dark dark:text-text-light">{settings.contact_phone || '+33 1 23 45 67 89'}</a>
+                            <a href={`tel:${settings.contact_phone?.replace(/\s/g, '')}`} className="text-xl font-display italic text-maroon-dark dark:text-text-light">{settings.contact_phone || '+229 01 68 31 18 96'}</a>
                         </div>
                         <Link to="/providers" className="block w-full">
                             <Button variant="primary" size="lg" className="w-full h-16 font-black text-xs uppercase tracking-[0.3em]">

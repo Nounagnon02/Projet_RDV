@@ -10,6 +10,9 @@ __pycache__/
 *.db
 *.sqlite3
 /docs
+/.claude
+/.qodo
+/.sixth
 # Fichiers de configuration locaux
 .env
 .vscode/

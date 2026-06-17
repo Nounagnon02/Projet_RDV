@@ -25,6 +25,8 @@ import LoyaltyProgram from './pages/LoyaltyProgram';
 import HelpCenter from './pages/HelpCenter';
 import DashboardHome from './pages/DashboardHome';
 import ServicesSelection from './pages/ServicesSelection';
+import BookingGlobal from './pages/BookingGlobal';
+import BookingSuccess from './pages/BookingSuccess';
 
 // Admin imports
 import ProductManagement from './pages/admin/ProductManagement';
@@ -234,6 +236,16 @@ function AppContent() {
         <Route
           path="/b/:slug"
           element={<BookingPage />}
+        />
+
+        {/* Nouvelle réservation globale (tous prestataires) */}
+        <Route
+          path="/book"
+          element={<BookingGlobal />}
+        />
+        <Route
+          path="/booking/success"
+          element={<BookingSuccess />}
         />
 
         {/* Liste des prestataires */}

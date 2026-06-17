@@ -14,8 +14,8 @@ export const useSiteSettings = () => {
 export const SiteSettingsProvider = ({ children }) => {
     const [settings, setSettings] = useState({
         site_name: 'Elsa Coiffure',
-        contact_email: 'concierge@elsacoiffure.com',
-        contact_phone: '+33 1 23 45 67 89',
+        contact_email: 'lantonkpodearielle@gmail.com',
+        contact_phone: '+229 01 68 31 18 96',
         contact_address: '75 Av. des Champs-Élysées, Paris',
         social_instagram: 'https://instagram.com/elsacoiffure',
         social_facebook: 'https://facebook.com/elsacoiffure',

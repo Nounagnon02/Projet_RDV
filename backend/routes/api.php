@@ -39,6 +39,11 @@ Route::get('/booking/{slug}/services', [BookingController::class, 'getServicesPu
 Route::get('/booking/{slug}/slots', [BookingController::class, 'getAvailableSlots']);
 Route::post('/booking/{slug}/appointments', [BookingController::class, 'bookAppointment']);
 
+// Option C — Réservation globale (tous prestataires)
+Route::get('/global-slots', [BookingController::class, 'getGlobalAvailableSlots']);
+Route::post('/global-book', [BookingController::class, 'globalBookAppointment']);
+Route::post('/booking/confirm-payment', [BookingController::class, 'confirmBookingPayment']);
+
 // Public Products & Guest Order
 Route::get('/products', [App\Http\Controllers\Api\ProductController::class, 'index']);
 Route::get('/products/{id}', [App\Http\Controllers\Api\ProductController::class, 'show']);

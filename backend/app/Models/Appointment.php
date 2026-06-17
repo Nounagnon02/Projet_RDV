@@ -18,6 +18,11 @@ class Appointment extends Model
         'status',
         'client_notes',
         'provider_notes',
+        'total_amount',
+        'deposit_amount',
+        'remaining_amount',
+        'deposit_paid',
+        'payment_transaction_id',
     ];
 
     public function provider()

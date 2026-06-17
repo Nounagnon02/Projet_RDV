@@ -66,7 +66,32 @@ class DatabaseSeeder extends Seeder
 
         // Get the provider ID from the providers table
         $providerRecord = \DB::table('providers')->where('user_id', $provider->id)->first();
-        $providerId = $providerRecord->id;;
+        $providerId = $providerRecord->id;
+
+        // Create Second Provider (Prestige)
+        $provider2User = User::create([
+            'name' => 'Elsa Coiffure - Prestige',
+            'email' => 'prestige@coiffure.com',
+            'password' => Hash::make('password123'),
+            'phone' => '+33 1 98 76 54 32',
+            'role' => 'provider',
+        ]);
+
+        // Create Second Provider Profile
+        \DB::table('providers')->insert([
+            'user_id' => $provider2User->id,
+            'business_name' => 'Elsa Coiffure - Prestige',
+            'description' => 'Services premium de haute coiffure afro',
+            'address' => '75 Av. des Champs-Élysées',
+            'city' => 'Paris',
+            'postal_code' => '75008',
+            'slug' => 'elsa-coiffure-prestige',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $provider2Record = \DB::table('providers')->where('user_id', $provider2User->id)->first();
+        $provider2Id = $provider2Record->id;
 
         // Create Client
         $client = User::create([
@@ -79,30 +104,100 @@ class DatabaseSeeder extends Seeder
 
         // Create Services
         $services = [
+            // Traitement cheveux naturels
             [
-                'name' => 'Soin Signature Hydratation',
-                'description' => 'Soin d\'excellence avec marula et karité',
+                'name' => 'Traitement Cheveux Naturels',
+                'description' => 'Soin complet incluant une analyse capillaire rapide, un nettoyage et un démêlage en profondeur des cheveux.',
+                'duration' => 90,
+                'price' => 2500.00,
+                'provider_id' => $providerId,
+                'category' => 'traitement',
+            ],
+            // Ressérage de locks
+            [
+                'name' => 'Ressérage - Moins de 100 tiges',
+                'description' => 'Ressérage de locks pour moins de 100 tiges. Prix valable pour tous types de ressérage.',
                 'duration' => 120,
-                'price' => 89.00,
+                'price' => 5000.00,
                 'provider_id' => $providerId,
+                'category' => 'resserage',
             ],
             [
-                'name' => 'Diagnostic Capacillaire Complet',
-                'description' => 'Analyse complète et recommandations personnalisées',
+                'name' => 'Ressérage - Entre 100 et 150 tiges',
+                'description' => 'Ressérage de locks pour 100 à 150 tiges. Prix valable pour tous types de ressérage.',
+                'duration' => 180,
+                'price' => 7000.00,
+                'provider_id' => $providerId,
+                'category' => 'resserage',
+            ],
+            [
+                'name' => 'Ressérage - Entre 150 et 200 tiges',
+                'description' => 'Ressérage de locks pour 150 à 200 tiges. Prix valable pour tous types de ressérage.',
+                'duration' => 240,
+                'price' => 9000.00,
+                'provider_id' => $providerId,
+                'category' => 'resserage',
+            ],
+            [
+                'name' => 'Micro Locks',
+                'description' => 'Ressérage micro locks. Prix valable pour tous types de ressérage.',
+                'duration' => 300,
+                'price' => 12000.00,
+                'provider_id' => $providerId,
+                'category' => 'resserage',
+            ],
+            // Détox et bain de locks
+            [
+                'name' => 'Bain de Locks Classique',
+                'description' => 'Bain classique pour nettoyer et rafraîchir vos locks en douceur.',
                 'duration' => 45,
-                'price' => 45.00,
+                'price' => 2000.00,
                 'provider_id' => $providerId,
+                'category' => 'detox',
             ],
             [
-                'name' => 'Traitement Réparation Intégral',
-                'description' => 'Réparation profonde et reconstruction',
-                'duration' => 150,
-                'price' => 125.00,
+                'name' => 'Détox Simple',
+                'description' => 'Détoxification en profondeur de vos locks pour éliminer les impuretés.',
+                'duration' => 90,
+                'price' => 7000.00,
                 'provider_id' => $providerId,
+                'category' => 'detox',
+            ],
+            [
+                'name' => 'Détox + Hydratation',
+                'description' => 'Détoxification complète suivie d\'un soin hydratant intense pour vos locks.',
+                'duration' => 120,
+                'price' => 8000.00,
+                'provider_id' => $providerId,
+                'category' => 'detox',
+            ],
+            // Tresses protectrices
+            [
+                'name' => 'Tresses Protectrices',
+                'description' => 'Réalisation de tresses protectrices. Le prix débute à partir de 1500 FCFA — à convenir avec le prestataire en fonction de votre demande (type, longueur, complexité).',
+                'duration' => 120,
+                'price' => 1500.00,
+                'provider_id' => $providerId,
+                'category' => 'tresses',
+            ],
+            // Départ de locks
+            [
+                'name' => 'Départ de Locks',
+                'description' => 'Départ de locks. Le prix commence à partir de 5000 FCFA — contacter le prestataire pour un prix précis en fonction de vos besoins, nombre de tiges et type de départ.',
+                'duration' => 120,
+                'price' => 5000.00,
+                'provider_id' => $providerId,
+                'category' => 'depart',
             ],
         ];
 
         foreach ($services as $service) {
+            Service::create($service);
+        }
+
+        // Dupliquer les services pour le 2e prestataire
+        foreach ($services as $service) {
+            $service['provider_id'] = $provider2Id;
             Service::create($service);
         }
 

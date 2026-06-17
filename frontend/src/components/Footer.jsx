@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin } from 'lucide-react';
-import { BrandLogo, ProtectedIcon, ProtectedLogo } from './ui';
+import { BrandLogo, ProtectedIcon } from './ui';
 import { useSiteSettings } from '../context/SiteSettingsContext';
 
 const Footer = () => {
@@ -9,8 +9,8 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
     const siteName = settings.site_name || 'Elsa';
     const footerDescription = settings.footer_description || 'Élever les standards du soin capillaire Afro à travers une expérience de luxe et une excellence artistique depuis plus d\'une décennie.';
-    const contactEmail = settings.contact_email || 'concierge@elsacoiffure.com';
-    const contactPhone = settings.contact_phone || '+33 1 23 45 67 89';
+    const contactEmail = settings.contact_email || 'lantonkpodearielle@gmail.com';
+    const contactPhone = settings.contact_phone || '+229 01 68 31 18 96';
     const contactAddress = settings.contact_address || '75 Av. des Champs-Élysées, Paris';
     const socialInstagram = settings.social_instagram || '#';
     const socialFacebook = settings.social_facebook || '#';
@@ -24,12 +24,9 @@ const Footer = () => {
                     <div className="lg:col-span-1 flex flex-col items-center sm:items-start">
                         <Link to="/" className="flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-4 mb-8 text-primary group">
                             <BrandLogo
-                                className="h-14 md:h-16 w-auto max-w-[150px] md:max-w-[180px] object-contain group-hover:scale-105 transition-transform duration-500"
+                                className="h-20 md:h-24 w-auto max-w-[200px] md:max-w-[260px] object-contain group-hover:scale-105 transition-transform duration-500"
                                 alt="Logo Elsa Coiffure"
                             />
-                            <ProtectedLogo className="flex flex-col justify-center space-y-1">
-                                <h2 className="text-2xl md:text-3xl font-display font-bold uppercase tracking-[0.16em] text-primary leading-none">{siteName}</h2>
-                            </ProtectedLogo>
                         </Link>
                         <p className="text-slate-400 text-base md:text-lg leading-relaxed max-w-sm italic">
                             {footerDescription}

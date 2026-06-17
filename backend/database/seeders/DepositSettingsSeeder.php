@@ -22,7 +22,7 @@ class DepositSettingsSeeder extends Seeder
             ],
             [
                 'key' => 'deposit_percentage',
-                'value' => '30',
+                'value' => '50',
                 'type' => 'number',
                 'group' => 'booking',
                 'label' => 'Pourcentage d\'acompte',

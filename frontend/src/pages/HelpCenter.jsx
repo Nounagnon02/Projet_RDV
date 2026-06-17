@@ -84,13 +84,13 @@ const HelpCenter = () => {
         {
             icon: Phone,
             method: t('help.call_us', { defaultValue: 'Appelez-nous' }),
-            detail: siteSettings.contact_phone || '+33 1 23 45 67 89',
+            detail: siteSettings.contact_phone || '+229 01 68 31 18 96',
             hours: t('help.phone_hours', { defaultValue: 'Lun-Sam: 10h-19h' })
         },
         {
             icon: Mail,
             method: t('help.email_us', { defaultValue: 'Ecrivez-nous' }),
-            detail: siteSettings.contact_email || 'support@elsacoiffure.com',
+            detail: siteSettings.contact_email || 'lantonkpodearielle@gmail.com',
             hours: t('help.email_hours', { defaultValue: 'Reponse sous 24h' })
         },
         {

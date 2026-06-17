@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Clock, ArrowRight, Check } from 'lucide-react';
+import { Clock, ArrowRight, Check, Search } from 'lucide-react';
 import api from '../api/axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Button, Card } from '../components/ui';
+
+const CATEGORIES = ['resserage', 'traitement', 'detox', 'tresses', 'depart'];
 
 const ServicesSelection = () => {
     const { t } = useTranslation();
@@ -13,6 +15,7 @@ const ServicesSelection = () => {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedService, setSelectedService] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const fetchServices = async () => {
@@ -29,15 +32,104 @@ const ServicesSelection = () => {
         fetchServices();
     }, []);
 
+    // Group services by category
+    const groupedServices = useMemo(() => {
+        const groups = {};
+        CATEGORIES.forEach((cat) => { groups[cat] = []; });
+        groups['other'] = [];
+
+        // Filter by search query first
+        const filtered = searchQuery.trim()
+            ? services.filter((s) =>
+                s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                s.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (s.provider?.business_name || '').toLowerCase().includes(searchQuery.toLowerCase())
+            )
+            : services;
+
+        filtered.forEach((service) => {
+            const cat = service.category && CATEGORIES.includes(service.category)
+                ? service.category
+                : 'other';
+            groups[cat].push(service);
+        });
+
+        return groups;
+    }, [services, searchQuery]);
+
+    const getCategoryTitle = (cat) => {
+        const key = `services.cat_${cat}`;
+        const defaults = {
+            cat_resserage: 'Ress\u00e9rage de locks',
+            cat_traitement: 'Traitement cheveux naturels',
+            cat_detox: 'D\u00e9tox et bain de locks',
+            cat_tresses: 'R\u00e9alisation de Tresses protectrices',
+            cat_depart: 'D\u00e9part de locks',
+            cat_other: 'Autres services',
+        };
+        return t(key, { defaultValue: defaults[`cat_${cat}`] || cat });
+    };
+
     const handleServiceSelect = (service) => {
         setSelectedService(service);
     };
 
     const handleContinue = () => {
-        if (selectedService && selectedService.provider) {
-            navigate(`/b/${selectedService.provider.slug}?service=${selectedService.id}`);
+        if (selectedService) {
+            navigate(`/book?service=${selectedService.id}`);
         }
     };
+
+    const renderServiceCard = (service) => (
+        <Card
+            key={service.id}
+            className={`p-8 cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden ${
+                selectedService?.id === service.id
+                    ? 'ring-4 ring-primary shadow-2xl shadow-primary/20'
+                    : 'hover:ring-2 hover:ring-primary/30'
+            }`}
+            onClick={() => handleServiceSelect(service)}
+        >
+            {selectedService?.id === service.id && (
+                <div className="absolute top-4 right-4 bg-primary text-white rounded-full p-2 shadow-lg animate-scale-in">
+                    <Check className="size-5" />
+                </div>
+            )}
+
+            <div className="space-y-4">
+                <div className="flex items-start justify-between">
+                    <h3 className="text-2xl font-display font-bold italic text-maroon-dark dark:text-text-light pr-12">
+                        {service.name}
+                    </h3>
+                </div>
+
+                <p className="text-accent-bronze text-sm leading-relaxed">
+                    {service.description}
+                </p>
+
+                <div className="flex items-center gap-2 text-sm text-maroon-dark/60 dark:text-text-light/60">
+                    <Clock className="size-4" />
+                    <span>{service.duration} min</span>
+                </div>
+
+                <div className="pt-4 border-t border-maroon-dark/10">
+                    <div className="flex items-baseline justify-between">
+                        <span className="text-3xl font-display font-black italic text-primary">
+                            {service.price.toLocaleString()} FCFA
+                        </span>
+                    </div>
+                </div>
+
+                {service.provider && (
+                    <div className="pt-4 border-t border-maroon-dark/10">
+                        <p className="text-xs text-accent-bronze uppercase tracking-wider">
+                            {t('services.by', { defaultValue: 'Par' })} {service.provider.business_name}
+                        </p>
+                    </div>
+                )}
+            </div>
+        </Card>
+    );
 
     return (
         <div className="min-h-screen bg-background-light dark:bg-background-dark">
@@ -62,68 +154,93 @@ const ServicesSelection = () => {
                         </p>
                     </div>
 
+                    {/* Search Bar */}
+                    <div className="max-w-xl mx-auto mb-12">
+                        <div className="relative">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-maroon-dark/40" />
+                            <input
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder={t('services.search_placeholder', { defaultValue: 'Rechercher un service...' })}
+                                className="w-full pl-12 pr-4 py-4 rounded-xl border border-maroon-dark/10 bg-white dark:bg-maroon-dark/50 text-maroon-dark dark:text-text-light placeholder:text-maroon-dark/30 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all text-lg"
+                            />
+                        </div>
+                    </div>
+
                     {loading ? (
                         <div className="text-center py-20">
                             <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
                             <p className="mt-4 text-accent-bronze">{t('common.loading', { defaultValue: 'Chargement...' })}</p>
                         </div>
+                    ) : services.length === 0 ? (
+                        <div className="text-center py-20">
+                            <p className="text-xl text-accent-bronze italic">
+                                {t('services.no_services', { defaultValue: 'Aucun service disponible pour le moment.' })}
+                            </p>
+                        </div>
                     ) : (
                         <>
-                            {/* Services Grid */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                                {services.map((service) => (
-                                    <Card
-                                        key={service.id}
-                                        className={`p-8 cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 relative overflow-hidden ${
-                                            selectedService?.id === service.id
-                                                ? 'ring-4 ring-primary shadow-2xl shadow-primary/20'
-                                                : 'hover:ring-2 hover:ring-primary/30'
-                                        }`}
-                                        onClick={() => handleServiceSelect(service)}
-                                    >
-                                        {/* Selection Indicator */}
-                                        {selectedService?.id === service.id && (
-                                            <div className="absolute top-4 right-4 bg-primary text-white rounded-full p-2 shadow-lg animate-scale-in">
-                                                <Check className="size-5" />
-                                            </div>
-                                        )}
-
-                                        {/* Service Content */}
-                                        <div className="space-y-4">
-                                            <div className="flex items-start justify-between">
-                                                <h3 className="text-2xl font-display font-bold italic text-maroon-dark dark:text-text-light pr-12">
-                                                    {service.name}
-                                                </h3>
-                                            </div>
-
-                                            <p className="text-accent-bronze text-sm leading-relaxed">
-                                                {service.description}
-                                            </p>
-
-                                            <div className="flex items-center gap-2 text-sm text-maroon-dark/60 dark:text-text-light/60">
-                                                <Clock className="size-4" />
-                                                <span>{service.duration} min</span>
-                                            </div>
-
-                                            <div className="pt-4 border-t border-maroon-dark/10">
-                                                <div className="flex items-baseline justify-between">
-                                                    <span className="text-3xl font-display font-black italic text-primary">
-                                                        {service.price.toLocaleString()} FCFA
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            {service.provider && (
-                                                <div className="pt-4 border-t border-maroon-dark/10">
-                                                    <p className="text-xs text-accent-bronze uppercase tracking-wider">
-                                                        {t('services.by', { defaultValue: 'Par' })} {service.provider.business_name}
-                                                    </p>
-                                                </div>
-                                            )}
+                            {/* Services by Category */}
+                            {CATEGORIES.map((cat) => {
+                                const catServices = groupedServices[cat];
+                                if (!catServices || catServices.length === 0) return null;
+                                return (
+                                    <div key={cat} className="mb-16 last:mb-0">
+                                        <div className="flex items-center gap-4 mb-4">
+                                            <div className="h-px flex-1 bg-primary/20"></div>
+                                            <h2 className="text-3xl md:text-4xl font-display font-bold italic text-maroon-dark dark:text-text-light text-center">
+                                                {getCategoryTitle(cat)}
+                                            </h2>
+                                            <div className="h-px flex-1 bg-primary/20"></div>
                                         </div>
-                                    </Card>
-                                ))}
-                            </div>
+                                        {cat === 'resserage' && (
+                                            <p className="text-center text-sm text-primary/80 font-medium italic mb-8">
+                                                NB : Ces prix sont valables pour tous types de ressérage.
+                                            </p>
+                                        )}
+                                        {cat === 'tresses' && (
+                                            <p className="text-center text-sm text-primary/80 font-medium italic mb-8">
+                                                Le prix débute à partir de 1 500 FCFA — à convenir avec le prestataire en fonction de votre demande.
+                                            </p>
+                                        )}
+                                        {cat === 'depart' && (
+                                            <p className="text-center text-sm text-primary/80 font-medium italic mb-8">
+                                                Le départ commence à partir de 5 000 FCFA — contacter le prestataire pour un prix précis en fonction de vos besoins, nombre de tiges et type de départ.
+                                            </p>
+                                        )}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                            {catServices.map(renderServiceCard)}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+
+                            {/* Other uncategorized services */}
+                            {groupedServices['other'] && groupedServices['other'].length > 0 && (
+                                <div className="mb-16">
+                                    <div className="flex items-center gap-4 mb-8">
+                                        <div className="h-px flex-1 bg-primary/20"></div>
+                                        <h2 className="text-3xl md:text-4xl font-display font-bold italic text-maroon-dark dark:text-text-light text-center">
+                                            {getCategoryTitle('other')}
+                                        </h2>
+                                        <div className="h-px flex-1 bg-primary/20"></div>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        {groupedServices['other'].map(renderServiceCard)}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* No search results */}
+                            {searchQuery.trim() && !CATEGORIES.some(cat => groupedServices[cat]?.length > 0) && !groupedServices['other']?.length > 0 && (
+                                <div className="text-center py-20">
+                                    <Search className="size-12 text-maroon-dark/20 mx-auto mb-4" />
+                                    <p className="text-xl text-accent-bronze italic">
+                                        {t('services.no_results', { defaultValue: 'Aucun service ne correspond à votre recherche.' })}
+                                    </p>
+                                </div>
+                            )}
 
                             {/* Continue Button */}
                             {selectedService && (
